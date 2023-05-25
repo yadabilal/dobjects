@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 class Product extends Base
 {
     use SoftDeletes;
+
+    const MAX_ORDER_COUNT = 10;
     const PAGINATION_COUNT = 12;
     const STATUS_PUBLISH = 'PUBLISH';
     const STATUS_NOT_PUBLISH = 'NOT_PUBLISH';

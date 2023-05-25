@@ -44,7 +44,7 @@
                                                 <td class="product-quantity">
                                                     <div class="quantity">
                                                         <button type="button" class="minus">-</button>
-                                                        <input type="number" class="qty" step="1" min="1" max="" name="quantity[{{$cart->uuid}}]" value="{{$cart->quantity}}" title="Qty" size="4" placeholder="" inputmode="numeric" autocomplete="off">
+                                                        <input type="number" class="qty" step="1" min="1" max="{{$cart->product->stock ?: \App\Model\Product::MAX_ORDER_COUNT}}" name="quantity[{{$cart->uuid}}]" value="{{$cart->quantity}}" title="Qty" size="4" placeholder="" inputmode="numeric" autocomplete="off">
                                                         <button type="button" class="plus">+</button>
                                                     </div>
                                                 </td>

@@ -874,12 +874,12 @@
   }
   .back-top {
     bottom: 65px;
-    right: 15px;
+    left: 15px;
   }
 
     .contact-whatsap {
         bottom: 65px!important;
-        left: 15px!important;
+        right: 15px!important;
     }
 }
 

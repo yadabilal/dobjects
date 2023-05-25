@@ -25,8 +25,9 @@ class HomeController extends Controller
         $item = Product::findByUrl($url);
 
         if($item) {
+            $maxCount = $item->stock ?: Product::MAX_ORDER_COUNT;
             $lastItems = Product::list_all(8);
-            return view('site.show', compact('item', 'lastItems'));
+            return view('site.show', compact('item', 'lastItems', 'maxCount'));
         }else {
             return $this->errorPage();
         }

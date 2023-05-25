@@ -46,17 +46,24 @@ class BasketController extends Controller
                 ->first();
 
             if($product) {
-                $basket = Basket::add($product, @$all['quantity'] ?: 1, @$all['note'] ?: '');
+                $max = $product->stock ?: Product::MAX_ORDER_COUNT;
+                $quantity = @$all['quantity'] ?: 1;
 
-                if($basket) {
-                    $count = $this->user->baskets->sum('quantity');
+                if($quantity > 1 && $quantity <= $max) {
+                    $basket = Basket::add($product, @$all['quantity'] ?: 1, @$all['note'] ?: '');
 
-                    $data['success'] = true;
-                    $data['id'] = $basket->uuid;
-                    $data['count'] = $count;
-                    $data['message'] = "Ürün Sepete Eklendi!";
+                    if($basket) {
+                        $count = $this->user->baskets->sum('quantity');
+
+                        $data['success'] = true;
+                        $data['id'] = $basket->uuid;
+                        $data['count'] = $count;
+                        $data['message'] = "Ürün Sepete Eklendi!";
+                    }else {
+                        $data['message'] = "Geçersiz İşlem!";
+                    }
                 }else {
-                    $data['message'] = "Geçersiz İşlem!";
+                    $data['message'] = "Aynı üründen en fazla ".$max.' adet sipariş verebilirsiniz!';
                 }
 
             }else {
@@ -115,20 +122,28 @@ class BasketController extends Controller
           $inputs = Base::js_xss(\request());
           $carts = $this->user->baskets;
           if(@$inputs['quantity'] && $carts) {
+              $isError = false;
               foreach ($carts as $cart) {
                   $quantity = @$inputs['quantity'][$cart->uuid] ?: null;
-                  if($quantity) {
+
+                  if($quantity>0) {
                       $product = Product::where('id', $cart->product_id)
                           ->where('status', Product::STATUS_PUBLISH)
                           ->first();
-
+                      $max = $product->stock ?: Product::MAX_ORDER_COUNT;
                       if($product) {
-                          $cart->price = $product->price;
-                          $cart->quantity = $quantity;
-                          $cart->discount_price = $product->discount_price;
-                          $cart->total_price = $product->price*$quantity;
-                          $cart->total_discount_price = $product->discount_price*$quantity;
-                          $cart->save();
+                          if($quantity <= $max) {
+                              $cart->price = $product->price;
+                              $cart->quantity = $quantity;
+                              $cart->discount_price = $product->discount_price;
+                              $cart->total_price = $product->price*$quantity;
+                              $cart->total_discount_price = $product->discount_price*$quantity;
+                              $cart->save();
+                          }else {
+                              $isError = true;
+                              Session::flash('error_message', "Aynı üründen en fazla ".$max.' adet sipariş verebilirsiniz!');
+                          }
+
                       }else {
                           $cart->delete();
                       }
@@ -138,7 +153,9 @@ class BasketController extends Controller
                   }
               }
 
-              Session::flash('success_message', 'Sepet güncellendi!');
+              if(!$isError) {
+                  Session::flash('success_message', 'Sepet güncellendi!');
+              }
               return redirect(route('basket.short_list'));
           }else {
               Session::flash('error_message', 'Geçersiz İşlem!');

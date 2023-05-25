@@ -11,7 +11,6 @@
 <script src="{{ asset('theme/deekobjects/libs/slider/js/jquery.slider.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>
 
 <script src="{{ asset('theme/deekobjects/js/app.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>
-<script src="{{ asset('theme/deekobjects/js/app2.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>
 <script src="{{ asset('theme/deekobjects/libs/elevatezoom/js/jquery.elevatezoom.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>
 
 <script src="{{ asset('theme/deekobjects/js/btn-proccess.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>

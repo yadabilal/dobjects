@@ -4,7 +4,7 @@
             <div class="section-container">
                 <div class="block-widget-wrap">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="block block-menu m-b-20">
                                 <h2 class="block-title">İletişim Bilgileri</h2>
                                 <div class="block-content">
@@ -37,15 +37,18 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="block block-menu">
                                 <h2 class="block-title">Adres Bilgileri</h2>
                                 <div class="block-content">
                                     <p>{{@$settings['address'] ?: ''}}</p>
                                 </div>
                             </div>
+                            <div class="block block-image">
+                                <img width="100" height="32" src="{{asset('theme/deekobjects/media/payments.png')}}" alt="">
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="block block-menu">
                                 <h2 class="block-title">Sözleşmeler</h2>
                                 <div class="block-content">
@@ -64,11 +67,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="block block-image">
-                                <img width="309" height="32" src="{{asset('theme/deekobjects/media/payments.png')}}" alt="">
                             </div>
                         </div>
                     </div>

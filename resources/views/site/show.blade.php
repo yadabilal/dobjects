@@ -67,7 +67,7 @@
                                     <div class="add-to-cart-wrap">
                                         <div class="quantity">
                                             <button type="button" class="plus">+</button>
-                                            <input type="number" class="qty" step="1" min="1" max="" id="quantity" data-id="{{$item->uuid}}" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric" autocomplete="off">
+                                            <input type="number" class="qty" step="1" min="1" max="{{$maxCount}}" id="quantity" data-id="{{$item->uuid}}" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric" autocomplete="off">
                                             <button type="button" class="minus">-</button>
                                         </div>
                                         @guest

@@ -1,0 +1,215 @@
+.text-error {
+    color: #ff5f59!important;
+}
+.fullwidth {
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+.success-message {
+    background: #28a745!important;
+}
+
+.error-message {
+    background: #dc3545!important;
+}
+.has-error input.input-text {
+    border: solid 1px;
+    border-color: #ff5f59;
+}
+p.form-submit {
+    padding: 0 10px;
+}
+
+
+.isDisabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.isDisabled > a {
+    color: currentColor;
+    display: inline-block;  /* For IE11/ MS Edge bug */
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.button-login .button {
+    background: #000!important;
+    color: #fff!important;
+
+}
+
+.shop-details .product-tabs #review-form .comment-form-rating .stars span a.reviewed:after {
+    content: "\f005";
+    font-family: FontAwesome;
+    font-size: 18px;
+    font-weight: unset;
+    text-indent: 0;
+    color: #f5bf1c!important;
+}
+.contact-whatsap {
+    left: 0.2in;
+    bottom: 0.3125in;
+    position: fixed;
+}
+
+.button[disabled], fieldset[disabled] .button {
+    background-color: #fff;
+    border-color: #dbdbdb;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .5;
+}
+
+.page-login-register .box-form-login .box-content .required {
+    color: black!important;
+}
+
+.button[disabled]:hover{
+    border-color: #dbdbdb!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+    opacity: .5!important;
+}
+
+.button[disabled], .input[disabled], .textarea[disabled], .select select[disabled], .file-cta[disabled], .file-name[disabled], .pagination-previous[disabled], .pagination-next[disabled], .pagination-link[disabled], .pagination-ellipsis[disabled], fieldset[disabled] .button, fieldset[disabled] .input, fieldset[disabled] .textarea, fieldset[disabled] .select select, .select fieldset[disabled] select, fieldset[disabled] .file-cta, fieldset[disabled] .file-name, fieldset[disabled] .pagination-previous, fieldset[disabled] .pagination-next, fieldset[disabled] .pagination-link, fieldset[disabled] .pagination-ellipsis {
+    cursor: not-allowed;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after,
+.navbar-link:not(.is-arrowless)::after {
+    border: 3px solid rgba(0, 0, 0, 0);
+    border-radius: 2px;
+    border-right: 0;
+    border-top: 0;
+    content: " ";
+    display: block;
+    height: 0.625em;
+    margin-top: -0.4375em;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    width: 0.625em
+}
+
+.button.is-loading::after,
+.loader,
+.select.is-loading::after,
+.control.is-loading::after {
+    -webkit-animation: spinAround 500ms infinite linear;
+    animation: spinAround 500ms infinite linear;
+    border: 2px solid #dbdbdb;
+    border-radius: 290486px;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: 1em;
+    position: relative;
+    width: 1em
+}
+
+.button.is-white.is-loading::after {
+    border-color: transparent transparent #0a0a0a #0a0a0a !important
+}
+
+.button.is-white.is-outlined.is-loading::after {
+    border-color: transparent transparent #fff #fff !important
+}
+
+
+
+.button.is-white.is-outlined.is-loading:hover::after,
+.button.is-white.is-outlined.is-loading.is-hovered::after,
+.button.is-white.is-outlined.is-loading:focus::after,
+.button.is-white.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent #0a0a0a #0a0a0a !important
+}
+
+.button.is-white.is-inverted.is-outlined.is-loading:hover::after,
+.button.is-white.is-inverted.is-outlined.is-loading.is-hovered::after,
+.button.is-white.is-inverted.is-outlined.is-loading:focus::after,
+.button.is-white.is-inverted.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent #fff #fff !important
+}
+
+.button.is-black.is-loading::after {
+    border-color: transparent transparent #fff #fff !important
+}
+
+.button.is-black.is-outlined.is-loading::after {
+    border-color: transparent transparent #0a0a0a #0a0a0a !important
+}
+
+
+.button.is-black.is-outlined.is-loading:hover::after,
+.button.is-black.is-outlined.is-loading.is-hovered::after,
+.button.is-black.is-outlined.is-loading:focus::after,
+.button.is-black.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent #fff #fff !important
+}
+
+.button.is-black.is-inverted.is-outlined.is-loading:hover::after,
+.button.is-black.is-inverted.is-outlined.is-loading.is-hovered::after,
+.button.is-black.is-inverted.is-outlined.is-loading:focus::after,
+.button.is-black.is-inverted.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent #0a0a0a #0a0a0a !important
+}
+
+.button.is-light.is-loading::after {
+    border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important
+}
+
+.button.is-light.is-outlined.is-loading::after {
+    border-color: transparent transparent #f5f5f5 #f5f5f5 !important
+}
+
+
+
+.button.is-light.is-outlined.is-loading:hover::after,
+.button.is-light.is-outlined.is-loading.is-hovered::after,
+.button.is-light.is-outlined.is-loading:focus::after,
+.button.is-light.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important
+}
+.button.is-light.is-inverted.is-outlined.is-loading:hover::after,
+.button.is-light.is-inverted.is-outlined.is-loading.is-hovered::after,
+.button.is-light.is-inverted.is-outlined.is-loading:focus::after,
+.button.is-light.is-inverted.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent #f5f5f5 #f5f5f5 !important
+}
+
+.button.is-dark.is-loading::after {
+    border-color: transparent transparent #fff #fff !important
+}
+
+
+.button.is-dark.is-outlined.is-loading::after {
+    border-color: transparent transparent #363636 #363636 !important
+}
+
+
+
+.button.is-dark.is-outlined.is-loading:hover::after,
+.button.is-dark.is-outlined.is-loading.is-hovered::after,
+.button.is-dark.is-outlined.is-loading:focus::after,
+.button.is-dark.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent #fff #fff !important
+}
+
+.button.is-dark.is-inverted.is-outlined.is-loading:hover::after,
+.button.is-dark.is-inverted.is-outlined.is-loading.is-hovered::after,
+.button.is-dark.is-inverted.is-outlined.is-loading:focus::after,
+.button.is-dark.is-inverted.is-outlined.is-loading.is-focused::after {
+    border-color: transparent transparent #363636 #363636 !important
+}
+
+.button.is-primary.is-loading::after {
+    border-color: transparent transparent #fff #fff !important
+}

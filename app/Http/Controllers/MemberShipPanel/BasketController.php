@@ -49,7 +49,7 @@ class BasketController extends Controller
                 $max = $product->stock ?: Product::MAX_ORDER_COUNT;
                 $quantity = @$all['quantity'] ?: 1;
 
-                if($quantity > 1 && $quantity <= $max) {
+                if($quantity > 0 && $quantity <= $max) {
                     $basket = Basket::add($product, @$all['quantity'] ?: 1, @$all['note'] ?: '');
 
                     if($basket) {

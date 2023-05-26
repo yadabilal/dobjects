@@ -22,7 +22,7 @@
                 </a>
 
             @elseif($model->status == \App\Model\Order::STATUS_COMPLETED)
-                <a href="{{route('admin.order.billing', ['uuid' => $model->uuid])}}" class="btn btn-info btn-rounded">
+                <a href="{{route('admin.order.billing_show', ['uuid' => $model->uuid])}}" class="btn btn-info btn-rounded">
                     <i class="fa fa-barcode"></i> Fatura Yükle
                 </a>
             @endif

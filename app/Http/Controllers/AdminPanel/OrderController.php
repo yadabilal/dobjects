@@ -7,6 +7,7 @@ use App\Model\CargoCompany;
 use App\Model\File;
 use App\Model\Order;
 use App\Model\Product;
+use App\Model\Sms;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -155,6 +156,7 @@ class OrderController extends Controller
                 $files[] = $billing;
 
                 if(File::upload($files, $model)) {
+                    Sms::order_billing($model);
                     Session::flash('success_message', 'Fatura başarılı bir şekilde kaydedildi!');
                     return redirect(route('admin.order.show', ['uuid' => $model->uuid]));
                 }else {

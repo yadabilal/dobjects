@@ -39,7 +39,7 @@
                                                 <div class="remember-me">
                                                 </div>
                                                 <div class="lost-password">
-                                                    Kod almadıysan, <a class="new-code isDisabled" data-action="{{route('auth.second')}}"  href="javascript:void(0)" disabled> Yeni Kod Gönder!</a>
+                                                    Kod almadıysan, <a class="new-code isDisabled" data-action="{{route('auth.second')}}"  href="javascript:void(0)" disabled> Yeni Kod Gönder!</a> ya da <a href="{{url('kayit-ol/yeni-numara')}}">Yeni Numara Gir!</a>
                                                 </div>
                                             </div>
 

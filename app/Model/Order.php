@@ -88,11 +88,16 @@ class Order extends Base
       OrderStatusLog::create($status_log); */
 
       // Sms Prodda düzelt
-      //Sms::new_order($model);
-    });
-    static::updating(function ($model) {
 
+      Sms::new_order($model);
     });
+
+    static::saving(function ($model) {
+        if($model->isDirty('cargo_id') && $model->status == self::STATUS_CARGO){
+            Sms::order_cargo($model);
+        }
+    });
+
   }
 
   /*

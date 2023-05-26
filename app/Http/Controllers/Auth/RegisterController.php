@@ -71,8 +71,7 @@ class RegisterController extends Controller
           $this->guard()->login($user);
           Session::flash('success_message', 'Lütfen telefonunu onayla!');
 
-          // TODO canlıya geçerken aç
-          //Sms::confirm_code($user);
+          Sms::confirm_code($user);
           return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
 

@@ -141,7 +141,7 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
     Route::get('siparis/bitir/{uuid}', 'OrderController@completed')->name('admin.order.completed');
     Route::post('siparis/kargola-kaydet/{uuid}', 'OrderController@cargo_save')->name('admin.order.cargo_save');
     Route::get('siparis/fatura-indir/{uuid}', 'OrderController@downloadBill')->name('admin.order.billing_download');
-    Route::get('siparis/fatura/{uuid}', 'OrderController@billing')->name('admin.order.billing');
+    Route::get('siparis/fatura/{uuid}', 'OrderController@billing')->name('admin.order.billing_show');
     Route::post('siparis/fatura-kaydet/{uuid}', 'OrderController@billing_save')->name('admin.order.billing');
 
     // Kategori İşlemleri

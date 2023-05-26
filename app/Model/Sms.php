@@ -82,22 +82,22 @@ class Sms extends Model
 
   public static function new_order($order) {
     $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->sender->phone;
-    $data['content'] ='deekobjects.com kullanıcısı senden '.$order->book->full_name().' kitabını istedi. En geç '.$order->last_send_at().' tarihinde kargola. Detay için giriş yap.';
+    $data['contact'] = $order->user->phone;
+    $data['content'] ='deekobjects.com ekibi olarak siparişlerini aldık. Sipariş durumunu profil sayfandan takip edebilirsin.';
     Job::create($data);
   }
 
   public static function order_cargo($order) {
     $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->receiver->phone;
-    $data['content'] ='deekobjects.com kullanıcısı istediğin '.$order->book->full_name().' kitabı kargoladı. İstediğin kitap eline ulaştığında sosyal medyalarda bizi (@birkitapbul) etiketlemeyi, takip etmeyi ve paylaşmayı unutma:) Detay için giriş yap.';
+    $data['contact'] = $order->user->phone;
+    $data['content'] ='deekobjects.com ekibi olarak siparişini kargoladık. Sipariş durumunu profil sayfandan takip edebilirsin.';
     Job::create($data);
   }
 
-  public static function cancel_order($order) {
+  public static function order_billing($order) {
     $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->receiver->phone;
-    $data['content'] ='deekobjects.com kullanıcısı istediğin '.$order->book->full_name().' kitabın gönderimini iptal etti. Aradığın ücretsiz kitap başka kullanıcılar da olabilir. Detay için giriş yap.';
+    $data['contact'] = $order->user->phone;
+    $data['content'] ='deekobjects.com ekibi olarak faturanı oluşturduk. Faturana profil sayfandan ulaşabilirsin.';
     Job::create($data);
   }
 

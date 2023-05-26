@@ -40,7 +40,91 @@ p.form-submit {
     color: #fff!important;
 
 }
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    letter-spacing: .010416667in;
+}
 
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    text-transform: uppercase;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    cursor: pointer;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    color: #fff;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    padding-top: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    padding-bottom: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    padding-left: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    font-size: 9.75pt;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-image: none;
+}
+[class~=page-404] [class~=content-page-404], [class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    padding-right: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-top-color: currentColor;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-right-color: currentColor;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-bottom-color: currentColor;
+}
+[class~=page-faq] [class~=faq-section] [class~=faq-item] [class~=faq-question], [class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    font-weight: 500;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-left-color: currentColor;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-top-style: none;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-right-style: none;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-bottom-style: none;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-left-style: none;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-top-width: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-right-width: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-bottom-width: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    border-left-width: 0;
+}
+[class~=page-login-register] [class~=box-form-login] [class~=box-content] [class~=button-register] input[type=submit] {
+    background: #000;
+}
+.page-login-register .box-form-login .box-content input {
+    line-height: 3.4375pc;
+}
+.page-login-register .box-form-login .box-content input {
+    height: 3.4375pc;
+}
+.page-login-register .box-form-login .box-content input {
+    width: 100%;
+}
+[type=reset], [type=submit], button, html [type=submit] {
+    -webkit-appearance: button;
+}
 .shop-details .product-tabs #review-form .comment-form-rating .stars span a.reviewed:after {
     content: "\f005";
     font-family: FontAwesome;

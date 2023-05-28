@@ -15,7 +15,9 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/select2.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/bootstrap-datetimepicker.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/plugins/morris/morris.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/plugins/summernote/dist/summernote-bs4.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/style.css') }}">
   <!--[if lt IE 9]>
   <script src="{{ asset('preadmin/js/html5shiv.min.js') }}"></script>
   <script src="{{ asset('preadmin/js/respond.min.js') }}"></script>
@@ -140,6 +142,8 @@
 <script type="text/javascript" src="{{ asset('preadmin/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('preadmin/plugins/morris/morris.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('preadmin/plugins/raphael/raphael-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('preadmin/plugins/summernote/dist/summernote-bs4.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('preadmin/js/app.js') }}"></script>
 <script>
   var csrf_token= '{{csrf_token()}}';

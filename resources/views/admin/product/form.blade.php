@@ -162,7 +162,7 @@
           <div class="row">
               <div class="col-md-12">
                   <div class="form-group">
-                      <textarea class="form-control" name="description" rows="6" cols="30" maxlength="500">{{old('description', @$model->description)}} </textarea>
+                      <textarea class="form-control summernote" name="description" rows="6" cols="30" maxlength="500">{!! old('description', @$model->description) !!} </textarea>
                       @error('description')
                       <small class="form-text text-muted">{{$message}}</small>
                       @enderror
@@ -175,7 +175,7 @@
           <div class="row">
               <div class="col-md-12">
                   <div class="form-group">
-                      <textarea class="form-control" name="additional_information" rows="6" cols="30" maxlength="500">{{old('additional_information', @$model->additional_information)}} </textarea>
+                      <textarea class="form-control summernote" name="additional_information" rows="6" cols="30" maxlength="500">{!! old('additional_information', @$model->additional_information) !!} </textarea>
                       @error('additional_information')
                       <small class="form-text text-muted">{{$message}}</small>
                       @enderror

@@ -70,7 +70,7 @@ class ProductController extends Controller
               'tags' => 'nullable|max:255',
               'url' => 'nullable|max:150',
               'short_description' => 'nullable|max:255',
-              'description' => 'nullable',
+              'description' => 'required',
               'additional_information' => 'nullable|max:500',
           ];
 
@@ -88,7 +88,7 @@ class ProductController extends Controller
               unset($inputs['id']);
               unset($inputs['_token']);
 
-              if((!$product->id && $product->create($inputs)) || ($product->id && $product->update($inputs))) {
+              if((!$product->id && $product=$product->create($inputs)) || ($product->id && $product->update($inputs))) {
                   $files = $product->files()->get();
                   $shortings = @$inputs['shorting'] ?: [];
                   $removed = @$inputs['removed'] ?: [];

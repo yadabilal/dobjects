@@ -200,6 +200,7 @@ return [
       'tags' => 'Etiketler',
       'stock' => 'Stok',
       'category_id' => 'Kategori',
+      'description' => 'Açıklama',
     ],
 
 ];

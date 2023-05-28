@@ -55,13 +55,19 @@ class Basket extends Base
         $basketElement->note = $note;
         $basketElement->product_id = $product->id;
         $basketElement->user_id = $userId;
-        $basketElement->price = $product->price;
         $basketElement->quantity = $quantity;
+        $basketElement->price = $product->price;
         $basketElement->discount_price = $product->discount_price;
         $basketElement->total_price = $product->price*$quantity;
         $basketElement->total_discount_price = $product->discount_price*$quantity;
         $basketElement->save();
-
+    }else {
+        $basketElement->quantity = $quantity;
+        $basketElement->price = $product->price;
+        $basketElement->discount_price = $product->discount_price;
+        $basketElement->total_price = $product->price*$quantity;
+        $basketElement->total_discount_price = $product->discount_price*$quantity;
+        $basketElement->save();
     }
 
     return $basketElement;
@@ -71,6 +77,6 @@ class Basket extends Base
   public static function remove($productId, $userId=null) {
       $userId = $userId ? : \auth()->id();
 
-    return self::where('book_id', $productId)->where('user_id', $userId)->delete();
+    return self::where('product_id', $productId)->where('user_id', $userId)->delete();
   }
 }

@@ -25,6 +25,13 @@ Route::get('/sozlesme/{url}', 'HomeController@contract')->name('contract.sub');
 
 Route::post('ilce-bul', 'HomeController@town');
 
+
+Route::post('sepet-ekle', 'TempBasketController@add')->name('tempbasket.add');
+Route::post('sepet-liste', 'TempBasketController@list')->name('tempbasket.list');
+Route::post('sepet-sil', 'TempBasketController@delete')->name('tempbasket.delete');
+Route::get('sepetim', 'TempBasketController@index')->name('tempbasket.short_list');
+Route::post('sepet-guncelle', 'TempBasketController@update')->name('tempbasket.update');
+
 // Auth İşlemleri
 Route::get('giris-yap', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('giris-yap', 'Auth\LoginController@login');

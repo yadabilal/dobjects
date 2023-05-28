@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Model\Basket;
+use App\Model\TempBasket;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -95,8 +98,18 @@ class LoginController extends Controller
       if(auth()->user()->type == User::TYPE_ADMIN) {
         return $this->adminRedirectTo;
       }else {
-        return $this->redirectTo;
+          TempBasket::addRealBasket();
+          return $this->redirectTo;
       }
 
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        //$request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->intended($this->redirectPath());
     }
 }

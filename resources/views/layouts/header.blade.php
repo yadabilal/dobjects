@@ -16,7 +16,7 @@
                             <div class="dropdown mini-cart top-cart">
                                 <div class="remove-cart-shadow"></div>
                                 <a class="dropdown-toggle cart-icon cart-button" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{@$user ? $user->baskets->count(): '0'}}</span></div>
+                                    <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{@$user ? $user->baskets->count(): \App\Model\TempBasket::totalCount()}}</span></div>
                                 </a>
                                 <div class="dropdown-menu cart-popup">
                                     <div class="loader is-loading"></div>
@@ -108,7 +108,7 @@
                                     <div class="dropdown mini-cart top-cart">
                                         <div class="remove-cart-shadow"></div>
                                         <a class="dropdown-toggle cart-icon cart-button" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{@$user ? $user->baskets->count(): '0'}}</span></div>
+                                            <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{@$user ? $user->baskets->count():  \App\Model\TempBasket::totalCount()}}</span></div>
                                         </a>
                                         <div class="dropdown-menu cart-popup" id="cart-popup">
                                             <div class="loader is-loading"></div>

@@ -42,7 +42,7 @@
         }
 
         $.ajax({
-            url: '{{route('basket.add')}}',
+            url: '{{auth()->id() ? route('basket.add') : route('tempbasket.add')}}',
             data: {_token:csrf_token, id:id, quantity: quantity},
             type: 'POST',
             success: function (data) {
@@ -77,7 +77,7 @@
     $('.cart-icon')['on']('click', function() {
         var cartBody = $(".cart-popup");
         $.ajax({
-            url: '{{route('basket.list')}}',
+            url: '{{auth()->id() ? route('basket.list') : route('tempbasket.list')}}',
             data: {_token:csrf_token},
             type: 'POST',
             success: function (data) {
@@ -120,7 +120,7 @@
         var cart = element['closest']('.cart-items');
         console.log(cart)
         $.ajax({
-            url: '{{url(route('basket.delete'))}}',
+            url: '{{auth()->id() ? route('basket.list') : route('tempbasket.delete')}}',
             data: {_token:csrf_token, id:id},
             type: 'POST',
             success: function (data) {
@@ -162,7 +162,7 @@
         var cart = element['closest']('.mini-cart');
 
         $.ajax({
-            url: '{{url(route('basket.delete'))}}',
+            url: '{{auth()->id() ? route('basket.list') : route('tempbasket.delete')}}',
             data: {_token:csrf_token, id:id},
             type: 'POST',
             success: function (data) {

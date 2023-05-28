@@ -61,6 +61,7 @@ class File extends Model
             $data['model_name'] = @get_class($model) ? : null;
             $path = @$model->store_path  ? : 'undefineds';
             $shorting = 1;
+
             if(@$model->id) {
                $lastFile =  File::where('model_id', $model->id)
                     ->where('model_name', get_class($model))

@@ -127,7 +127,7 @@
           <h3 class="card-title">Resim Galerisi</h3>
           <div class="form-group">
               <div>
-                  <input class="form-control" type="file" name="files[]" multiple accept="image/x-png,image/gif,image/jpeg">
+                  <input class="form-control" type="file" name="galeries[]" multiple accept="image/x-png,image/gif,image/jpeg">
                   <small class="form-text text-muted">Lütfen max 1000x1000px olacak şekilde fotoğraf yükleyiniz!</small>
               </div>
               <div class="row">

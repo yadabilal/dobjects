@@ -25,13 +25,13 @@ class Base extends Model
     });
     self::created(function($model){
       // Eğer Dosya Varsa Kaydet
-      if(request()->file('files')) {
-        File::upload(request()->file('files'), $model);
+      if(request()->file('galeries')) {
+        File::upload(request()->file('galeries'), $model);
       }
     });
     self::saving(function($model){
-      if(request()->file('files')) {
-        File::upload(request()->file('files'), $model);
+      if(request()->file('galeries')) {
+        File::upload(request()->file('galeries'), $model);
       }
     });
     self::updating(function($model){

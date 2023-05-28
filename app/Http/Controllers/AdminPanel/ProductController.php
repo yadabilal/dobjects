@@ -81,18 +81,25 @@ class ProductController extends Controller
               Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
               return redirect()->back()->withErrors($errors)->withInput();
           }else {
-              $product = new Product();
+              $product = null;
               if(request()->post('id')) {
                   $product = Product::where('uuid', request()->post('id'))->first();
               }
               unset($inputs['id']);
               unset($inputs['_token']);
 
-              if((!$product->id && $product=$product->create($inputs)) || ($product->id && $product->update($inputs))) {
+              if($product) {
+                  $product->update($inputs);
+              }else {
+                  $product = new Product();
+                  $product = $product->create($inputs);
+                  $product->refresh();
+              }
+
+              if($product->uuid) {
                   $files = $product->files()->get();
                   $shortings = @$inputs['shorting'] ?: [];
                   $removed = @$inputs['removed'] ?: [];
-
                   foreach ($files as $file) {
                       if(@$removed[$file->uuid] == 'removed') {
                           $file->delete();
@@ -101,13 +108,14 @@ class ProductController extends Controller
                           $file->save();
                       }
                   }
-
                   Session::flash('success_message', 'Ürün başarılı bir şekilde kaydedildi!');
                   return redirect(route('admin.product.update', ['uuid' => $product->uuid]));
+
               }else {
                   Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
                   return redirect()->back()->withErrors($errors)->withInput();
               }
+
           }
 
 

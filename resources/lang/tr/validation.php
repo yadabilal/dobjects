@@ -193,7 +193,13 @@ return [
       'note' => 'Sipariş Notun',
       'code' => 'Onay Kodu',
       'rate' => 'Puanın',
-      'review' => 'Yorumun',
+      'price' => 'Fiyat',
+      'discount_rate' => 'İndirim Oranı',
+      'discount_price' => 'Satış Fiyatı',
+      'status' => 'Durum',
+      'tags' => 'Etiketler',
+      'stock' => 'Stok',
+      'category_id' => 'Kategori',
     ],
 
 ];

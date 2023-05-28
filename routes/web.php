@@ -103,7 +103,7 @@ Route::prefix('job')->group(function () {
   Route::get('order-cancel-today/{id}', 'JobController@order_cancel_today')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
   Route::get('order-cancel-tomorrow/{id}', 'JobController@order_cancel_tomorrow')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
   Route::get('order-completed/{id}', 'JobController@order_completed')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
-  Route::get('send-sms/{id}', 'JobController@send_sms')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
+  Route::get('send-sms/{id}', 'JobController@send_sms')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-deekobjects-asdfg');
   });
 
 Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin')->group(function () {

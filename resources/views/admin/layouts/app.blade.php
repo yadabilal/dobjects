@@ -182,7 +182,7 @@
     });
   });
 
-  $('.calculate').change(function () {
+  $('.calculate').keyup(function () {
       var rate = $('#discount_rate').val();
       var price = $('#price').val();
 

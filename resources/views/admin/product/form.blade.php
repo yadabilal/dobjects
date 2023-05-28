@@ -22,19 +22,21 @@
                 <div class="form-group form-focus">
                   <label class="focus-label">Ürün Adı</label>
                   <input type="text" class="form-control floating title" name="name" value="{{old('name', @$model->name)}}" maxlength="100">
-                      @error('name')
-                      <small class="form-text text-muted">{{$message}}</small>
-                      @enderror
+
                 </div>
+                  @error('name')
+                  <small class="form-text text-muted">{{$message}}</small>
+                  @enderror
               </div>
               <div class="col-md-4">
                 <div class="form-group form-focus">
                   <label class="focus-label">Stok</label>
                     <input type="number" class="form-control floating" name="stock" value="{{old('stock', @$model->stock)}}">
-                      @error('stock')
-                      <small class="form-text text-muted">{{$message}}</small>
-                      @enderror
+
                 </div>
+                  @error('stock')
+                  <small class="form-text text-muted">{{$message}}</small>
+                  @enderror
               </div>
 
                 <div class="col-md-4">
@@ -46,39 +48,39 @@
                                 <option data-tokens="{{$category->name}}" value="{{$category->id}}" {{@old('category_id', @$model->category_id) == $category->id ? 'selected': ''}}>{{$category->name}}</option>
                             @endforeach
                         </select>
-                        @error('category_id')
-                        <small class="form-text text-muted">{{$message}}</small>
-                        @enderror
                     </div>
+                    @error('category_id')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
                 </div>
 
                 <div class="col-md-4">
                     <div class="form-group form-focus">
                         <label class="focus-label">Fiyat</label>
                         <input type="text" class="form-control floating calculate" id="price" name="price" value="{{old('price', @$model->price)}}">
-                        @error('price')
-                        <small class="form-text text-muted">{{$message}}</small>
-                        @enderror
                     </div>
+                    @error('price')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
                 </div>
 
                 <div class="col-md-4">
                     <div class="form-group form-focus">
                         <label class="focus-label">İndirim Oranı</label>
                         <input type="number" class="form-control floating calculate" id="discount_rate" name="discount_rate" value="{{old('discount_rate', @$model->discount_rate)}}" max="100" min="0">
-                        @error('discount_rate')
-                        <small class="form-text text-muted">{{$message}}</small>
-                        @enderror
                     </div>
+                    @error('discount_rate')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
                 </div>
                 <div class="col-md-4">
                     <div class="form-group form-focus">
-                        <label class="focus-label">İndirimli Satış Fiyatı</label>
+                        <label class="focus-label">Satış Fiyatı</label>
                         <input type="text" class="form-control floating discount_price" name="discount_price" value="{{old('discount_price', @$model->discount_price)}}">
-                        @error('discount_price')
-                        <small class="form-text text-muted">{{$message}}</small>
-                        @enderror
                     </div>
+                    @error('discount_price')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
                 </div>
 
                 <div class="col-md-4">
@@ -90,29 +92,29 @@
                                 <option data-tokens="{{$status}}" value="{{$key}}" {{@old('status', @$model->status) == $key ? 'selected': ''}}>{{$status}}</option>
                             @endforeach
                         </select>
-                        @error('status')
-                        <small class="form-text text-muted">{{$message}}</small>
-                        @enderror
                     </div>
+                    @error('status')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
                 </div>
 
                 <div class="col-md-4">
                     <div class="form-group form-focus">
                         <label class="focus-label">Etiketler</label>
                         <input type="text" class="form-control floating" name="tags" value="{{old('tags', @$model ? $model->tags : '')}}" maxlength="255">
-                        @error('tags')
-                        <small class="form-text text-muted">{{$message}}</small>
-                        @enderror
                     </div>
+                    @error('tags')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
                 </div>
                 <div class="col-md-4">
                     <div class="form-group form-focus">
                         <label class="focus-label">Url</label>
                         <input type="text" class="form-control floating url" name="url" value="{{old('url', @$model->url)}}" maxlength="150">
-                        @error('url')
-                        <small class="form-text text-muted">{{$message}}</small>
-                        @enderror
                     </div>
+                    @error('url')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
                 </div>
 
             </div>

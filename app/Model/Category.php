@@ -32,7 +32,15 @@ class Category extends Base
       return route('home').'?kategori='.$this->url;
     }
 
-    public static function list() {
+    public static function list($forAdmin = false) {
+
+      if($forAdmin) {
+          return self::with("products")->withCount('products')
+              ->orderBy('created_at', 'desc')
+              ->orderBy('name', 'asc')
+              ->get();
+      }
+
         return self::with("products")->withCount('products')
             ->has('products', '>' , 0)
             ->orderBy('created_at', 'desc')

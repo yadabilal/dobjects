@@ -37,7 +37,7 @@ class ProductController extends Controller
 
     public function create(){
         $model = new Product();
-        $categories = Category::list();
+        $categories = Category::list(true);
         $statues = Product::statues();
         return view($this->view.'.form', compact('model', 'categories', 'statues'));
     }
@@ -48,7 +48,7 @@ class ProductController extends Controller
             ->with('avgRating', 'comments', 'category')
             ->withCount('baskets', 'waitingOrders', 'comments')
             ->first();
-        $categories = Category::list();
+        $categories = Category::list(true);
         $statues = Product::statues();
         return view($this->view.'.form', compact('model', 'categories', 'statues'));
   }

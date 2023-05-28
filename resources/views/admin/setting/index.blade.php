@@ -45,6 +45,28 @@
               </div>
           @endif
       </div>
+
+      <div class="row filter-row">
+          <div class="col-sm-3 col-md-3">
+              <div class="form-group form-focus">
+                  <label class="focus-label">Arka Plan</label>
+                  <input type="text" class="form-control floating" value="Arka Plan" disabled>
+              </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+              <div class="form-group">
+                  <input class="form-control" type="file" name="breadcrumb" accept="image/x-png,image/gif,image/jpeg">
+              </div>
+          </div>
+          @if($breadcrumb)
+              <div class="col-md-3 col-sm-3 col-4 col-lg-3 col-xl-2">
+                  <div class="product-thumbnail" style="margin-top: 0px!important; ">
+                      <img src="{{url('uploads/'.$breadcrumb->value)}}" class="img-thumbnail img-fluid" alt="">
+                  </div>
+              </div>
+          @endif
+      </div>
+
     @foreach($models as $model)
       <div class="row filter-row">
         <div class="col-sm-3 col-md-3">

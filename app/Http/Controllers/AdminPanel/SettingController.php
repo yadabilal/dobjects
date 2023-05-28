@@ -17,8 +17,9 @@ class SettingController extends Controller
     {
       $models = Setting::orderBy('id', 'desc')->where('param', '!=', 'logo')->get();
         $logo = Setting::where('param', 'logo')->first();
+        $breadcrumb = Setting::where('param', 'breadcrumb')->first();
 
-        return view($this->view.'.index', compact('models', 'logo'));
+        return view($this->view.'.index', compact('models', 'logo', 'breadcrumb'));
     }
 
     public function save() {
@@ -51,6 +52,21 @@ class SettingController extends Controller
                   $setting->save();
               }else {
                   Setting::create(['param' => "logo", 'value' => $pathUploaded]);
+              }
+          }
+
+          if(request()->file('breadcrumb')) {
+              $file = request()->file('breadcrumb');
+              $path = Setting::STORE_PATH;
+              $pathUploaded = $file->store($path,['disk' => 'public']);
+
+              $setting = Setting::where('param', 'breadcrumb')->first();
+
+              if($setting) {
+                  $setting->value = $pathUploaded;
+                  $setting->save();
+              }else {
+                  Setting::create(['param' => "breadcrumb", 'value' => $pathUploaded]);
               }
           }
       }

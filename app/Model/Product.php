@@ -123,6 +123,15 @@ class Product extends Base
 
         return false;
     }
+
+    public function in_wishlist() {
+        $user= \auth()->user();
+        if($user && $user->wishlists()->where('product_id',$this->id)->first())
+            return true;
+
+        return false;
+    }
+
     public function seo_title() {
         return $this->name;
     }
@@ -180,6 +189,14 @@ class Product extends Base
 
     public function readablePriceWithQuantity($quantity){
         return self::decimalFormat($this->price*$quantity).self::currency();
+    }
+
+    public function addFavoriteUrl() {
+        return route('wishlist.add', ['uuid' => $this->uuid]);
+    }
+
+    public function deleteFavoriteUrl() {
+        return route('wishlist.delete', ['uuid' => $this->uuid]);
     }
 
     public function detailUrl() {

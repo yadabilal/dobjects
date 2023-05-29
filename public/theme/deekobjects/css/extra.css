@@ -23,6 +23,13 @@ p.form-submit {
     padding: 0 10px;
 }
 
+.added-favorite:before {
+    color: #fff!important;
+    background: #000!important;
+    border-color: #000!important;
+}
+
+
 
 .isDisabled {
     cursor: not-allowed;

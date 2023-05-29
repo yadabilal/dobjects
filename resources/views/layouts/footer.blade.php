@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="block block-image">
-                                <img width="100" height="32" src="{{asset('theme/deekobjects/media/iyzico.png')}}" alt="">
+                                <img height="270" src="{{asset('theme/deekobjects/media/iyzico.jpg')}}" alt="">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">

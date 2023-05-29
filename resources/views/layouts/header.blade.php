@@ -79,7 +79,7 @@
                                 <nav id="main-navigation">
                                     <ul id="menu-main-menu" class="menu">
                                         <li class="level-0 menu-item">
-                                            <a href="{{route('home')}}"><span class="menu-item-text">Ürünler</span></a>
+                                            <a href="{{route('home')}}"><span class="menu-item-text">Mağaza</span></a>
                                         </li>
                                         <li class="level-0 menu-item">
                                             <a href="{{route('contact')}}"><span class="menu-item-text">İletişim</span></a>

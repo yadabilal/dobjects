@@ -53,18 +53,11 @@
                                 <h2 class="block-title">Sözleşmeler</h2>
                                 <div class="block-content">
                                     <ul>
-                                        <li>
-                                            <a href="{{route('contract.sub', ['url' => 'iptal-ve-iade-kosullari'])}}">İade ve İptal Koşulları</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('contract.sub', ['url' => 'kisisel-verilerin-korunmasi'])}}">Kişisel Verilerin Korunması</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('contract.sub', ['url' => 'gizlilik-sozlesmesi'])}}">Gizlilik Sözleşmesi</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('contract.sub', ['url' => 'kullanici-sozlesmesi'])}}">Kullanıcı Sözleşmesi</a>
-                                        </li>
+                                        @foreach($pages as $page)
+                                            <li>
+                                                <a href="{{route('contract.sub', ['url' => $page->url])}}">{{$page->title}}</a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>

@@ -120,13 +120,20 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
   Route::post('ayarlar', 'SettingController@save')->name('admin.setting.save');
 
 
+    Route::get('sozlesme', 'PageController@index')->name('admin.page.index');
+    Route::get('sozlesme/yayinla/{id}', 'PageController@publish')->name('admin.page.publish');
+    Route::get('sozlesme/yayindan-kaldir/{id}', 'PageController@unpublish')->name('admin.page.unpublish');
+    Route::get('sozlesme/guncelle/{id}', 'PageController@update')->name('admin.page.update');
+    Route::get('sozlesme/ekle', 'PageController@create')->name('admin.page.create');
+    Route::post('sozlesme/kaydet', 'PageController@save')->name('admin.page.save');
+
     Route::post('admin/url-olustur', 'AdminController@urlGenerator')->name('admin.urlGenerator');
 
   // Ürün İşlemleri
     Route::get('urunler', 'ProductController@index')->name('admin.product.index');
     Route::get('urun/guncelle/{uuid}', 'ProductController@update')->name('admin.product.update');
     Route::get('urun/ekle', 'ProductController@create')->name('admin.product.create');
-    Route::post('urun/save', 'ProductController@save')->name('admin.product.save');
+    Route::post('urun/kaydet', 'ProductController@save')->name('admin.product.save');
     Route::get('urun/{uuid}', 'ProductController@show')->name('admin.product.show');
     Route::get('urun/yayinla/{uuid}', 'ProductController@publish')->name('admin.product.publish');
     Route::get('urun/yayindan-kaldir/{uuid}', 'ProductController@unpublish')->name('admin.product.unpublish');

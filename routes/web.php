@@ -59,7 +59,15 @@ Route::prefix('hesabim')->namespace('MemberShipPanel')->middleware('auth', 'norm
   Route::get('sepet', 'BasketController@index')->name('basket.short_list');
   Route::post('sepet/guncelle', 'BasketController@update')->name('basket.update');
 
-  // Alışveriş İşlemleri
+
+    // Favoriler İşlemleri
+    Route::get('favorilerim', 'WishlistController@index')->name('wishlist.index');
+    Route::get('favorilerime-ekle/{uuid}', 'WishlistController@add')->name('wishlist.add');
+    Route::get('favorilerimden-sil/{uuid}', 'WishlistController@delete')->name('wishlist.delete');
+
+
+
+    // Alışveriş İşlemleri
   Route::post('alisveris/kontrol', 'ShopController@check')->name('shop.check');
   Route::get('alisveris/adres', 'ShopController@index')->name('shop');
   Route::post('alisveris/adres', 'ShopController@save_address')->name('shop.save_address');
@@ -116,6 +124,7 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
   Route::get('destek', 'SupportController@index')->name('admin.support.index');
   Route::get('ayarlar', 'SettingController@index')->name('admin.setting.index');
     Route::get('sepet', 'BasketController@index')->name('admin.basket.index');
+    Route::get('favoriler', 'WishlistController@index')->name('admin.wishlist.index');
     Route::get('arama', 'SearchController@index')->name('admin.search.index');
   Route::post('ayarlar', 'SettingController@save')->name('admin.setting.save');
 

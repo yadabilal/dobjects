@@ -70,23 +70,27 @@
                                             <input type="number" class="qty" step="1" min="1" max="{{$maxCount}}" id="quantity" data-id="{{$item->uuid}}" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric" autocomplete="off">
                                             <button type="button" class="minus">-</button>
                                         </div>
-                                        @guest
+
+                                        @if($item->in_basket())
+                                            <div class="btn-add-to-cart" data-title="Sepetinde"  data-id="{{$item->uuid}}">
+                                                <a href="javascript:void(0)" class="added-to-cart product-btn" title="Sepetinde" tabindex="0">Sepetinde</a>
+                                            </div>
+                                        @else
                                             <div class="btn-add-to-cart" data-title="Sepete Ekle"  data-id="{{$item->uuid}}">
                                                 <a rel="nofollow" href="javascript:void(0)" class="button" data-id="{{$item->uuid}}">Sepete Ekle</a>
                                             </div>
-                                        @else
-
-                                            @if($item->in_basket())
-                                                <div class="btn-add-to-cart" data-title="Sepetinde"  data-id="{{$item->uuid}}">
-                                                    <a href="javascript:void(0)" class="added-to-cart product-btn" title="Sepetinde" tabindex="0">Sepetinde</a>
-                                                </div>
-                                            @else
-                                                <div class="btn-add-to-cart" data-title="Sepete Ekle"  data-id="{{$item->uuid}}">
-                                                    <a rel="nofollow" href="javascript:void(0)" class="button" data-id="{{$item->uuid}}">Sepete Ekle</a>
-                                                </div>
-                                            @endif
-                                        @endguest
+                                        @endif
                                     </div>
+                                    <div class="btn-quick-buy"></div>
+                                    @if($item->in_wishlist())
+                                        <div class="btn-wishlist" data-title="Favorilerinde">
+                                                <a href="{{$item->deleteFavoriteUrl()}}" class="product-btn added-favorite">Favorilerinde</a>
+                                        </div>
+                                    @else
+                                        <div class="btn-wishlist" data-title="Favorilere Ekle">
+                                            <a href="{{$item->addFavoriteUrl()}}" class="product-btn">Favorilere Ekle</a>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="product-meta">
                                     <span class="posted-in">Kategori: <a href="{{$item->category->detailUrl()}}" rel="tag">{{$item->category->name}}</a></span>
@@ -255,11 +259,16 @@
                                                                 </a>
                                                             </div>
                                                             <div class="product-button">
-                                                                @guest
-                                                                    <div class="btn-add-to-cart" data-title="Sepete Ekle"  data-id="{{$lastItem->uuid}}">
-                                                                        <a rel="nofollow" href="javascript:void(0)" class="product-btn button" data-id="{{$lastItem->uuid}}">Sepete Ekle</a>
+
+                                                                @if($lastItem->in_wishlist())
+                                                                    <div class="btn-wishlist" data-title="Favorilerinde">
+                                                                        <a href="{{$lastItem->deleteFavoriteUrl()}}" class="product-btn added-favorite">Favorilerinde</a>
                                                                     </div>
                                                                 @else
+                                                                    <div class="btn-wishlist" data-title="Favorilere Ekle">
+                                                                        <a href="{{$lastItem->addFavoriteUrl()}}" class="product-btn">Favorilere Ekle</a>
+                                                                    </div>
+                                                                @endif
 
                                                                     @if($lastItem->in_basket())
                                                                         <div class="btn-add-to-cart" data-title="Sepetinde"  data-id="{{$lastItem->uuid}}">
@@ -270,7 +279,6 @@
                                                                             <a rel="nofollow" href="javascript:void(0)" class="product-btn button" data-id="{{$lastItem->uuid}}">Sepete Ekle</a>
                                                                         </div>
                                                                     @endif
-                                                                @endguest
                                                             </div>
                                                         </div>
                                                         <div class="products-content">

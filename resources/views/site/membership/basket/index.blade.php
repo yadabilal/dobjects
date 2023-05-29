@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('meta')
-  <title> Deek Objects | Sepet</title>
+  <title> Deek Objects | Sepetim</title>
   <meta name="keywords" content="">
   <meta name="description" content="" />
 @endsection

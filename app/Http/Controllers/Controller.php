@@ -25,6 +25,9 @@ class Controller extends BaseController
     {
       // Eğer Giriş Yapmışsa kullanıcının yapmadığı İşlere Yolla
       $this->user = \auth()->user();
+        $wishListCount =  0;
+        $cartItemCount =  0;
+
       if($this->user) {
         $midds = $this->getMiddleware();
         if(@$midds[0]['middleware']=='auth' && request()->is('*hesabim*')) {
@@ -38,6 +41,9 @@ class Controller extends BaseController
             return redirect('kayit-ol/kullanici-adi-belirle');
           }
         }
+
+          $wishListCount = $this->user->wishlists->count();
+          $cartItemCount = $this->user->baskets->sum('quantity');
       }
 
       $pages = Page::where('status', Page::STATUS_PUBLISH)->get();
@@ -48,7 +54,10 @@ class Controller extends BaseController
             $settings[$set->param] = $set->value;
         }
 
-      View::share(['user' => $this->user, 'settings' => $settings, 'pages' => $pages]);
+
+      View::share(['user' => $this->user, 'settings' => $settings,
+          'pages' => $pages, 'wishListCount' => $wishListCount,
+          'cartItemCount' => $cartItemCount]);
       return parent::callAction($method, $parameters);
     }
 

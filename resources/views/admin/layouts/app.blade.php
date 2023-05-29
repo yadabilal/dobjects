@@ -99,6 +99,10 @@
             <a href="{{route('admin.basket.index')}}"><i class="fa fa-shopping-bag"></i> Sepetler</a>
           </li>
 
+            <li class="{{request()->url() == route('admin.wishlist.index') ? 'active': ''}}">
+                <a href="{{route('admin.wishlist.index')}}"><i class="fa fa-heart"></i> Favoriler</a>
+            </li>
+
           <li class="{{request()->url() == route('admin.support.index') ? 'active': ''}}">
             <a href="{{route('admin.support.index')}}"><i class="fa fa-ticket"></i> İletişim Mesajları</a>
           </li>

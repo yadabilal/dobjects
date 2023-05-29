@@ -64,7 +64,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{route('admin.product.show', ['uuid' => $model->uuid])}}">
+                                        <a class="dropdown-item" href="{{route('admin.product.update', ['uuid' => $model->uuid])}}">
                                             <i class="fa fa-pencil m-r-5"></i> Güncelle</a>
                                     </li>
                                     @if($model->status == \App\Model\Product::STATUS_PUBLISH)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Book;
 use App\Model\File;
+use App\Model\Page;
 use App\Model\Setting;
 use App\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -39,6 +40,7 @@ class Controller extends BaseController
         }
       }
 
+      $pages = Page::where('status', Page::STATUS_PUBLISH)->get();
       $setting = Setting::get();
         $settings = [];
 
@@ -46,7 +48,7 @@ class Controller extends BaseController
             $settings[$set->param] = $set->value;
         }
 
-      View::share(['user' => $this->user, 'settings' => $settings]);
+      View::share(['user' => $this->user, 'settings' => $settings, 'pages' => $pages]);
       return parent::callAction($method, $parameters);
     }
 

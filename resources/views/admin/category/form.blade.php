@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group form-focus">
                             <label class="focus-label">Kategori Adı</label>
                             <input type="text" class="form-control floating required title" name="name" value="{{old('name', @$model->name)}}">
@@ -23,7 +23,17 @@
                         <small class="form-text text-muted">{{$message}}</small>
                         @enderror
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Sıra</label>
+                            <input type="number" class="form-control floating" name="sorting" value="{{old('sorting', @$model->sorting ?: 1)}}">
+
+                        </div>
+                        @error('shorting')
+                        <small class="form-text text-muted">{{$message}}</small>
+                        @enderror
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group form-focus">
                             <label class="focus-label">Url</label>
                             <input type="text" class="form-control floating required url" name="url" value="{{old('url', @$model->url)}}">

@@ -53,6 +53,34 @@ class ProductController extends Controller
         return view($this->view.'.form', compact('model', 'categories', 'statues'));
   }
 
+    public function publish($uuid){
+        $model = Product::where('uuid' , $uuid)
+            ->first();
+        $model->status = Product::STATUS_PUBLISH;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Ürün başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect(route('admin.product.index'));
+    }
+
+    public function unpublish($uuid){
+        $model = Product::where('uuid' , $uuid)
+            ->first();
+        $model->status = Product::STATUS_NOT_PUBLISH;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Ürün başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect(route('admin.product.index'));
+    }
+
   public function save() {
       $errors = [];
 
@@ -62,6 +90,7 @@ class ProductController extends Controller
           $rules = [
               'name' => 'required|max:100|min:3',
               'stock' => 'required|integer',
+              'sorting' => 'required|integer',
               'category_id' => 'required|exists:categories,id',
               'price' => 'required',
               'discount_rate' => 'required|integer',

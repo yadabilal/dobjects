@@ -47,6 +47,7 @@ class CategoryController extends Controller
 
             $inputs = request()->all();
             $rules = [
+                'sorting' => 'required|integer',
                 'name' => 'required|max:100|min:3',
                 'url' => $category ? 'required|max:255|min:3|unique:categories,url,'.$category->id : 'required|max:255|min:3|unique:categories,url',
             ];

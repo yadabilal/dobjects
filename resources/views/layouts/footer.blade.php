@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="block block-menu">
-                                <h2 class="block-title">Sözleşmeler</h2>
+                                <h2 class="block-title">Kurumsal</h2>
                                 <div class="block-content">
                                     <ul>
                                         @foreach($pages as $page)
@@ -58,6 +58,9 @@
                                                 <a href="{{route('contract.sub', ['url' => $page->url])}}">{{$page->title}}</a>
                                             </li>
                                         @endforeach
+                                        <li>
+                                            <a href="{{route('contact')}}">İletişim</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

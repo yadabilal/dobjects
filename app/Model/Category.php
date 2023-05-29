@@ -10,7 +10,7 @@ class Category extends Base
   use SoftDeletes;
 
   protected $table = 'categories';
-  protected $fillable = [ 'uuid', 'name', 'url' ];
+  protected $fillable = [ 'uuid', 'name', 'url', 'sorting' ];
 
 
   protected static function boot()
@@ -43,8 +43,9 @@ class Category extends Base
 
         return self::with("products")->withCount('products')
             ->has('products', '>' , 0)
+            ->orderBy('sorting')
             ->orderBy('created_at', 'desc')
-            ->orderBy('name', 'asc')
+            ->orderBy('name')
             ->get();
     }
 

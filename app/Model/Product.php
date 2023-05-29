@@ -18,7 +18,7 @@ class Product extends Base
 
     protected $table = 'products';
     protected $fillable = [
-        'uuid', 'tags', 'name',
+        'uuid', 'tags', 'name', 'sorting',
         'url', 'meta_description', 'short_description',
         'description','additional_information','status', 'stock',
         'discount_rate', 'price', 'discount_price', 'category_id', ''
@@ -305,7 +305,12 @@ class Product extends Base
                 }
             }
         }else {
-            $items = $items->orderBy('created_at', 'desc');
+
+            if($waiting_orders) {
+                $items = $items->orderBy('created_at', 'desc');
+            }else {
+                $items = $items->orderBy('sorting')->orderBy('created_at', 'desc');
+            }
         }
 
         if($waiting_orders) {

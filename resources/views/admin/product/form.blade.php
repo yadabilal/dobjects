@@ -31,13 +31,24 @@
               <div class="col-md-4">
                 <div class="form-group form-focus">
                   <label class="focus-label">Stok</label>
-                    <input type="number" class="form-control floating" name="stock" value="{{old('stock', @$model->stock)}}">
+                    <input type="number" class="form-control floating" name="stock" value="{{old('stock', @$model->stock ?: 1)}}">
 
                 </div>
                   @error('stock')
                   <small class="form-text text-muted">{{$message}}</small>
                   @enderror
               </div>
+
+                <div class="col-md-4">
+                    <div class="form-group form-focus">
+                        <label class="focus-label">Sıra</label>
+                        <input type="number" class="form-control floating" name="sorting" value="{{old('sorting', @$model->sorting ?: 1)}}">
+
+                    </div>
+                    @error('shorting')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
+                </div>
 
                 <div class="col-md-4">
                     <div class="form-group form-focus">

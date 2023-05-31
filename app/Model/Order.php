@@ -11,9 +11,11 @@ class Order extends Base
 {
   use SoftDeletes;
 
+  const STATUS_WAITING_PAYMENT = 'WAITING_PAYMENT';
   const STATUS_NEW = 'NEW';
   const STATUS_PROCCESS = 'PROCCESS';
   const STATUS_CANCEL = 'CANCEL';
+  const STATUS_ERROR = 'ERROR';
   const STATUS_CARGO = 'CARGO';
   const STATUS_COMPLETED = 'COMPLETED';
 
@@ -27,7 +29,8 @@ class Order extends Base
     'user_id', 'address_id',
     'total_quantity', 'total_price',
       'total_discount_price', 'discount_price',
-      'cargo_id','folow_number', 'extra_messages'
+      'cargo_id','folow_number', 'extra_messages',
+      'payment_reference', 'payment_payload'
   ];
 
 
@@ -74,7 +77,7 @@ class Order extends Base
     parent::boot();
 
     static::creating(function ($model) {
-      $model->status = self::STATUS_NEW;
+      $model->status = self::STATUS_WAITING_PAYMENT;
       $model->user_id = \auth()->id();
     });
 
@@ -87,14 +90,16 @@ class Order extends Base
       $status_log['user_id'] = $user->id;
       OrderStatusLog::create($status_log); */
 
-      // Sms Prodda düzelt
-
-      Sms::new_order($model);
     });
 
     static::saving(function ($model) {
         if($model->isDirty('cargo_id') && $model->status == self::STATUS_CARGO){
             Sms::order_cargo($model);
+        }
+
+        if($model->isDirty('status') && $model->status == self::STATUS_NEW) {
+            Sms::new_order($model);
+            Basket::where('user_id', \auth()->id())->delete();
         }
     });
 
@@ -109,6 +114,7 @@ class Order extends Base
 
       if($for_admin) {
           return [
+              self::STATUS_WAITING_PAYMENT => 'Ödeme Bekleniyor',
               self::STATUS_NEW => 'Yeni',
               self::STATUS_PROCCESS => 'Hazırlanıyor',
               self::STATUS_CARGO => 'Kargolandı',

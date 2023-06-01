@@ -368,7 +368,7 @@ class ShopController extends Controller
 
                 }catch (\Exception $e) {
                     DB::rollBack();
-                    Session::flash('error_message', 'Beklenmedik bir hata meydana geldi! Lütfen tekrar dene!');
+                    Session::flash('error_message', $e->getMessage());
                 }
 
                 return redirect()->back();

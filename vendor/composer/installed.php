@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '47034c7b518ae2d9b518cf3c037051a4a3e977ce',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => NULL,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -352,15 +352,6 @@
                 0 => 'v6.18.38',
             ),
         ),
-        'iyzico/iyzipay-php' => array(
-            'pretty_version' => 'v2.0.51',
-            'version' => '2.0.51.0',
-            'reference' => 'fa2a07634cfc099ca47d5397ef6591d06b31cbb4',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../iyzico/iyzipay-php',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'jakub-onderka/php-console-color' => array(
             'pretty_version' => 'v0.2',
             'version' => '0.2.0.0',
@@ -395,9 +386,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '47034c7b518ae2d9b518cf3c037051a4a3e977ce',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => NULL,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

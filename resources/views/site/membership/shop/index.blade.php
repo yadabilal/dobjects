@@ -23,28 +23,12 @@
                                                 <label>Ad <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
                                                     <input type="text" class="input-text" name="name" value="{{old("name") ?:$user->name}}">
-                                                    @error('name')
-                                                    <p class="text-error">{{$message}}</p>
-                                                    @enderror
                                                 </span>
                                             </p>
                                             <p class="form-row form-row-last validate-required">
                                                 <label>Soyad <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
                                                     <input type="text" class="input-text" name="surname" value="{{old("surname") ?: $user->surname}}">
-                                                    @error('surname')
-                                                <p class="text-error">{{$message}}</p>
-                                                @enderror
-                                                </span>
-
-                                            </p>
-                                            <p class="form-row form-row-last validate-required">
-                                                <label>TC Kimlik Numarası <span class="required" title="required">*</span></label>
-                                                <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="identity_number" maxlength="11" minlength="11" value="{{old("identity_number") ?: $user->identity_number}}">
-                                                    @error('identity_number')
-                                                <p class="text-error">{{$message}}</p>
-                                                @enderror
                                                 </span>
                                             </p>
                                             <p class="form-row form-row-wide validate-required">
@@ -61,6 +45,7 @@
                                                       @enderror
                                                 </span>
                                             </p>
+
                                             <p class="form-row form-row-wide validate-required">
                                                 <label>İlçe <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
@@ -105,133 +90,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="shipping-fields">
-                                    <p class="form-row form-row-wide ship-to-different-address">
-                                        <label class="checkbox">
-                                            <input class="input-checkbox" type="checkbox" name="different_address" value="{{old('different_address') ?: 1}}" id="ship_to_different_address">
-                                            <span>Fatura adresim farklı.</span>
-                                        </label>
-                                    </p>
-                                    <div class="shipping-address" style="display: none;">
-                                        <p class="form-row form-row-wide validate-required">
-                                            <label>Fatura Türü <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <select name="Billing_type" class="country-select custom-select billing-types">
-                                                        @foreach($billingTypes as $billingKey => $billingType)
-                                                            <option value="{{$billingKey}}" {{old('Billing_type') == $billingKey ? 'selected':
-                                                                (@$oldBillingAddress->billing_type == $billingKey ? 'selected' :
-                                                                $billingKey == \App\Model\Address::BILLING_TYPE_PERSONAL ? 'selected' : '')}}>
-                                                                {{$billingType}}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('Billing_type')
-                                                      <p class="text-error">{{$message}}</p>
-                                                      @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row form-row-first validate-required billing-company" style="display: none">
-                                            <label>Şirket Adı <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_name" value="{{old("Billing_name") ?: @$oldBillingAddress->name}}">
-                                                    @error('Billing_name')
-                                                    <p class="text-error">{{$message}}</p>
-                                                    @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row form-row-first validate-required billing-company" style="display: none">
-                                            <label>Vergi Numarası <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                <input type="text" class="input-text" name="Billing_identity_number" value="{{old("Billing_identity_number") ?: @$oldBillingAddress->identity_number}}">
-                                                @error('Billing_identity_number')
-                                                <p class="text-error">{{$message}}</p>
-                                                @enderror
-                                            </span>
-                                        </p>
-                                        <p class="form-row form-row-first validate-required billing-personal">
-                                            <label>Ad <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_name" value="{{old("Billing_name") ?:$user->name}}">
-                                                    @error('Billing_name')
-                                                    <p class="text-error">{{$message}}</p>
-                                                    @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row form-row-last validate-required billing-personal">
-                                            <label>Soyad <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_surname" value="{{old("Billing_surname") ?: $user->surname}}">
-                                                    @error('Billing_surname')
-                                                <p class="text-error">{{$message}}</p>
-                                                @enderror
-                                                </span>
 
-                                        </p>
-                                        <p class="form-row form-row-last validate-required billing-personal">
-                                            <label>TC Kimlik Numarası <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_identity_number" maxlength="11" minlength="11" value="{{old("Billing_identity_number") ?: @$oldBillingAddress->identity_number}}">
-                                                    @error('Billing_identity_number')
-                                                <p class="text-error">{{$message}}</p>
-                                                @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row form-row-wide validate-required">
-                                            <label>Şehir <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <select name="Billing_city_id" class="country-select custom-select city">
-                                                        <option>Seç</option>
-                                                        @foreach($cities as $city)
-                                                            <option value="{{$city->uuid}}" {{old('Billing_city_id')==$city->uuid ? 'selected': (@$oldBillingAddress->city_id == $city->id ? 'selected' : '')}}>{{$city->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('Billing_city_id')
+                                <div class="additional-fields">
+                                    <p class="form-row notes">
+                                        <label>Fatura Bilgileri <span class="optional">(Varsa)</span></label>
+                                        <span class="input-wrapper">
+                                            <textarea name="billing_note" class="input-text" placeholder="Fatura için diğer bilgiler. (Tc, Firma bilgisi, Vergi numarası, Vergi dairesi, İl, İlçe vb.)" rows="2" cols="5" maxlength="255">{{old('note')}}</textarea>
+                                            @error('billing_note')
                                                       <p class="text-error">{{$message}}</p>
-                                                      @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row form-row-wide validate-required">
-                                            <label>İlçe <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <select name="Billing_town_id" class="country-select custom-select town">
-                                                       <option>Seç</option>
-                                                        @foreach($billingTowns as  $billingTown)
-                                                            <option value="{{$billingTown->uuid}}" {{old('Billing_town_id')==$billingTown->uuid ? 'selected': (@$oldBillingAddress->town_id == $billingTown->id ? 'selected' : '')}}>{{$billingTown->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('Billing_town_id')
-                                                  <p class="text-error">{{$message}}</p>
-                                                  @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row address-field validate-required form-row-wide">
-                                            <label>Detay <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_address" placeholder="Mahalle, sokak ev numarası ve daha fazla detay..." maxlength="130" value="{{old('Billing_address') ? : @$oldBillingAddress->address}}">
-                                                @error('Billing_address')
-                                                  <p class="text-error">{{$message}}</p>
-                                                  @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row form-row-wide validate-required validate-phone">
-                                            <label>Telefon <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <input type="tel" class="input-text" name="Billing_phone" value="{{old('Billing_phone') ?: $user->phone}}">
-                                                    @error('Billing_phone')
-                                                      <p class="text-error">{{$message}}</p>
-                                                    @enderror
-                                                </span>
-                                        </p>
-                                        <p class="form-row form-row-wide validate-required validate-email">
-                                            <label>Email Adresi <span class="required" title="required">*</span></label>
-                                            <span class="input-wrapper control">
-                                                    <input type="email" class="input-text" name="Billing_email" value="{{old('Billing_email') ?: @$oldBillingAddress->email}}" autocomplete="off">
-                                                    @error('Billing_email')
-                                                      <p class="text-error">{{$message}}</p>
-                                                    @enderror
-                                                </span>
-                                        </p>
-                                    </div>
+                                            @enderror
+                                        </span>
+                                    </p>
                                 </div>
 
                                 <div class="additional-fields">

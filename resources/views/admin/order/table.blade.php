@@ -24,7 +24,7 @@
                         </td>
 
                         <td>
-                            {!!  $item->address ? $item->address->fullDetail() : '' !!}
+                            {!!  $item->address->fullDetail() !!}
                         </td>
                         <td>
                 <span class="badge badge-warning">

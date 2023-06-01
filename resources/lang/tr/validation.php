@@ -201,7 +201,6 @@ return [
       'stock' => 'Stok',
       'category_id' => 'Kategori',
       'description' => 'Açıklama',
-      'identity' => 'Bu alan',
     ],
 
 ];

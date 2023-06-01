@@ -170,8 +170,8 @@
                                         <p class="form-row form-row-last validate-required billing-personal">
                                             <label>TC Kimlik Numarası <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_identity_number" maxlength="11" minlength="11" value="{{old("Billing_identity_number") ?: @$oldBillingAddress->identity_number}}">
-                                                    @error('Billing_identity_number')
+                                                    <input type="text" class="input-text" name="Billing_identity_number2" value="{{old("Billing_identity_number2") ?: @$oldBillingAddress->identity_number}}">
+                                                    @error('Billing_identity_number2')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror
                                                 </span>

@@ -11,11 +11,9 @@ class Order extends Base
 {
   use SoftDeletes;
 
-  const STATUS_WAITING_PAYMENT = 'WAITING_PAYMENT';
   const STATUS_NEW = 'NEW';
   const STATUS_PROCCESS = 'PROCCESS';
   const STATUS_CANCEL = 'CANCEL';
-  const STATUS_ERROR = 'ERROR';
   const STATUS_CARGO = 'CARGO';
   const STATUS_COMPLETED = 'COMPLETED';
 
@@ -29,8 +27,7 @@ class Order extends Base
     'user_id', 'address_id',
     'total_quantity', 'total_price',
       'total_discount_price', 'discount_price',
-      'cargo_id','folow_number', 'extra_messages',
-      'payment_reference', 'payment_payload', 'billing_address_id'
+      'cargo_id','folow_number', 'extra_messages'
   ];
 
 
@@ -45,15 +42,8 @@ class Order extends Base
 
   // Receiver
   public function address() {
-    return $this->belongsTo(Address::class, 'address_id')->where('type', Address::TYPE_SHIPPING)
-        ->withTrashed();
+    return $this->belongsTo(Address::class, 'address_id')->withTrashed();
   }
-
-    public function billing_address() {
-        return $this->belongsTo(Address::class, 'billing_address_id')
-            ->where('type', Address::TYPE_BILLING)
-            ->withTrashed();
-    }
 
   public function cargo() {
     return $this->belongsTo(CargoCompany::class, 'cargo_id')->withTrashed();
@@ -84,7 +74,7 @@ class Order extends Base
     parent::boot();
 
     static::creating(function ($model) {
-      $model->status = self::STATUS_WAITING_PAYMENT;
+      $model->status = self::STATUS_NEW;
       $model->user_id = \auth()->id();
     });
 
@@ -97,16 +87,14 @@ class Order extends Base
       $status_log['user_id'] = $user->id;
       OrderStatusLog::create($status_log); */
 
+      // Sms Prodda düzelt
+
+      Sms::new_order($model);
     });
 
     static::saving(function ($model) {
         if($model->isDirty('cargo_id') && $model->status == self::STATUS_CARGO){
             Sms::order_cargo($model);
-        }
-
-        if($model->isDirty('status') && $model->status == self::STATUS_NEW) {
-            Sms::new_order($model);
-            Basket::where('user_id', \auth()->id())->delete();
         }
     });
 
@@ -121,8 +109,6 @@ class Order extends Base
 
       if($for_admin) {
           return [
-              self::STATUS_ERROR => 'Ödeme Hatası',
-              self::STATUS_WAITING_PAYMENT => 'Ödeme Bekleniyor',
               self::STATUS_NEW => 'Yeni',
               self::STATUS_PROCCESS => 'Hazırlanıyor',
               self::STATUS_CARGO => 'Kargolandı',
@@ -145,12 +131,10 @@ class Order extends Base
    */
   public static function color_list() {
     return [
-      self::STATUS_WAITING_PAYMENT => 'badge badge-warning',
       self::STATUS_NEW => 'badge badge-info',
       self::STATUS_PROCCESS => 'badge badge-warning',
       self::STATUS_CARGO => 'badge badge-secondary',
       self::STATUS_CANCEL => 'badge badge-danger',
-      self::STATUS_ERROR => 'badge badge-danger',
       self::STATUS_COMPLETED => 'badge badge-success',
     ];
   }

@@ -32,10 +32,6 @@ Route::post('cikis-yap', 'Auth\LoginController@logout')->name('logout');
 Route::get('sifremi-unuttum', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('forgotpassword');
 Route::post('sifremi-unuttum', 'Auth\ForgotPasswordController@sendResetPassword');
 
-Route::post('alisveris/odeme/sonuc/{uuid}', 'MemberShipPanel\ShopController@callbackPayment')->name('shop.callback');
-Route::get('alisveris/odeme/sonuc/{uuid}', 'MemberShipPanel\ShopController@callbackPayment')->name('shop.callback');
-Route::get('alisveris/odeme/tamamlandi/{uuid}', 'MemberShipPanel\ShopController@resultPayment')->name('shop.result');
-
 Route::prefix('hesabim')->namespace('MemberShipPanel')->middleware('auth', 'normal_user')->group(function () {
   // Profil İşlemleri
   Route::get('/', 'UserController@index')->name('profile');
@@ -75,9 +71,9 @@ Route::prefix('hesabim')->namespace('MemberShipPanel')->middleware('auth', 'norm
   Route::post('alisveris/kontrol', 'ShopController@check')->name('shop.check');
   Route::get('alisveris/adres', 'ShopController@index')->name('shop');
   Route::post('alisveris/adres', 'ShopController@save_address')->name('shop.save_address');
-  Route::get('alisveris/odeme/{uuid}', 'ShopController@payment')->name('shop.payment');
+  Route::get('alisveris/odeme', 'ShopController@payment')->name('shop.payment');
+  Route::get('alisveris/result', 'ShopController@result')->name('shop.result');
   Route::post('alisveris/odeme', 'ShopController@save_payment')->name('shop.save_payment');
-
 
   // Bildirim İşlemleri
   Route::get('bildirim', 'NotificationController@index')->name('notification');

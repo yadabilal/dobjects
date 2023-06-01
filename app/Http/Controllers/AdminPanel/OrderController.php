@@ -24,7 +24,6 @@ class OrderController extends Controller
   {
     $models = Order::with('user', 'items', 'address', 'address.city', 'address.town')
         ->withCount('items')
-        ->with('address', 'billing_address')
       ->orderBy('id', 'desc');
 
     $statues = Order::status_list(true);
@@ -54,7 +53,7 @@ class OrderController extends Controller
 
   public function show($uuid) {
       $model = Order::where('uuid', $uuid)
-          ->with('user', 'items', 'items.product','address', 'address.city', 'address.town', 'billing_address')
+          ->with('user', 'items', 'items.product','address', 'address.city', 'address.town')
           ->withCount('items')
           ->orderBy('id', 'desc')
       ->first();

@@ -157,11 +157,10 @@
 
   setTimeout(function() {
       $('.notification-popup').fadeOut();
-  }, 1500);
+  }, 1000);
 
   $('.product-image-remove').click(function () {
       var id = $(this).data('id');
-      console.log($("#"+id).val("removed"))
       $("#"+id).val("removed");
       $(this).closest('.product-image-wrapper').hide();
 

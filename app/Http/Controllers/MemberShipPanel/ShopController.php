@@ -39,9 +39,10 @@ class ShopController extends Controller
         $billingTypes = Address::billingType();
 
         $cities = City::all_list();
-        $towns = old('city_id') ? Town::all_list(old('city_id'), 'uuid') : (@$oldAddress->city_id ? Town::all_list(@$oldAddress->city_id): []);
+        $towns = old('city_id') ? Town::all_list(old('city_id'), 'uuid') : (@$oldAddress->city_id ? Town::all_list($oldAddress->city_id): []);
+        $billingTowns = old('Billing_city_id') ? Town::all_list(old('Billing_city_id'), 'uuid') : (@$oldBillingAddress->city_id ? Town::all_list($oldBillingAddress->city_id): []);
 
-        return view('site.membership.shop.index', compact('oldAddress','oldBillingAddress', 'billingTypes','carts', 'user', 'totalCount', 'totalPrice', 'totalDiscountPrice', 'discountPrice', 'cities', 'towns'));
+        return view('site.membership.shop.index', compact('oldAddress', 'billingTowns', 'oldBillingAddress', 'billingTypes','carts', 'user', 'totalCount', 'totalPrice', 'totalDiscountPrice', 'discountPrice', 'cities', 'towns'));
 
       }else {
           Session::flash('error_message', 'Sepetinde yeterli miktarda ürün yok!');
@@ -290,6 +291,7 @@ class ShopController extends Controller
 
                     $order = new Order();
                     $order->address_id = $address->id;
+                    $order->billing_address_id = $billingOurAddress->id;
                     $order->number = substr(str_shuffle(MD5(microtime())), 0, (50-strlen($latestOrder->id))).$latestOrder->id;
                     $order->total_quantity = $totalCount ;
                     $order->total_price = $tp ;
@@ -352,6 +354,8 @@ class ShopController extends Controller
                             $order->payment_url = $checkoutFormInitialize->getPaymentPageUrl().'&iframe=true';
                             $order->save();
 
+                            $billingOurAddress->delete();
+                            $address->delete();
                             DB::commit();;
                             return redirect(route('shop.payment', ['uuid' => $order->uuid]));
                         }else {

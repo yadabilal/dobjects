@@ -30,7 +30,7 @@ class Order extends Base
     'total_quantity', 'total_price',
       'total_discount_price', 'discount_price',
       'cargo_id','folow_number', 'extra_messages',
-      'payment_reference', 'payment_payload'
+      'payment_reference', 'payment_payload', 'billing_address_id'
   ];
 
 
@@ -45,8 +45,15 @@ class Order extends Base
 
   // Receiver
   public function address() {
-    return $this->belongsTo(Address::class, 'address_id')->withTrashed();
+    return $this->belongsTo(Address::class, 'address_id')->where('type', Address::TYPE_SHIPPING)
+        ->withTrashed();
   }
+
+    public function billing_address() {
+        return $this->belongsTo(Address::class, 'billing_address_id')
+            ->where('type', Address::TYPE_BILLING)
+            ->withTrashed();
+    }
 
   public function cargo() {
     return $this->belongsTo(CargoCompany::class, 'cargo_id')->withTrashed();
@@ -114,6 +121,7 @@ class Order extends Base
 
       if($for_admin) {
           return [
+              self::STATUS_ERROR => 'Ödeme Hatası',
               self::STATUS_WAITING_PAYMENT => 'Ödeme Bekleniyor',
               self::STATUS_NEW => 'Yeni',
               self::STATUS_PROCCESS => 'Hazırlanıyor',
@@ -137,10 +145,12 @@ class Order extends Base
    */
   public static function color_list() {
     return [
+      self::STATUS_WAITING_PAYMENT => 'badge badge-warning',
       self::STATUS_NEW => 'badge badge-info',
       self::STATUS_PROCCESS => 'badge badge-warning',
       self::STATUS_CARGO => 'badge badge-secondary',
       self::STATUS_CANCEL => 'badge badge-danger',
+      self::STATUS_ERROR => 'badge badge-danger',
       self::STATUS_COMPLETED => 'badge badge-success',
     ];
   }

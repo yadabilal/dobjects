@@ -195,8 +195,8 @@
                                             <span class="input-wrapper control">
                                                     <select name="Billing_town_id" class="country-select custom-select town">
                                                        <option>Seç</option>
-                                                        @foreach($towns as  $town)
-                                                            <option value="{{$town->uuid}}" {{old('Billing_town_id')==$town->uuid ? 'selected': (@$oldBillingAddress->town_id == $town->id ? 'selected' : '')}}>{{$town->name}}</option>
+                                                        @foreach($billingTowns as  $billingTown)
+                                                            <option value="{{$billingTown->uuid}}" {{old('Billing_town_id')==$billingTown->uuid ? 'selected': (@$oldBillingAddress->town_id == $billingTown->id ? 'selected' : '')}}>{{$billingTown->name}}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('Billing_town_id')

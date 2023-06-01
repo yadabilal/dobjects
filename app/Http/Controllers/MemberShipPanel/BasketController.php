@@ -53,7 +53,7 @@ class BasketController extends Controller
                     $basket = Basket::add($product, @$all['quantity'] ?: 1, @$all['note'] ?: '');
 
                     if($basket) {
-                        $count = $this->user->baskets->sum('quantity');
+                        $count = $this->user->baskets()->sum('quantity');
 
                         $data['success'] = true;
                         $data['id'] = $basket->uuid;

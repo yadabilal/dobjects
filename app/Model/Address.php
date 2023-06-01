@@ -37,6 +37,10 @@ class Address extends Base
       return $this->name.' '.$this->surname;
   }
 
+  public function billingTypeReadable() {
+      return @self::billingType()[$this->billing_type] ?: '-';
+  }
+
   public static function billingType() {
       return [
           self::BILLING_TYPE_PERSONAL => 'Bireysel',

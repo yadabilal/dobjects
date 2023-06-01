@@ -40,7 +40,7 @@
                                         @foreach($items as $item)
 
                                             <tr>
-                                                <td>#{{$item->number}}</td>
+                                                <td>{{$item->number}}</td>
                                                 <td>{{$item->created_at()}}</td>
                                                 <td>{{$item->status()}}</td>
                                                 <td> {{$item->readableTotalDiscountPrice().' ('.$item->total_quantity.' ürün için)'}} </td>

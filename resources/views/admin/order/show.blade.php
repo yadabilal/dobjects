@@ -67,23 +67,19 @@
                                 <ul class="personal-info">
                                     <li>
                                         <span class="title">Ad Soyad:</span>
-                                        <span class="text">{{$model->address ? $model->address->name.' '.$model->address->surname : ''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">TC:</span>
-                                        <span class="text">{{$model->address ? $model->address->identity_number : ''}}</span>
+                                        <span class="text">{{$model->address->name.' '.$model->address->surname}}</span>
                                     </li>
                                     <li>
                                         <span class="title">Telefon:</span>
-                                        <span class="text">{{$model->address ? $model->address->phone : ''}}</span>
+                                        <span class="text">{{$model->address->phone}}</span>
                                     </li>
                                     <li>
                                         <span class="title">Email:</span>
-                                        <span class="text">{{$model->address ? $model->address->email : ''}}</span>
+                                        <span class="text">{{$model->address->email}}</span>
                                     </li>
                                     <li>
                                         <span class="title">Adres:</span>
-                                        <span class="text">{!! $model->address ? $model->address->fullDetail() : '' !!}</span>
+                                        <span class="text">{!! $model->address->fullDetail() !!}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -92,28 +88,10 @@
                                 <h3 class="user-name m-t-0">Fatura Bilgileri</h3>
                                 <ul class="personal-info">
                                     <li>
-                                        <span class="title">{{$model->billing_address ? $model->billing_address->billing_type == \App\Model\Address::BILLING_TYPE_COMPANY ? 'Şirket Adı:' : 'Ad Soyad:': 'Ad Soyad:'}}</span>
-                                        <span class="text">{{$model->billing_address ? $model->billing_address->fullName() : ''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">Fatura Türü:</span>
-                                        <span class="text">{{$model->billing_address ? $model->billing_address->billingTypeReadable() : ''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">V.N/TC:</span>
-                                        <span class="text">{{$model->billing_address ? $model->billing_address->identity_number : ''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">Telefon:</span>
-                                        <span class="text">{{$model->billing_address ? $model->billing_address->phone : ''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">Email:</span>
-                                        <span class="text">{{$model->billing_address ? $model->billing_address->email : ''}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">Adres:</span>
-                                        <span class="text">{!! $model->billing_address ? $model->billing_address->fullDetail() : '' !!}</span>
+                                        <span class="title">Fatura Bilgileri:</span>
+                                        <span class="text">
+                                            {{$model->address->billing_note ?: 'Teslimat bilgileri ile aynı.'}}
+                                        </span>
                                     </li>
                                 </ul>
                                 @if($model->lastFile)

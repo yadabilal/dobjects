@@ -134,7 +134,6 @@ class ShopController extends Controller
             $data['success'] = true;
 
             if($this->user->can_order()) {
-
                 if(!@$inputs['different_address']) {
                     $inputs['Billing_city_id'] = $inputs['city_id'];
                     $inputs['Billing_town_id'] = $inputs['town_id'];
@@ -157,7 +156,8 @@ class ShopController extends Controller
                     'Billing_surname' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_PERSONAL.'|max:30',
                     'Billing_email' => 'required_if:different_address,=,1|email|max:150',
                     'Billing_phone' => 'required_if:different_address,=,1|min:10|max:15|phone:TR|regex:/(5)[0-9]/|not_regex:/[a-z]/|',
-                    'Billing_identity_number' => 'required_if:different_address,=,1|max:11|min:11',
+                    'Billing_identity_number' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_COMPANY.'|min:9',
+                    'Billing_identity_number2' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_PERSONAL.'|min:11|max:11',
                     'Billing_city_id' => 'required_if:different_address,=,1|exists:cities,uuid',
                     'Billing_town_id' => 'required_if:different_address,=,1|exists:towns,uuid',
                     'Billing_address' => 'required_if:different_address,=,1|max:130|min:20',
@@ -229,6 +229,7 @@ class ShopController extends Controller
                         $billingCity = City::by_uuid($inputs['Billing_city_id']);
                         $billingTown = Town::by_uuid($inputs['Billing_town_id']);
 
+                        $billingOurAddress->billing_type = $inputs['Billing_type'];
                         $billingOurAddress->type = Address::TYPE_BILLING;
                         $billingOurAddress->user_id = auth()->id();
                         $billingOurAddress->name = $inputs['Billing_name'];
@@ -241,6 +242,7 @@ class ShopController extends Controller
                         $billingOurAddress->email = $inputs['Billing_email'];
                     }
                     else {
+                        $billingOurAddress->billing_type = Address::BILLING_TYPE_PERSONAL;
                         $billingOurAddress->type = Address::TYPE_BILLING;
                         $billingOurAddress->identity_number = $inputs['identity_number'];
                         $billingOurAddress->user_id = auth()->id();

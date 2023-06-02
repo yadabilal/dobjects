@@ -107,7 +107,7 @@
             <a href="{{route('admin.support.index')}}"><i class="fa fa-ticket"></i> İletişim Mesajları</a>
           </li>
             <li class="{{request()->url() == route('admin.page.index') ? 'active': ''}}">
-                <a href="{{route('admin.page.index')}}"><i class="fa fa-file"></i> Sözleşmeler</a>
+                <a href="{{route('admin.page.index')}}"><i class="fa fa-file"></i> Sayfalar</a>
             </li>
           <li class="{{request()->url() == route('admin.setting.index') ? 'active': ''}}">
             <a href="{{route('admin.setting.index')}}"><i class="fa fa-cog"></i> Ayarlar</a>

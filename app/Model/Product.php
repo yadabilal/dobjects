@@ -271,11 +271,14 @@ class Product extends Base
 
         return $urls;
     }
-    public static function list_all($paginate =null, $waiting_orders = false) {
+    public static function list_all($paginate =null, $waiting_orders = false, $withRate = false) {
         $paginate = $paginate ? : self::PAGINATION_COUNT;
         $search = Base::js_xss(request());
-        $items = self::with('category')
-            ->with("avgRating");
+        $items = self::with('category');
+
+        if($withRate) {
+            $items->with("avgRating");
+        }
 
         // Ürün adına göre
         if(@$search['urun']) {

@@ -139,7 +139,7 @@ class Product extends Base
         return $this->tags.','.$this->category->name;
     }
     public function seo_description() {
-        return $this->meta_description;
+        return $this->meta_description ?: $this->seo_title();
     }
 
     public function readableTags() {

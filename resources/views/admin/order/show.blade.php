@@ -5,30 +5,37 @@
             <h4 class="page-title">{{$model->number}}</h4>
         </div>
         <div class="col-sm-5 text-right m-b-30">
-            @if($model->status == \App\Model\Order::STATUS_NEW)
-                <a href="{{route('admin.order.proccess', ['uuid' => $model->uuid])}}" class="btn btn-secondary btn-rounded">
+            <a href="{{route('admin.order.query', ['uuid' => $model->uuid])}}" class="btn btn-warning">
+                <i class="fa fa-clock-o"></i> Durum Sorgula (Iyzico)
+            </a>
+            @if($model->status == \App\Model\Order::STATUS_WAITING_PAYMENT)
+                <a href="{{route('admin.order.query', ['uuid' => $model->uuid])}}" class="btn btn-warning">
+                    <i class="fa fa-clock-o"></i> Durum Sorgula (Iyzico)
+                </a>
+            @elseif($model->status == \App\Model\Order::STATUS_NEW)
+                <a href="{{route('admin.order.proccess', ['uuid' => $model->uuid])}}" class="btn btn-secondary">
                     <i class="fa fa-clock-o"></i> Hazırlamaya Başla
                 </a>
             @elseif($model->status == \App\Model\Order::STATUS_PROCCESS)
-                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary btn-rounded">
+                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary">
                     <i class="fa fa-truck"></i> Kargola
                 </a>
             @elseif($model->status == \App\Model\Order::STATUS_CARGO)
-                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary btn-rounded">
+                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary">
                     <i class="fa fa-truck"></i> Kargo Bilgilerini Güncelle
                 </a>
-                <a href="{{route('admin.order.completed', ['uuid' => $model->uuid])}}" class="btn btn-success btn-rounded">
+                <a href="{{route('admin.order.completed', ['uuid' => $model->uuid])}}" class="btn btn-success">
                     <i class="fa fa-check"></i> Kullanıcıya Ulaştı
                 </a>
 
             @elseif($model->status == \App\Model\Order::STATUS_COMPLETED)
-                <a href="{{route('admin.order.billing_show', ['uuid' => $model->uuid])}}" class="btn btn-info btn-rounded">
+                <a href="{{route('admin.order.billing_show', ['uuid' => $model->uuid])}}" class="btn btn-info">
                     <i class="fa fa-barcode"></i> Fatura Yükle
                 </a>
             @endif
 
             @if(!in_array($model->status, [\App\Model\Order::STATUS_COMPLETED, \App\Model\Order::STATUS_CANCEL]))
-                <a href="{{route('admin.order.cancel', ['uuid' => $model->uuid])}}" class="btn btn-danger btn-rounded">
+                <a href="{{route('admin.order.cancel', ['uuid' => $model->uuid])}}" class="btn btn-danger">
                     <i class="fa fa-close"></i> İptal Et
                 </a>
                 @endif

@@ -6,8 +6,11 @@ use Carbon\Carbon;
 
 class Job extends Base
 {
+    const WAITING_PAYMENT_MINUTE = 10;
+
   const TYPE_SMS= 'SMS';
   const TYPE_EMAIL= 'EMAIL';
+  const TYPE_WAITING_PAYMENT= 'WAITING_PAYMENT';
 
   const STATUS_WAITING = 'WAITING';
   const STATUS_COMPLETED = 'COMPLETED';

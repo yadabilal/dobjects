@@ -14,6 +14,28 @@ use Illuminate\Support\Facades\Log;
 class JobController extends Controller
 {
 
+    public function waiting_payment() {
+
+        $models = Job::where('status', Job::STATUS_WAITING)
+            ->where('type', Job::TYPE_WAITING_PAYMENT)
+            ->whereDate('send_at', '<=',Carbon::now())->get();
+
+        foreach ($models as $model) {
+
+            $order = Order::where('status', Order::STATUS_WAITING_PAYMENT)
+                ->where('id', $model->contact)
+                ->first();
+
+            if($order) {
+
+                if($order->checkPayment()) {
+                    $model->delete();
+                }
+            }else {
+                $model->delete();
+            }
+        }
+    }
 
   public function send_sms() {
 

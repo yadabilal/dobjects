@@ -81,28 +81,10 @@ class ShopController extends Controller
         $order= $order->first();
 
         if($order) {
-            $conversationId = time();
-            $options = new \Iyzipay\Options();
-            $options->setApiKey(env('IYZICO_API_KEY'));
-            $options->setSecretKey(env('IYZICO_API_SECRET'));
-            $options->setBaseUrl(env('IYZICO_BASE_URL'));
-
-            $request = new \Iyzipay\Request\RetrieveCheckoutFormRequest();
-            $request->setLocale(\Iyzipay\Model\Locale::TR);
-            $request->setConversationId($conversationId);
-            $request->setToken($order->payment_reference);
-
-            $checkoutForm = \Iyzipay\Model\CheckoutForm::retrieve($request, $options);
-
-            if(strtolower($checkoutForm->getPaymentStatus()) == 'success' && $conversationId == $checkoutForm->getConversationId()) {
-                $order->status = Order::STATUS_NEW;
-            }else if($checkoutForm->getErrorCode()) {
-                $order->status = Order::STATUS_ERROR;
-                $order->setNote(Order::MESSAGE_PAYMENT_NOTE, $checkoutForm->getErrorMessage() ?: 'Ödeme Hatası. Hata Kodu: '.$checkoutForm->getErrorCode());
-            }
-
-            if($order->save()) {
+            if($order->checkPayment()) {
                 return redirect()->route('shop.result', ['uuid' => $order->uuid]);
+            }else {
+                Session::flash('error_message', 'İşlem sırasında bir hata meydana geldi. Lütfen bizi bilgilendirin!');
             }
         }else {
             Session::flash('error_message', 'Geçersiz İşlem!');
@@ -366,7 +348,6 @@ class ShopController extends Controller
                     }
 
                 }catch (\Exception $e) {
-                    dd($e->getMessage(), $e->getLine(), $e );
                     DB::rollBack();
                     Session::flash('error_message', $e->getMessage() );
                 }

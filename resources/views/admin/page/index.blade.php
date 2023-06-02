@@ -5,7 +5,7 @@
       <h4 class="page-title">Sözleşmeler</h4>
     </div>
       <div class="col-sm-5 text-right m-b-30">
-          <a href="{{route('admin.page.create')}}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Sözleşme Ekle</a>
+          <a href="{{route('admin.page.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Sözleşme Ekle</a>
       </div>
   </div>
 

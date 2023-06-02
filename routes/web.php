@@ -110,13 +110,11 @@ Route::prefix('kayit-ol')->namespace('Auth')->group(function () {
 });
 
 Route::prefix('job')->group(function () {
-  Route::get('monthly/{id}', 'JobController@monthly')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
-  Route::get('order-cancel/{id}', 'JobController@order_cancel')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
-  Route::get('order-cancel-today/{id}', 'JobController@order_cancel_today')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
-  Route::get('order-cancel-tomorrow/{id}', 'JobController@order_cancel_tomorrow')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
-  Route::get('order-completed/{id}', 'JobController@order_completed')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-birkitapbul-asdfg');
-  Route::get('send-sms/{id}', 'JobController@send_sms')->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-deekobjects-asdfg');
-  });
+  Route::get('waiting-payment/{id}', 'JobController@waiting_payment')
+      ->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-deekobjects-asdfg');
+  Route::get('send-sms/{id}', 'JobController@send_sms')
+      ->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-deekobjects-asdfg');
+});
 
 Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin')->group(function () {
   // Profil
@@ -156,6 +154,7 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
     // Sipariş İşlemleri
     Route::get('siparisler', 'OrderController@index')->name('admin.order.index');
     Route::get('siparis/{uuid}', 'OrderController@show')->name('admin.order.show');
+    Route::get('siparis/sorgula/{uuid}', 'OrderController@query')->name('admin.order.query');
     Route::get('siparis/hazirla/{uuid}', 'OrderController@proccess')->name('admin.order.proccess');
     Route::get('siparis/kargola/{uuid}', 'OrderController@cargo')->name('admin.order.cargo');
     Route::get('siparis/bitir/{uuid}', 'OrderController@completed')->name('admin.order.completed');
@@ -191,15 +190,4 @@ Route::prefix('sitemap.xml')->group(function () {
   Route::get('/urunler', 'SitemapController@products')->name('sitemap.products');
 });
 
-Route::get('/php-laravel-mail',function (){
-  $data=[
-    'mail_address'=>'yada.bilal@gmail.com',
-    'name'=>'Bilal Yada'
-  ];
-  \Illuminate\Support\Facades\Mail::send('laravel-mail',$data,function($mail) use ($data) {
-    $mail->subject('Örnek Mail Gönderimi');
-    $mail->sender('info@mail.birkitapbul.com');
-    $mail->from('info@mail.birkitapbul.com','Örnek Mail Gönderimi');
-    $mail->to($data['mail_address']);
-  });
-});
+

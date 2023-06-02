@@ -84,6 +84,36 @@ class Order extends Base
     }
 
 
+    public function checkPayment($canSave = true) {
+
+        if($this->status != self::STATUS_WAITING_PAYMENT) {
+            return false;
+        }
+
+        $conversationId = time();
+        $options = new \Iyzipay\Options();
+        $options->setApiKey(env('IYZICO_API_KEY'));
+        $options->setSecretKey(env('IYZICO_API_SECRET'));
+        $options->setBaseUrl(env('IYZICO_BASE_URL'));
+
+        $request = new \Iyzipay\Request\RetrieveCheckoutFormRequest();
+        $request->setLocale(\Iyzipay\Model\Locale::TR);
+        $request->setConversationId($conversationId);
+        $request->setToken($this->payment_reference);
+
+        $checkoutForm = \Iyzipay\Model\CheckoutForm::retrieve($request, $options);
+
+        if(strtolower($checkoutForm->getPaymentStatus()) == 'success' && $conversationId == $checkoutForm->getConversationId()) {
+            $this->status = Order::STATUS_NEW;
+            return $this->save();
+        }else if($checkoutForm->getPaymentStatus() && $checkoutForm->getErrorCode()) {
+            $this->status = Order::STATUS_ERROR;
+            $this->setNote(Order::MESSAGE_PAYMENT_NOTE, $checkoutForm->getErrorMessage() ?: 'Ödeme Hatası. Hata Kodu: '.$checkoutForm->getErrorCode());
+            return $this->save();
+        }
+
+        return false;
+    }
   protected static function boot(){
     parent::boot();
 
@@ -93,14 +123,11 @@ class Order extends Base
     });
 
     static::created(function ($model) {
-      //Bildirim Notification::create_order_create($model);
-
-      /* Status Log
-      $status_log['after_status'] = self::STATUS_NEW;
-      $status_log['order_id'] = $model->id;
-      $status_log['user_id'] = $user->id;
-      OrderStatusLog::create($status_log); */
-
+        $job = new Job();
+        $job->type = Job::TYPE_WAITING_PAYMENT;
+        $job->send_at = Carbon::now()->addMinute(Job::WAITING_PAYMENT_MINUTE);
+        $job->contact = $model->id;
+        $job->save();
     });
 
     static::saving(function ($model) {

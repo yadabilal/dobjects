@@ -20,6 +20,14 @@ class OrderController extends Controller
     $this->middleware('auth');
   }
 
+  public function query($uuid) {
+      $order = Order::where('uuid', $uuid)->first();
+      $order->checkPayment();
+      Session::flash('success_message', 'Iyzico sorgulaması yapıldı!');
+
+      return redirect()->back();
+  }
+
   public function index()
   {
     $models = Order::with('user', 'items', 'address', 'address.city', 'address.town')

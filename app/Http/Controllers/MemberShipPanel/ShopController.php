@@ -292,7 +292,7 @@ class ShopController extends Controller
                     $order = new Order();
                     $order->address_id = $address->id;
                     $order->billing_address_id = $billingOurAddress->id;
-                    $order->number = substr(str_shuffle(MD5(microtime())), 0, (50-strlen($latestOrder->id))).$latestOrder->id;
+                    $order->number = $latestOrder ? substr(str_shuffle(MD5(microtime())), 0, (50-strlen($latestOrder->id))).$latestOrder->id : substr(str_shuffle(MD5(microtime())), 0, 50);
                     $order->total_quantity = $totalCount ;
                     $order->total_price = $tp ;
                     $order->total_discount_price = $tdp;

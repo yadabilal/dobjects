@@ -164,6 +164,9 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
     Route::get('siparis/fatura/{uuid}', 'OrderController@billing')->name('admin.order.billing_show');
     Route::post('siparis/fatura-kaydet/{uuid}', 'OrderController@billing_save')->name('admin.order.billing');
 
+    Route::get('siparis/iptal/{uuid}', 'OrderController@cancel')->name('admin.order.cancel');
+    Route::post('siparis/iptal-et/{uuid}', 'OrderController@cancel_save')->name('admin.order.cancel_save');
+
     // Kategori İşlemleri
     Route::get('kategoriler', 'CategoryController@index')->name('admin.category.index');
     Route::get('kategori/{uuid}', 'CategoryController@update')->name('admin.category.update');

@@ -71,6 +71,7 @@ class PageController extends Controller
             $inputs = request()->all();
             $rules = [
                 'title' => 'required|max:100|min:3',
+                'sorting' => 'required|integer',
                 'status' => 'required|in:'.implode(',', array_keys(Page::statues())),
                 'url' => 'nullable|max:150',
                 'detail' => 'required',

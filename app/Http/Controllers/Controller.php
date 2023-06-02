@@ -46,7 +46,7 @@ class Controller extends BaseController
           $cartItemCount = $this->user->baskets->sum('quantity');
       }
 
-      $pages = Page::pluck('title', 'url');
+      $pages = Page::orderBy('sorting')->pluck('title', 'url');
       $settings = Setting::pluck('value', 'param');
 
 

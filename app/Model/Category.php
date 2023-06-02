@@ -41,7 +41,8 @@ class Category extends Base
               ->get();
       }
 
-        return self::with("products")->withCount('products')
+        return self::select('id', 'name', 'url')
+            ->withCount('products')
             ->has('products', '>' , 0)
             ->orderBy('sorting')
             ->orderBy('created_at', 'desc')

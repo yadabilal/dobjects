@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('meta')
-  <title>Deek Objects | Tasarım Ürünleri</title>
+  <title>{{@$settings['meta_title'] ?: 'Deek Objects | Tasarım Ürünleri'}}</title>
   <meta name="keywords" content="{{@$settings['meta_keywords']}}">
   <meta name="description" content="{{@$settings['meta_description']}}" />
 @endsection

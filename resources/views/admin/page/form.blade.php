@@ -12,12 +12,21 @@
     <div class="card-box">
       <h3 class="card-title">Bilgiler</h3>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="form-group form-focus">
                     <label class="focus-label">Başlık</label>
                     <input type="text" class="form-control floating title" name="title" value="{{old('title', @$model->title)}}" maxlength="100">
                 </div>
                 @error('title')
+                <small class="form-text text-muted">{{$message}}</small>
+                @enderror
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-focus">
+                    <label class="focus-label">Sıra</label>
+                    <input type="number" class="form-control floating" name="sorting" value="{{old('sorting', @$model->sorting)}}">
+                </div>
+                @error('sorting')
                 <small class="form-text text-muted">{{$message}}</small>
                 @enderror
             </div>
@@ -44,6 +53,7 @@
                 <small class="form-text text-muted">{{$message}}</small>
                 @enderror
             </div>
+
         </div>
       </div>
       <div class="card-box">

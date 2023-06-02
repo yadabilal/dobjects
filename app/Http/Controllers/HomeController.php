@@ -28,7 +28,7 @@ class HomeController extends Controller
 
         if($item) {
             $maxCount = $item->stock ?: Product::MAX_ORDER_COUNT;
-            $lastItems = Product::list_all(8);
+            $lastItems = Product::list_all(8, false, true);
             return view('site.show', compact('item', 'lastItems', 'maxCount'));
         }else {
             return $this->errorPage();

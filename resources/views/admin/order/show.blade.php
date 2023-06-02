@@ -5,9 +5,6 @@
             <h4 class="page-title">{{$model->number}}</h4>
         </div>
         <div class="col-sm-5 text-right m-b-30">
-            <a href="{{route('admin.order.query', ['uuid' => $model->uuid])}}" class="btn btn-warning">
-                <i class="fa fa-clock-o"></i> Durum Sorgula (Iyzico)
-            </a>
             @if($model->status == \App\Model\Order::STATUS_WAITING_PAYMENT)
                 <a href="{{route('admin.order.query', ['uuid' => $model->uuid])}}" class="btn btn-warning">
                     <i class="fa fa-clock-o"></i> Durum Sorgula (Iyzico)

@@ -365,7 +365,7 @@ class ShopController extends Controller
                     }
 
                 }catch (\Exception $e) {
-                    dd($e->getMessage() );
+                    dd($e->getMessage(), $e->getLine(), $e );
                     DB::rollBack();
                     Session::flash('error_message', $e->getMessage() );
                 }

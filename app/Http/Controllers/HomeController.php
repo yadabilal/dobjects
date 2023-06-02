@@ -15,7 +15,6 @@ class HomeController extends Controller
         $allCount = Product::list_all_count();
         $urls = Product::shortingUrls();
         $items = Product::list_all();
-
         $categories = Category::list();
 
         return view('site.home', compact('items', 'categories', 'allCount', 'urls'));

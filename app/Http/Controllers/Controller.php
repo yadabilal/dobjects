@@ -46,8 +46,13 @@ class Controller extends BaseController
           $cartItemCount = $this->user->baskets->sum('quantity');
       }
 
-      $pages = Page::pluck('title', 'url');
-      $settings = Setting::pluck('value', 'param');
+      $pages = Page::where('status', Page::STATUS_PUBLISH)->get();
+      $setting = Setting::get();
+        $settings = [];
+
+        foreach ($setting as $set) {
+            $settings[$set->param] = $set->value;
+        }
 
 
       View::share(['user' => $this->user, 'settings' => $settings,

@@ -274,7 +274,9 @@ class Product extends Base
     public static function list_all($paginate =null, $waiting_orders = false) {
         $paginate = $paginate ? : self::PAGINATION_COUNT;
         $search = Base::js_xss(request());
-        $items = self::with('category', 'twoFiles')
+        $items = self::with('category', 'files')
+            ->with("comments", "comments.user")
+            ->withCount('comments')
             ->with("avgRating");
 
         // Ürün adına göre

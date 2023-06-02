@@ -25,7 +25,7 @@ class Category extends Base
   }
 
     public function products() {
-        return $this->hasMany(Product::class, 'category_id')->where('status', Product::STATUS_PUBLISH);
+        return $this->hasMany(Product::class, 'category_id');
     }
 
     public function detailUrl() {
@@ -48,5 +48,12 @@ class Category extends Base
             ->orderBy('name')
             ->get();
     }
+
+
+
+    // TODO: SİL
+  public function books() {
+    return $this->hasMany(Book::class, 'category_id');
+  }
 
 }

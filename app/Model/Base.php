@@ -53,7 +53,7 @@ class Base extends Model
 
     public function twoFiles() {
         return $this->morphMany(File::class, 'files', 'model_name', 'model_id')
-            ->orderBy('shorting', 'asc')->limit(2);
+            ->orderBy('shorting')->limit(2);
     }
 
   public function files() {

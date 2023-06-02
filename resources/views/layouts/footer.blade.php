@@ -53,9 +53,9 @@
                                 <h2 class="block-title">Kurumsal</h2>
                                 <div class="block-content">
                                     <ul>
-                                        @foreach($pages as $page)
+                                        @foreach($pages as $url => $pageTitle)
                                             <li>
-                                                <a href="{{route('contract.sub', ['url' => $page->url])}}">{{$page->title}}</a>
+                                                <a href="{{route('contract.sub', ['url' => $url])}}">{{$pageTitle}}</a>
                                             </li>
                                         @endforeach
                                         <li>

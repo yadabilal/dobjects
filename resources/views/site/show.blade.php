@@ -20,7 +20,7 @@
                                                 @foreach($item->files as $file)
                                                     <div class="img-item slick-slide">
                                                         <span class="img-thumbnail-scroll">
-                                                            <img width="600" height="600" src="{{url('uploads/'.$file->path)}}" alt="">
+                                                            <img width="600" height="600" src="{{url('uploads/'.$file->path)}}" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
                                                         </span>
                                                     </div>
                                                 @endforeach
@@ -33,7 +33,7 @@
                                             <div class="image-additional slick-carousel" data-asnavfor=".image-thumbnail" data-fade="true" data-columns4="1" data-columns3="1" data-columns2="1" data-columns1="1" data-columns="1" data-nav="true">
                                                 @foreach($item->files as $file)
                                                     <div class="img-item slick-slide">
-                                                        <img width="900" height="900" src="{{url('uploads/'.$file->path)}}" alt="" title="">
+                                                        <img width="900" height="900" src="{{url('uploads/'.$file->path)}}" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
                                                     </div>
                                                 @endforeach
 
@@ -247,12 +247,12 @@
                                                                 <a href="{{$lastItem->detailUrl()}}">
                                                                     @if($lastItem->twoFiles)
                                                                         @if(@$lastItem->twoFiles[0])
-                                                                            <img width="600" height="600" src="{{url('uploads/'.$lastItem->twoFiles[0]->path)}}" class="post-image" alt="">
+                                                                            <img width="600" height="600" src="{{url('uploads/'.$lastItem->twoFiles[0]->path)}}" class="post-image" title="{{$lastItem->seo_title()}}" alt="{{$lastItem->seo_description()}}">
                                                                         @endif
                                                                         @if(@$lastItem->twoFiles[1])
-                                                                            <img width="600" height="600" src="{{url('uploads/'.$lastItem->twoFiles[1]->path)}}" class="hover-image back" alt="">
+                                                                            <img width="600" height="600" src="{{url('uploads/'.$lastItem->twoFiles[1]->path)}}" class="hover-image back" title="{{$lastItem->seo_title()}}" alt="{{$lastItem->seo_description()}}">
                                                                         @elseif(@$lastItem->twoFiles[0])
-                                                                            <img width="600" height="600" src="{{url('uploads/'.$lastItem->twoFiles[0]->path)}}" class="hover-image back" alt="">
+                                                                            <img width="600" height="600" src="{{url('uploads/'.$lastItem->twoFiles[0]->path)}}" class="hover-image back" title="{{$lastItem->seo_title()}}" alt="{{$lastItem->seo_description()}}">
 
                                                                         @endif
                                                                     @endif

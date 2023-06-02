@@ -79,12 +79,12 @@
                                                             <a href="{{$item->detailUrl()}}">
                                                                 @if($item->twoFiles)
                                                                     @if(@$item->twoFiles[0])
-                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="post-image" alt="">
+                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="post-image" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
                                                                     @endif
                                                                     @if(@$item->twoFiles[1])
-                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[1]->path)}}" class="hover-image back" alt="">
+                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[1]->path)}}" class="hover-image back" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
                                                                     @elseif(@$item->twoFiles[0])
-                                                                            <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="hover-image back" alt="">
+                                                                            <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="hover-image back" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
 
                                                                     @endif
                                                                 @endif

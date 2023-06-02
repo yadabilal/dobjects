@@ -18,6 +18,9 @@
 @stack('page-scripts')
 
 <script>
+    $(document).on("keyup","#identity_number",function() {
+        $("#Billing_identity_number2").val($(this).val());
+    });
 
     $(document).on("click","#ship_to_different_address",function() {
         var element = $(this);

@@ -22,7 +22,7 @@
                                             <p class="form-row form-row-first validate-required">
                                                 <label>Ad <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="name" value="{{old("name") ?:$user->name}}">
+                                                    <input type="text" class="input-text" name="name" value="{{old("name") ?:$user->name}}" maxlength="25">
                                                     @error('name')
                                                     <p class="text-error">{{$message}}</p>
                                                     @enderror
@@ -31,7 +31,7 @@
                                             <p class="form-row form-row-last validate-required">
                                                 <label>Soyad <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="surname" value="{{old("surname") ?: $user->surname}}">
+                                                    <input type="text" class="input-text" name="surname" value="{{old("surname") ?: $user->surname}}" maxlength="30">
                                                     @error('surname')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror
@@ -41,7 +41,7 @@
                                             <p class="form-row form-row-last validate-required">
                                                 <label>TC Kimlik Numarası <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="identity_number" maxlength="11" minlength="11" value="{{old("identity_number") ?: $user->identity_number}}">
+                                                    <input type="text" id="identity_number" class="input-text" name="identity_number" maxlength="11" minlength="11" value="{{old("identity_number") ?: $user->identity_number}}">
                                                     @error('identity_number')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror
@@ -109,7 +109,7 @@
                                     <p class="form-row form-row-wide ship-to-different-address">
                                         <label class="checkbox">
                                             <input class="input-checkbox" type="checkbox" name="different_address" value="{{old('different_address') ?: 1}}" id="ship_to_different_address">
-                                            <span>Fatura adresim farklı.</span>
+                                            <span>Fatura adresi girmek istiyorum.</span>
                                         </label>
                                     </p>
                                     <div class="shipping-address" style="display: none;">
@@ -133,8 +133,8 @@
                                         <p class="form-row form-row-first validate-required billing-company" style="display: none">
                                             <label>Şirket Adı <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_name" value="{{old("Billing_name") ?: @$oldBillingAddress->name}}">
-                                                    @error('Billing_name')
+                                                    <input type="text" class="input-text" name="Billing_name2" value="{{old("Billing_name2") ?: @$oldBillingAddress->name}}" maxlength="25">
+                                                    @error('Billing_name2')
                                                     <p class="text-error">{{$message}}</p>
                                                     @enderror
                                                 </span>
@@ -151,7 +151,7 @@
                                         <p class="form-row form-row-first validate-required billing-personal">
                                             <label>Ad <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_name" value="{{old("Billing_name") ?:$user->name}}">
+                                                    <input type="text" class="input-text" name="Billing_name" value="{{old("Billing_name") ?:$user->name}}" maxlength="25">
                                                     @error('Billing_name')
                                                     <p class="text-error">{{$message}}</p>
                                                     @enderror
@@ -160,7 +160,7 @@
                                         <p class="form-row form-row-last validate-required billing-personal">
                                             <label>Soyad <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_surname" value="{{old("Billing_surname") ?: $user->surname}}">
+                                                    <input type="text" class="input-text" name="Billing_surname" value="{{old("Billing_surname") ?: $user->surname}}" maxlength="30">
                                                     @error('Billing_surname')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror
@@ -170,7 +170,7 @@
                                         <p class="form-row form-row-last validate-required billing-personal">
                                             <label>TC Kimlik Numarası <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_identity_number2" value="{{old("Billing_identity_number2") ?: @$oldBillingAddress->identity_number}}">
+                                                    <input type="text" class="input-text" id="Billing_identity_number2" name="Billing_identity_number2" value="{{old("Billing_identity_number2") ?: @$oldBillingAddress->identity_number}}" maxlength="11">
                                                     @error('Billing_identity_number2')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror

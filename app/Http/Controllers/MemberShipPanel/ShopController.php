@@ -134,9 +134,9 @@ class ShopController extends Controller
             $data['success'] = true;
 
             if($this->user->can_order()) {
-                if(!@$inputs['different_address']) {
-                    $inputs['Billing_city_id'] = $inputs['city_id'];
-                    $inputs['Billing_town_id'] = $inputs['town_id'];
+                $differentAddress = false;
+                if(@$inputs['different_address']) {
+                    $differentAddress = true;
                 }
 
                 $rules = [
@@ -151,17 +151,25 @@ class ShopController extends Controller
                     'note' => 'nullable|max:255',
                     'confirm_document' => 'required|in:1',
                     'different_address' => 'nullable|in:0,1',
-                    'Billing_type' => 'required_if:different_address,=,1|in:'.implode(',', array_keys(Address::billingType())),
-                    'Billing_name' => 'required_if:different_address,=,1|max:25',
-                    'Billing_surname' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_PERSONAL.'|max:30',
-                    'Billing_email' => 'required_if:different_address,=,1|email|max:150',
-                    'Billing_phone' => 'required_if:different_address,=,1|min:10|max:15|phone:TR|regex:/(5)[0-9]/|not_regex:/[a-z]/|',
-                    'Billing_identity_number' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_COMPANY.'|min:9',
-                    'Billing_identity_number2' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_PERSONAL.'|min:11|max:11',
-                    'Billing_city_id' => 'required_if:different_address,=,1|exists:cities,uuid',
-                    'Billing_town_id' => 'required_if:different_address,=,1|exists:towns,uuid',
-                    'Billing_address' => 'required_if:different_address,=,1|max:130|min:20',
                 ];
+
+                if($differentAddress) {
+                    $rules = array_merge($rules, [
+                        'different_address' => 'nullable|in:0,1',
+                        'Billing_type' => 'required_if:different_address,=,1|in:'.implode(',', array_keys(Address::billingType())),
+                        'Billing_name' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_PERSONAL.'|max:25',
+                        'Billing_name2' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_COMPANY.'|max:25',
+                        'Billing_surname' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_PERSONAL.'|max:30',
+                        'Billing_email' => 'required_if:different_address,=,1|email|max:150',
+                        'Billing_phone' => 'required_if:different_address,=,1|min:10|max:15|phone:TR|regex:/(5)[0-9]/|not_regex:/[a-z]/|',
+                        'Billing_identity_number' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_COMPANY.'|min:9',
+                        'Billing_identity_number2' => 'required_if:Billing_type,=,'.Address::BILLING_TYPE_PERSONAL.'|min:11|max:11',
+                        'Billing_city_id' => 'required_if:different_address,=,1|exists:cities,uuid',
+                        'Billing_town_id' => 'required_if:different_address,=,1|exists:towns,uuid',
+                        'Billing_address' => 'required_if:different_address,=,1|max:130|min:20',
+                    ]);
+                }
+
 
                 $validator = Validator::make($inputs, $rules, [
                     'identity_number.required' => "Tc Kimlik Numaran boş olamaz!",
@@ -169,15 +177,6 @@ class ShopController extends Controller
                     'confirm_document.required' => "Ön Bilgilendirme Koşulları'nı ve Mesafeli Satış Sözleşmesi'ni okuyup onaylayın!",
                     'confirm_document.in' => "Ön Bilgilendirme Koşulları'nı ve Mesafeli Satış Sözleşmesi'ni okuyup onaylayın!",
                 ]);
-                $validator->after(function ($validator){
-                    $items = auth()->user()->baskets;
-                    $message = trans('validation.dont_request');
-                    foreach ($items as $item) {
-                        if (!$item->product) {
-                            $validator->errors()->add('items', [$item->uuid => $message]);
-                        }
-                    }
-                });
 
                 $errors = $validator->getMessageBag()->toArray();
                 if ($errors){
@@ -203,7 +202,6 @@ class ShopController extends Controller
                 DB::beginTransaction();
                 try {
                     $inputs = Base::js_xss(\request());
-
                     $city = City::by_uuid($inputs['city_id']);
                     $town = Town::by_uuid($inputs['town_id']);
                     $billingCity  = $city;
@@ -233,7 +231,7 @@ class ShopController extends Controller
                         $billingOurAddress->type = Address::TYPE_BILLING;
                         $billingOurAddress->user_id = auth()->id();
                         $billingOurAddress->name = $inputs['Billing_name'];
-                        $billingOurAddress->identity_number = $inputs['Billing_identity_number'];
+                        $billingOurAddress->identity_number = $billingOurAddress->billing_type == Address::BILLING_TYPE_PERSONAL ? $inputs['Billing_identity_number2'] : $inputs['Billing_identity_number'];
                         $billingOurAddress->surname = $inputs['Billing_surname'];
                         $billingOurAddress->city_id = $billingCity->id;
                         $billingOurAddress->town_id = $billingTown->id;
@@ -367,6 +365,7 @@ class ShopController extends Controller
                     }
 
                 }catch (\Exception $e) {
+                    dd($e->getMessage() );
                     DB::rollBack();
                     Session::flash('error_message', $e->getMessage() );
                 }

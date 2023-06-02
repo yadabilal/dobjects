@@ -227,7 +227,4 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-    'IYZICO_API_KEY' => 'sandbox-1tSZ1xZvqrUCIxX70yqBzMLpUtzfvOEw',
-    'IYZICO_API_SECRET' => 'sandbox-6FiOL0Ky8twtMGB5rAqeJuPB5zxBYNGv',
-    'IYZICO_BASE_URL' => 'https://sandbox-api.iyzipay.com',
 ];

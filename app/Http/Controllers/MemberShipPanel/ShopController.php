@@ -98,7 +98,7 @@ class ShopController extends Controller
                 $order->status = Order::STATUS_NEW;
             }else if($checkoutForm->getErrorCode()) {
                 $order->status = Order::STATUS_ERROR;
-                $order->extra_messages = $checkoutForm->getErrorMessage();
+                $order->setNote(Order::MESSAGE_PAYMENT_NOTE, $checkoutForm->getErrorMessage() ?: 'Ödeme Hatası. Hata Kodu: '.$checkoutForm->getErrorCode());
             }
 
             if($order->save()) {
@@ -297,6 +297,7 @@ class ShopController extends Controller
                     $order->total_price = $tp ;
                     $order->total_discount_price = $tdp;
                     $order->discount_price = $discountPrice;
+                    $order->setNote(Order::MESSAGE_USER_NOTE, @$inputs['note'] ?: '');
                     $order->save();
 
                     $basketItems = [];

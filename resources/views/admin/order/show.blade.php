@@ -27,6 +27,11 @@
                 </a>
             @endif
 
+            @if(!in_array($model->status, [\App\Model\Order::STATUS_COMPLETED, \App\Model\Order::STATUS_CANCEL]))
+                <a href="{{route('admin.order.cancel', ['uuid' => $model->uuid])}}" class="btn btn-danger btn-rounded">
+                    <i class="fa fa-close"></i> İptal Et
+                </a>
+                @endif
         </div>
     </div>
 
@@ -140,13 +145,27 @@
         </div>
     </div>
     <div class="row">
-        @if($model->note)
+            @if($model->getNote(\App\Model\Order::MESSAGE_USER_NOTE))
+                <div class="col-12">
+                    <div class="alert alert-warning">
+                        {{$model->getNote(\App\Model\Order::MESSAGE_USER_NOTE)}}
+                    </div>
+                </div>
+           @endif
+            @if($model->getNote(\App\Model\Order::MESSAGE_PAYMENT_NOTE))
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        {{$model->getNote(\App\Model\Order::MESSAGE_PAYMENT_NOTE)}}
+                    </div>
+                </div>
+            @endif
+            @if($model->getNote(\App\Model\Order::MESSAGE_CANCEL_NOTE))
             <div class="col-12">
-                <div class="alert alert-warning">
-                    {{$model->note}}
+                <div class="alert alert-danger">
+                    {{$model->getNote(\App\Model\Order::MESSAGE_CANCEL_NOTE)}}
                 </div>
             </div>
-        @endif
+            @endif
         <div class="col-lg-12">
             <div class="tab-content  profile-tab-content">
                 <div id="waitingOrders" class="tab-pane fade show active">

@@ -19,6 +19,10 @@ class Order extends Base
   const STATUS_CARGO = 'CARGO';
   const STATUS_COMPLETED = 'COMPLETED';
 
+  const MESSAGE_USER_NOTE = 'USER_NOTE';
+  const MESSAGE_CANCEL_NOTE = 'CANCEL_NOTE';
+  const MESSAGE_PAYMENT_NOTE = 'PAYMENT_NOTE';
+
   //
   const PAGINATION_LIST = 10;
     public $store_path = 'orders';
@@ -139,6 +143,22 @@ class Order extends Base
       self::STATUS_COMPLETED => 'Teslim Edildi',
     ];
   }
+
+  public function setNote($key, $note) {
+      $messages = $this->extra_messages ? json_decode($this->extra_messages, true) : [];
+      $messages[$key] = $note;
+      $this->extra_messages = json_encode($messages);
+
+      return $this->extra_messages;
+  }
+
+    public function getNote($key) {
+        $messages = @json_decode($this->extra_messages, true) ?: [];
+
+        return @$messages[$key] ?: '';
+    }
+
+
   /*
    * Siparişe Ait Renk
    * Listesini Döner

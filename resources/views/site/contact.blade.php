@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('meta')
   <title> Deek Objects | İletişim</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="" />
+  <meta name="keywords" content="{{@$settings['meta_keywords']}}">
+  <meta name="description" content="{{@$settings['meta_description']}}" />
 @endsection
 @section('content')
     @include('layouts.breadcrumb', ['title' => 'İletişim'])
@@ -11,7 +11,6 @@
             @if(\App\Model\Setting::by_key('maps'))
                 <section class="section section-padding">
                     <div class="section-container small">
-                        <!-- Block Contact Map -->
                         <div class="block block-contact-map">
                             <div class="block-widget-wrap">
                                 @if(@$settings['maps'])
@@ -74,9 +73,8 @@
                 </div>
             </section>
 
-            <section class="section section-padding contact-background m-b-0" style="background-image: url({{asset('theme/deekobjects/media/banner/contact-bg.jpg')}})!important;">
+            <section class="section section-padding contact-background m-b-0" style="background-image: url({{asset('theme/deekobjects/media/contact-bg.jpg')}})!important;">
                 <div class="section-container small">
-                    <!-- Block Contact Form -->
                     <div class="block block-contact-form">
                         <div class="block-widget-wrap">
                             <div class="block-title">

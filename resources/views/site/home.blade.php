@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('meta')
   <title>Deek Objects | Tasarım Ürünleri</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="" />
+  <meta name="keywords" content="{{@$settings['meta_keywords']}}">
+  <meta name="description" content="{{@$settings['meta_description']}}" />
 @endsection
 @section('content')
     @include('layouts.breadcrumb', ['title' => "Mağaza"])

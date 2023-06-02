@@ -73,7 +73,7 @@
                 </div>
             </section>
 
-            <section class="section section-padding contact-background m-b-0" style="background-image: url({{asset('theme/deekobjects/media/contact-bg.jpg')}})!important;">
+            <section class="section section-padding contact-background m-b-0">
                 <div class="section-container small">
                     <div class="block block-contact-form">
                         <div class="block-widget-wrap">

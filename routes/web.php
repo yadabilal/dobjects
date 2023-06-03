@@ -22,6 +22,12 @@ Route::post('destek/kontrol', 'SupportController@check')->name('support.check');
 Route::get('/sozlesme', 'HomeController@contract')->name('contract');
 Route::get('/sozlesme/{url}', 'HomeController@contract')->name('contract.sub');
 
+Route::post('/sepet/ekle', 'TempBasketController@add')->name('tempbasket.add');
+Route::post('sepet/liste', 'TempBasketController@list')->name('tempbasket.list');
+Route::get('sepet', 'TempBasketController@index')->name('tempbasket.short_list');
+Route::post('sepet/guncelle', 'TempBasketController@update')->name('tempbasket.update');
+Route::post('sepet/sil', 'TempBasketController@delete')->name('tempbasket.delete');
+
 
 Route::post('ilce-bul', 'HomeController@town');
 

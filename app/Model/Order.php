@@ -11,11 +11,17 @@ class Order extends Base
 {
   use SoftDeletes;
 
+  const STATUS_WAITING_PAYMENT = 'WAITING_PAYMENT';
   const STATUS_NEW = 'NEW';
   const STATUS_PROCCESS = 'PROCCESS';
   const STATUS_CANCEL = 'CANCEL';
+  const STATUS_ERROR = 'ERROR';
   const STATUS_CARGO = 'CARGO';
   const STATUS_COMPLETED = 'COMPLETED';
+
+  const MESSAGE_USER_NOTE = 'USER_NOTE';
+  const MESSAGE_CANCEL_NOTE = 'CANCEL_NOTE';
+  const MESSAGE_PAYMENT_NOTE = 'PAYMENT_NOTE';
 
   //
   const PAGINATION_LIST = 10;
@@ -27,7 +33,8 @@ class Order extends Base
     'user_id', 'address_id',
     'total_quantity', 'total_price',
       'total_discount_price', 'discount_price',
-      'cargo_id','folow_number', 'extra_messages'
+      'cargo_id','folow_number', 'extra_messages',
+      'payment_reference', 'payment_payload', 'billing_address_id'
   ];
 
 
@@ -42,8 +49,15 @@ class Order extends Base
 
   // Receiver
   public function address() {
-    return $this->belongsTo(Address::class, 'address_id')->withTrashed();
+    return $this->belongsTo(Address::class, 'address_id')->where('type', Address::TYPE_SHIPPING)
+        ->withTrashed();
   }
+
+    public function billing_address() {
+        return $this->belongsTo(Address::class, 'billing_address_id')
+            ->where('type', Address::TYPE_BILLING)
+            ->withTrashed();
+    }
 
   public function cargo() {
     return $this->belongsTo(CargoCompany::class, 'cargo_id')->withTrashed();
@@ -70,31 +84,60 @@ class Order extends Base
     }
 
 
+    public function checkPayment($canSave = true) {
+
+        if($this->status != self::STATUS_WAITING_PAYMENT) {
+            return false;
+        }
+
+        $conversationId = time();
+        $options = new \Iyzipay\Options();
+        $options->setApiKey(env('IYZICO_API_KEY'));
+        $options->setSecretKey(env('IYZICO_API_SECRET'));
+        $options->setBaseUrl(env('IYZICO_BASE_URL'));
+
+        $request = new \Iyzipay\Request\RetrieveCheckoutFormRequest();
+        $request->setLocale(\Iyzipay\Model\Locale::TR);
+        $request->setConversationId($conversationId);
+        $request->setToken($this->payment_reference);
+
+        $checkoutForm = \Iyzipay\Model\CheckoutForm::retrieve($request, $options);
+
+        if(strtolower($checkoutForm->getPaymentStatus()) == 'success' && $conversationId == $checkoutForm->getConversationId()) {
+            $this->status = Order::STATUS_NEW;
+            return $this->save();
+        }else if($checkoutForm->getPaymentStatus() && $checkoutForm->getErrorCode()) {
+            $this->status = Order::STATUS_ERROR;
+            $this->setNote(Order::MESSAGE_PAYMENT_NOTE, $checkoutForm->getErrorMessage() ?: 'Ödeme Hatası. Hata Kodu: '.$checkoutForm->getErrorCode());
+            return $this->save();
+        }
+
+        return false;
+    }
   protected static function boot(){
     parent::boot();
 
     static::creating(function ($model) {
-      $model->status = self::STATUS_NEW;
+      $model->status = self::STATUS_WAITING_PAYMENT;
       $model->user_id = \auth()->id();
     });
 
     static::created(function ($model) {
-      //Bildirim Notification::create_order_create($model);
-
-      /* Status Log
-      $status_log['after_status'] = self::STATUS_NEW;
-      $status_log['order_id'] = $model->id;
-      $status_log['user_id'] = $user->id;
-      OrderStatusLog::create($status_log); */
-
-      // Sms Prodda düzelt
-
-      Sms::new_order($model);
+        $job = new Job();
+        $job->type = Job::TYPE_WAITING_PAYMENT;
+        $job->send_at = Carbon::now()->addMinute(Job::WAITING_PAYMENT_MINUTE);
+        $job->contact = $model->id;
+        $job->save();
     });
 
     static::saving(function ($model) {
         if($model->isDirty('cargo_id') && $model->status == self::STATUS_CARGO){
             Sms::order_cargo($model);
+        }
+
+        if($model->isDirty('status') && $model->status == self::STATUS_NEW) {
+            Sms::new_order($model);
+            Basket::where('user_id', \auth()->id())->delete();
         }
     });
 
@@ -109,6 +152,8 @@ class Order extends Base
 
       if($for_admin) {
           return [
+              self::STATUS_ERROR => 'Ödeme Hatası',
+              self::STATUS_WAITING_PAYMENT => 'Ödeme Bekleniyor',
               self::STATUS_NEW => 'Yeni',
               self::STATUS_PROCCESS => 'Hazırlanıyor',
               self::STATUS_CARGO => 'Kargolandı',
@@ -125,16 +170,34 @@ class Order extends Base
       self::STATUS_COMPLETED => 'Teslim Edildi',
     ];
   }
+
+  public function setNote($key, $note) {
+      $messages = $this->extra_messages ? json_decode($this->extra_messages, true) : [];
+      $messages[$key] = $note;
+      $this->extra_messages = json_encode($messages);
+
+      return $this->extra_messages;
+  }
+
+    public function getNote($key) {
+        $messages = @json_decode($this->extra_messages, true) ?: [];
+
+        return @$messages[$key] ?: '';
+    }
+
+
   /*
    * Siparişe Ait Renk
    * Listesini Döner
    */
   public static function color_list() {
     return [
+      self::STATUS_WAITING_PAYMENT => 'badge badge-warning',
       self::STATUS_NEW => 'badge badge-info',
       self::STATUS_PROCCESS => 'badge badge-warning',
       self::STATUS_CARGO => 'badge badge-secondary',
       self::STATUS_CANCEL => 'badge badge-danger',
+      self::STATUS_ERROR => 'badge badge-danger',
       self::STATUS_COMPLETED => 'badge badge-success',
     ];
   }

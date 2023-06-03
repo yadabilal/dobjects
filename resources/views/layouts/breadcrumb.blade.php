@@ -1,4 +1,4 @@
-<div id="title" class="page-title" style="background-image: url({{@$settings['breadcrumb'] ? url('uploads/'.$settings['breadcrumb']): asset('theme/deekobjects/media/site-header.jpg')}})!important;">
+<div id="title" class="page-title">
     <div class="section-container">
         <div class="content-title-heading">
             <h1 class="text-title-heading">

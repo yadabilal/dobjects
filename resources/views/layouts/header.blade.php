@@ -16,7 +16,7 @@
                             <div class="dropdown mini-cart top-cart">
                                 <div class="remove-cart-shadow"></div>
                                 <a class="dropdown-toggle cart-icon cart-button" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{@$user ? $user->baskets->count(): \App\Model\TempBasket::totalCount()}}</span></div>
+                                    <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{$cartItemCount}}</span></div>
                                 </a>
                                 <div class="dropdown-menu cart-popup">
                                     <div class="loader is-loading"></div>
@@ -55,7 +55,11 @@
             <div class="search-box">
                 <div class="search-toggle"><i class="wpb-icon-magnifying-glass"></i></div>
             </div>
-
+            <div class="wishlist-box">
+                <a href="{{route('wishlist.index')}}">
+                    <i class="wpb-icon-heart"></i>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -75,7 +79,7 @@
                                 <nav id="main-navigation">
                                     <ul id="menu-main-menu" class="menu">
                                         <li class="level-0 menu-item">
-                                            <a href="{{route('home')}}"><span class="menu-item-text">Ürünler</span></a>
+                                            <a href="{{route('home')}}"><span class="menu-item-text">Mağaza</span></a>
                                         </li>
                                         <li class="level-0 menu-item">
                                             <a href="{{route('contact')}}"><span class="menu-item-text">İletişim</span></a>
@@ -100,15 +104,20 @@
                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i></a>
                                     </div>
                                 @endguest
+
                                 <div class="search-box">
                                     <div class="search-toggle"><i class="icon-search"></i></div>
                                 </div>
 
+                                    <div class="wishlist-box">
+                                        <a href="{{route('wishlist.index')}}"><i class="icon-heart"></i></a>
+                                        <span class="count-wishlist">{{$wishListCount}}</span>
+                                    </div>
                                 <div class="ruper-topcart dropdown light">
                                     <div class="dropdown mini-cart top-cart">
                                         <div class="remove-cart-shadow"></div>
                                         <a class="dropdown-toggle cart-icon cart-button" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{@$user ? $user->baskets->count():  \App\Model\TempBasket::totalCount()}}</span></div>
+                                            <div class="icons-cart"><i class="icon-large-paper-bag"></i><span class="cart-count">{{$cartItemCount}}</span></div>
                                         </a>
                                         <div class="dropdown-menu cart-popup" id="cart-popup">
                                             <div class="loader is-loading"></div>

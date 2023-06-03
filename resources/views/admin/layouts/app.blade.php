@@ -15,7 +15,9 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/select2.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/bootstrap-datetimepicker.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/plugins/morris/morris.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/plugins/summernote/dist/summernote-bs4.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('preadmin/css/style.css') }}">
   <!--[if lt IE 9]>
   <script src="{{ asset('preadmin/js/html5shiv.min.js') }}"></script>
   <script src="{{ asset('preadmin/js/respond.min.js') }}"></script>
@@ -97,9 +99,16 @@
             <a href="{{route('admin.basket.index')}}"><i class="fa fa-shopping-bag"></i> Sepetler</a>
           </li>
 
+            <li class="{{request()->url() == route('admin.wishlist.index') ? 'active': ''}}">
+                <a href="{{route('admin.wishlist.index')}}"><i class="fa fa-heart"></i> Favoriler</a>
+            </li>
+
           <li class="{{request()->url() == route('admin.support.index') ? 'active': ''}}">
             <a href="{{route('admin.support.index')}}"><i class="fa fa-ticket"></i> İletişim Mesajları</a>
           </li>
+            <li class="{{request()->url() == route('admin.page.index') ? 'active': ''}}">
+                <a href="{{route('admin.page.index')}}"><i class="fa fa-file"></i> Sayfalar</a>
+            </li>
           <li class="{{request()->url() == route('admin.setting.index') ? 'active': ''}}">
             <a href="{{route('admin.setting.index')}}"><i class="fa fa-cog"></i> Ayarlar</a>
           </li>
@@ -140,17 +149,18 @@
 <script type="text/javascript" src="{{ asset('preadmin/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('preadmin/plugins/morris/morris.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('preadmin/plugins/raphael/raphael-min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('preadmin/plugins/summernote/dist/summernote-bs4.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('preadmin/js/app.js') }}"></script>
 <script>
   var csrf_token= '{{csrf_token()}}';
 
   setTimeout(function() {
       $('.notification-popup').fadeOut();
-  }, 1500);
+  }, 1000);
 
   $('.product-image-remove').click(function () {
       var id = $(this).data('id');
-      console.log($("#"+id).val("removed"))
       $("#"+id).val("removed");
       $(this).closest('.product-image-wrapper').hide();
 

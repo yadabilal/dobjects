@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('meta')
-  <title>Deek Objects | Tasarım Ürünleri</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="" />
+  <title>{{@$settings['meta_title'] ?: 'Deek Objects | Tasarım Ürünleri'}}</title>
+  <meta name="keywords" content="{{@$settings['meta_keywords']}}">
+  <meta name="description" content="{{@$settings['meta_description']}}" />
 @endsection
 @section('content')
-    @include('layouts.breadcrumb', ['title' => "Ürünler"])
+    @include('layouts.breadcrumb', ['title' => "Mağaza"])
     <div id="content" class="site-content" role="main">
         <div class="section-padding">
             <div class="section-container p-l-r">
@@ -79,34 +79,36 @@
                                                             <a href="{{$item->detailUrl()}}">
                                                                 @if($item->twoFiles)
                                                                     @if(@$item->twoFiles[0])
-                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="post-image" alt="">
+                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="post-image" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
                                                                     @endif
                                                                     @if(@$item->twoFiles[1])
-                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[1]->path)}}" class="hover-image back" alt="">
+                                                                        <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[1]->path)}}" class="hover-image back" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
                                                                     @elseif(@$item->twoFiles[0])
-                                                                            <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="hover-image back" alt="">
+                                                                            <img width="600" height="600" src="{{url('uploads/'.$item->twoFiles[0]->path)}}" class="hover-image back" title="{{$item->seo_title()}}" alt="{{$item->seo_description()}}">
 
                                                                     @endif
                                                                 @endif
                                                             </a>
                                                         </div>
                                                         <div class="product-button">
-                                                                @guest
-                                                                    <div class="btn-add-to-cart" data-title="Sepete Ekle"  data-id="{{$item->uuid}}">
-                                                                        <a rel="nofollow" href="javascript:void(0)" class="product-btn button" data-id="{{$item->uuid}}">Sepete Ekle</a>
+                                                            @if($item->in_basket())
+                                                                <div class="btn-add-to-cart" data-title="Sepetinde"  data-id="{{$item->uuid}}">
+                                                                    <a href="javascript:void(0)" class="added-to-cart product-btn" title="Sepetinde" tabindex="0">Sepetinde</a>
+                                                                </div>
+                                                            @else
+                                                                <div class="btn-add-to-cart" data-title="Sepete Ekle"  data-id="{{$item->uuid}}">
+                                                                    <a rel="nofollow" href="javascript:void(0)" class="product-btn button" data-id="{{$item->uuid}}">Sepete Ekle</a>
+                                                                </div>
+                                                            @endif
+                                                                @if($item->in_wishlist())
+                                                                    <div class="btn-wishlist" data-title="Favorilerinde">
+                                                                        <button class="product-btn added" onclick="location.href='{{$item->deleteFavoriteUrl()}}';">Favorilerinde</button>
                                                                     </div>
                                                                 @else
-
-                                                                    @if($item->in_basket())
-                                                                        <div class="btn-add-to-cart" data-title="Sepetinde"  data-id="{{$item->uuid}}">
-                                                                            <a href="javascript:void(0)" class="added-to-cart product-btn" title="Sepetinde" tabindex="0">Sepetinde</a>
-                                                                        </div>
-                                                                    @else
-                                                                        <div class="btn-add-to-cart" data-title="Sepete Ekle"  data-id="{{$item->uuid}}">
-                                                                            <a rel="nofollow" href="javascript:void(0)" class="product-btn button" data-id="{{$item->uuid}}">Sepete Ekle</a>
-                                                                        </div>
-                                                                    @endif
-                                                                @endguest
+                                                                    <div class="btn-wishlist" data-title="Favorilere Ekle">
+                                                                        <button class="product-btn" onclick="location.href='{{$item->addFavoriteUrl()}}';">Favorilere Ekle</button>
+                                                                    </div>
+                                                                @endif
                                                         </div>
                                                     </div>
                                                     <div class="products-content">

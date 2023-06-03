@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Book;
 use App\Model\File;
+use App\Model\Page;
 use App\Model\Setting;
 use App\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -25,6 +26,9 @@ class Controller extends BaseController
     {
       // Eğer Giriş Yapmışsa kullanıcının yapmadığı İşlere Yolla
       $this->user = \auth()->user();
+        $wishListCount =  0;
+        $cartItemCount =  0;
+
       if($this->user) {
         $midds = $this->getMiddleware();
         if(@$midds[0]['middleware']=='auth' && request()->is('*hesabim*')) {
@@ -38,16 +42,18 @@ class Controller extends BaseController
             return redirect('kayit-ol/kullanici-adi-belirle');
           }
         }
+
+          $wishListCount = $this->user->wishlists->count();
+          $cartItemCount = $this->user->baskets->sum('quantity');
       }
-        dd(Session::getId());
-      $setting = Setting::get();
-        $settings = [];
 
-        foreach ($setting as $set) {
-            $settings[$set->param] = $set->value;
-        }
+      $pages = Page::orderBy('sorting')->pluck('title', 'url');
+      $settings = Setting::pluck('value', 'param');
 
-      View::share(['user' => $this->user, 'settings' => $settings]);
+
+      View::share(['user' => $this->user, 'settings' => $settings,
+          'pages' => $pages, 'wishListCount' => $wishListCount,
+          'cartItemCount' => $cartItemCount]);
       return parent::callAction($method, $parameters);
     }
 

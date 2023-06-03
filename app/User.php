@@ -12,6 +12,7 @@ use App\Model\PhoneLog;
 use App\Model\Sms;
 use App\Model\Town;
 use App\Model\UserPermission;
+use App\Model\Wishlist;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -84,6 +85,14 @@ class User extends Authenticatable
         ->has('product')
         ->with('product');
   }
+
+
+    public function wishlists() {
+        return $this->hasMany(Wishlist::class, 'user_id')
+            ->orderBy('id', 'desc')
+            ->has('product')
+            ->with('product');
+    }
 
   public function basketTotals() {
       $totalPrice = 0;

@@ -18,7 +18,7 @@ class Product extends Base
 
     protected $table = 'products';
     protected $fillable = [
-        'uuid', 'tags', 'name',
+        'uuid', 'tags', 'name', 'sorting',
         'url', 'meta_description', 'short_description',
         'description','additional_information','status', 'stock',
         'discount_rate', 'price', 'discount_price', 'category_id', ''
@@ -123,6 +123,15 @@ class Product extends Base
 
         return false;
     }
+
+    public function in_wishlist() {
+        $user= \auth()->user();
+        if($user && $user->wishlists()->where('product_id',$this->id)->first())
+            return true;
+
+        return false;
+    }
+
     public function seo_title() {
         return $this->name;
     }
@@ -130,7 +139,7 @@ class Product extends Base
         return $this->tags.','.$this->category->name;
     }
     public function seo_description() {
-        return $this->meta_description;
+        return $this->meta_description ?: $this->seo_title();
     }
 
     public function readableTags() {
@@ -180,6 +189,14 @@ class Product extends Base
 
     public function readablePriceWithQuantity($quantity){
         return self::decimalFormat($this->price*$quantity).self::currency();
+    }
+
+    public function addFavoriteUrl() {
+        return route('wishlist.add', ['uuid' => $this->uuid]);
+    }
+
+    public function deleteFavoriteUrl() {
+        return route('wishlist.delete', ['uuid' => $this->uuid]);
     }
 
     public function detailUrl() {
@@ -254,13 +271,14 @@ class Product extends Base
 
         return $urls;
     }
-    public static function list_all($paginate =null, $waiting_orders = false) {
+    public static function list_all($paginate =null, $waiting_orders = false, $withRate = false) {
         $paginate = $paginate ? : self::PAGINATION_COUNT;
         $search = Base::js_xss(request());
-        $items = self::with('category', 'files')
-            ->with("comments", "comments.user")
-            ->withCount('comments')
-            ->with("avgRating");
+        $items = self::with('category');
+
+        if($withRate) {
+            $items->with("avgRating");
+        }
 
         // Ürün adına göre
         if(@$search['urun']) {
@@ -305,7 +323,12 @@ class Product extends Base
                 }
             }
         }else {
-            $items = $items->orderBy('created_at', 'desc');
+
+            if($waiting_orders) {
+                $items = $items->orderBy('created_at', 'desc');
+            }else {
+                $items = $items->orderBy('sorting')->orderBy('created_at', 'desc');
+            }
         }
 
         if($waiting_orders) {

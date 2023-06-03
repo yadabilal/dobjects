@@ -5,28 +5,37 @@
             <h4 class="page-title">{{$model->number}}</h4>
         </div>
         <div class="col-sm-5 text-right m-b-30">
-            @if($model->status == \App\Model\Order::STATUS_NEW)
-                <a href="{{route('admin.order.proccess', ['uuid' => $model->uuid])}}" class="btn btn-secondary btn-rounded">
+            @if($model->status == \App\Model\Order::STATUS_WAITING_PAYMENT)
+                <a href="{{route('admin.order.query', ['uuid' => $model->uuid])}}" class="btn btn-warning">
+                    <i class="fa fa-clock-o"></i> Durum Sorgula (Iyzico)
+                </a>
+            @elseif($model->status == \App\Model\Order::STATUS_NEW)
+                <a href="{{route('admin.order.proccess', ['uuid' => $model->uuid])}}" class="btn btn-secondary">
                     <i class="fa fa-clock-o"></i> Hazırlamaya Başla
                 </a>
             @elseif($model->status == \App\Model\Order::STATUS_PROCCESS)
-                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary btn-rounded">
+                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary">
                     <i class="fa fa-truck"></i> Kargola
                 </a>
             @elseif($model->status == \App\Model\Order::STATUS_CARGO)
-                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary btn-rounded">
+                <a href="{{route('admin.order.cargo', ['uuid' => $model->uuid])}}" class="btn btn-primary">
                     <i class="fa fa-truck"></i> Kargo Bilgilerini Güncelle
                 </a>
-                <a href="{{route('admin.order.completed', ['uuid' => $model->uuid])}}" class="btn btn-success btn-rounded">
+                <a href="{{route('admin.order.completed', ['uuid' => $model->uuid])}}" class="btn btn-success">
                     <i class="fa fa-check"></i> Kullanıcıya Ulaştı
                 </a>
 
             @elseif($model->status == \App\Model\Order::STATUS_COMPLETED)
-                <a href="{{route('admin.order.billing_show', ['uuid' => $model->uuid])}}" class="btn btn-info btn-rounded">
+                <a href="{{route('admin.order.billing_show', ['uuid' => $model->uuid])}}" class="btn btn-info">
                     <i class="fa fa-barcode"></i> Fatura Yükle
                 </a>
             @endif
 
+            @if(!in_array($model->status, [\App\Model\Order::STATUS_COMPLETED, \App\Model\Order::STATUS_CANCEL]))
+                <a href="{{route('admin.order.cancel', ['uuid' => $model->uuid])}}" class="btn btn-danger">
+                    <i class="fa fa-close"></i> İptal Et
+                </a>
+                @endif
         </div>
     </div>
 
@@ -67,19 +76,23 @@
                                 <ul class="personal-info">
                                     <li>
                                         <span class="title">Ad Soyad:</span>
-                                        <span class="text">{{$model->address->name.' '.$model->address->surname}}</span>
+                                        <span class="text">{{$model->address ? $model->address->name.' '.$model->address->surname : ''}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">TC:</span>
+                                        <span class="text">{{$model->address ? $model->address->identity_number : ''}}</span>
                                     </li>
                                     <li>
                                         <span class="title">Telefon:</span>
-                                        <span class="text">{{$model->address->phone}}</span>
+                                        <span class="text">{{$model->address ? $model->address->phone : ''}}</span>
                                     </li>
                                     <li>
                                         <span class="title">Email:</span>
-                                        <span class="text">{{$model->address->email}}</span>
+                                        <span class="text">{{$model->address ? $model->address->email : ''}}</span>
                                     </li>
                                     <li>
                                         <span class="title">Adres:</span>
-                                        <span class="text">{!! $model->address->fullDetail() !!}</span>
+                                        <span class="text">{!! $model->address ? $model->address->fullDetail() : '' !!}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -88,10 +101,28 @@
                                 <h3 class="user-name m-t-0">Fatura Bilgileri</h3>
                                 <ul class="personal-info">
                                     <li>
-                                        <span class="title">Fatura Bilgileri:</span>
-                                        <span class="text">
-                                            {{$model->address->billing_note ?: 'Teslimat bilgileri ile aynı.'}}
-                                        </span>
+                                        <span class="title">{{$model->billing_address ? $model->billing_address->billing_type == \App\Model\Address::BILLING_TYPE_COMPANY ? 'Şirket Adı:' : 'Ad Soyad:': 'Ad Soyad:'}}</span>
+                                        <span class="text">{{$model->billing_address ? $model->billing_address->fullName() : ''}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">Fatura Türü:</span>
+                                        <span class="text">{{$model->billing_address ? $model->billing_address->billingTypeReadable() : ''}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">V.N/TC:</span>
+                                        <span class="text">{{$model->billing_address ? $model->billing_address->identity_number : ''}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">Telefon:</span>
+                                        <span class="text">{{$model->billing_address ? $model->billing_address->phone : ''}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">Email:</span>
+                                        <span class="text">{{$model->billing_address ? $model->billing_address->email : ''}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">Adres:</span>
+                                        <span class="text">{!! $model->billing_address ? $model->billing_address->fullDetail() : '' !!}</span>
                                     </li>
                                 </ul>
                                 @if($model->lastFile)
@@ -118,13 +149,27 @@
         </div>
     </div>
     <div class="row">
-        @if($model->note)
+            @if($model->getNote(\App\Model\Order::MESSAGE_USER_NOTE))
+                <div class="col-12">
+                    <div class="alert alert-warning">
+                        {{$model->getNote(\App\Model\Order::MESSAGE_USER_NOTE)}}
+                    </div>
+                </div>
+           @endif
+            @if($model->getNote(\App\Model\Order::MESSAGE_PAYMENT_NOTE))
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        {{$model->getNote(\App\Model\Order::MESSAGE_PAYMENT_NOTE)}}
+                    </div>
+                </div>
+            @endif
+            @if($model->getNote(\App\Model\Order::MESSAGE_CANCEL_NOTE))
             <div class="col-12">
-                <div class="alert alert-warning">
-                    {{$model->note}}
+                <div class="alert alert-danger">
+                    {{$model->getNote(\App\Model\Order::MESSAGE_CANCEL_NOTE)}}
                 </div>
             </div>
-        @endif
+            @endif
         <div class="col-lg-12">
             <div class="tab-content  profile-tab-content">
                 <div id="waitingOrders" class="tab-pane fade show active">

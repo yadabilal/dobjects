@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class Sms extends Model
@@ -63,21 +62,8 @@ class Sms extends Model
   }
   // Kayıt Smsi
   public static function confirm_code($user) {
-    /*$data['type'] =Job::TYPE_SMS;
-    $data['subject'] =self::SUBJECT_CONFIRM;
-    $data['contact'] = $user->phone;
-    $data['content'] ='birkitapbul.com onay kodun '.$user->phone_code.' . Bu kodu kimseyle paylaşma!';
-    Job::create($data);*/
-
     $message= 'deekobjects.com onay kodun '.$user->phone_code.' . Bu kodu kimseyle paylaşma!';
     self::send($message,$user->phone,self::SUBJECT_CONFIRM);
-  }
-
-  public static function completed_order($order) {
-    $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->receiver->phone;
-    $data['content'] ='deekobjects.com dan istediğin '.$order->book->full_name().' adlı kitap eline ulaştıysa giriş yaparak kitabın eline ulaştığını bildir. Detay için giriş yap.';
-    Job::create($data);
   }
 
   public static function new_order($order) {
@@ -86,6 +72,13 @@ class Sms extends Model
     $data['content'] ='deekobjects.com ekibi olarak siparişlerini aldık. Sipariş durumunu profil sayfandan takip edebilirsin.';
     Job::create($data);
   }
+
+    public static function cancel_order($order) {
+        $data['type'] =Job::TYPE_SMS;
+        $data['contact'] = $order->user->phone;
+        $data['content'] ='deekobjects.com ekibi olarak '.$order->number.' numaralı siparişini iptal ettik. Daha fazla detay için deekobjects.com.';
+        Job::create($data);
+    }
 
   public static function order_cargo($order) {
     $data['type'] =Job::TYPE_SMS;
@@ -105,37 +98,6 @@ class Sms extends Model
     $data['type'] =Job::TYPE_SMS;
     $data['contact'] = $phone;
     $data['content'] ='deekobjects.com için yeni şifren: "'.$new_password.'". Güvenliğin için bu şifreyi kimseyle paylaşmamalısın.';
-
-    Job::create($data);
-  }
-
-  public static function order_last_one_day($order) {
-    $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->sender->phone;
-    $data['content'] ='deekobjects.com kullanıcısının istediği '.$order->book->name.' adlı kitabı göndermen için yarın son gün! Detay için giriş yap!';
-
-    Job::create($data);
-  }
-  public static function order_last_day($order) {
-    $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->sender->phone;
-    $data['content'] ='deekobjects.com kullanıcısının istediği '.$order->book->name.' adlı kitabı göndermen için bugün son gün! Detay için giriş yap!';
-
-    Job::create($data);
-  }
-
-  public static function not_completed_user($user) {
-    $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $user->phone;
-    $data['content'] ='deekobjects.com üyeliğini tamamlamadın. Bir şeyler ters gitmişse üzgünüz. Şimdi en özgün tasarımlı mobilyalara sahip olmak için tekrar denemelisin.';
-
-    Job::create($data);
-  }
-
-  public static function doesnt_book($user) {
-    $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $user->phone;
-    $data['content'] ='birkitapbul.com ile okuduğun ya da okumayı düşünmediğin kitapları ekleyerek okurların kitap bulmalarına yardımcı olabilir ya da sen ücretsiz kitaplar isteyebilirsin. Detay için giriş yap.';
 
     Job::create($data);
   }

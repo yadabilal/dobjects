@@ -3,6 +3,6 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <sitemap>
         <loc>{{ route('sitemap.statics') }}</loc>
-        <loc>{{ route('sitemap.books') }}</loc>
+        <loc>{{ route('sitemap.products') }}</loc>
     </sitemap>
 </sitemapindex>

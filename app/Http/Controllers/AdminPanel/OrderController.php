@@ -20,10 +20,19 @@ class OrderController extends Controller
     $this->middleware('auth');
   }
 
+  public function query($uuid) {
+      $order = Order::where('uuid', $uuid)->first();
+      $order->checkPayment();
+      Session::flash('success_message', 'Iyzico sorgulaması yapıldı!');
+
+      return redirect()->back();
+  }
+
   public function index()
   {
     $models = Order::with('user', 'items', 'address', 'address.city', 'address.town')
         ->withCount('items')
+        ->with('address', 'billing_address')
       ->orderBy('id', 'desc');
 
     $statues = Order::status_list(true);
@@ -53,7 +62,7 @@ class OrderController extends Controller
 
   public function show($uuid) {
       $model = Order::where('uuid', $uuid)
-          ->with('user', 'items', 'items.product','address', 'address.city', 'address.town')
+          ->with('user', 'items', 'items.product','address', 'address.city', 'address.town', 'billing_address')
           ->withCount('items')
           ->orderBy('id', 'desc')
       ->first();
@@ -110,6 +119,61 @@ class OrderController extends Controller
         }else {
             Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
             return redirect()->back();
+        }
+    }
+
+    public function cancel($uuid) {
+        $model = Order::where('uuid', $uuid)
+            ->whereNotIn('status', [Order::STATUS_CANCEL, Order::STATUS_COMPLETED])
+            ->with('user', 'items', 'items.product','address', 'address.city', 'address.town')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if($model) {
+            return view($this->view.'.cancel_form', compact('model'));
+        }else {
+            Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
+            return redirect()->back();
+        }
+    }
+
+    public function cancel_save($uuid) {
+        $errors = [];
+        $model = Order::where('uuid', $uuid)
+            ->whereNotIn('status', [Order::STATUS_CANCEL, Order::STATUS_COMPLETED])
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if(request()->post() && $model) {
+
+            $inputs = request()->all();
+            $rules = [
+                "message" => "required|max:255"
+            ];
+
+            $validator = Validator::make($inputs, $rules);
+            $errors = $validator->getMessageBag()->toArray();
+
+            if ($errors){
+                Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
+                return redirect()->back()->withErrors($errors)->withInput();
+            }else {
+                $model->status = Order::STATUS_CANCEL;
+                $model->setNote(Order::MESSAGE_CANCEL_NOTE, $inputs['message']);
+
+                if($model->save()) {
+                    Sms::cancel_order($model);
+                    Session::flash('success_message', 'Sipariş Başarılı Bir Şekilde İptal Edildi!');
+                    return redirect(route('admin.order.show', ['uuid' => $model->uuid]));
+                }else {
+                    Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
+                    return redirect()->back()->withErrors($errors)->withInput();
+                }
+            }
+
+        }else {
+            Session::flash('error_message', 'İşelmi yapmaya yetkiniz yok!');
+            return redirect()->back()->withErrors($errors)->withInput();
         }
     }
 

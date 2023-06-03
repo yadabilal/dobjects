@@ -5,7 +5,7 @@
             <h4 class="page-title">{{$model->name}}</h4>
         </div>
         <div class="col-sm-5 text-right m-b-30">
-            <a href="{{route('admin.product.update', ['uuid' => $model->uuid])}}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Güncelle</a>
+            <a href="{{route('admin.product.update', ['uuid' => $model->uuid])}}" class="btn btn-primary"><i class="fa fa-plus"></i> Güncelle</a>
         </div>
     </div>
 

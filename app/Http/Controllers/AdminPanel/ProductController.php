@@ -53,6 +53,34 @@ class ProductController extends Controller
         return view($this->view.'.form', compact('model', 'categories', 'statues'));
   }
 
+    public function publish($uuid){
+        $model = Product::where('uuid' , $uuid)
+            ->first();
+        $model->status = Product::STATUS_PUBLISH;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Ürün başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect(route('admin.product.index'));
+    }
+
+    public function unpublish($uuid){
+        $model = Product::where('uuid' , $uuid)
+            ->first();
+        $model->status = Product::STATUS_NOT_PUBLISH;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Ürün başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect(route('admin.product.index'));
+    }
+
   public function save() {
       $errors = [];
 
@@ -62,6 +90,7 @@ class ProductController extends Controller
           $rules = [
               'name' => 'required|max:100|min:3',
               'stock' => 'required|integer',
+              'sorting' => 'required|integer',
               'category_id' => 'required|exists:categories,id',
               'price' => 'required',
               'discount_rate' => 'required|integer',
@@ -70,7 +99,7 @@ class ProductController extends Controller
               'tags' => 'nullable|max:255',
               'url' => 'nullable|max:150',
               'short_description' => 'nullable|max:255',
-              'description' => 'nullable',
+              'description' => 'required',
               'additional_information' => 'nullable|max:500',
           ];
 
@@ -81,18 +110,25 @@ class ProductController extends Controller
               Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
               return redirect()->back()->withErrors($errors)->withInput();
           }else {
-              $product = new Product();
+              $product = null;
               if(request()->post('id')) {
                   $product = Product::where('uuid', request()->post('id'))->first();
               }
               unset($inputs['id']);
               unset($inputs['_token']);
 
-              if((!$product->id && $product->create($inputs)) || ($product->id && $product->update($inputs))) {
+              if($product) {
+                  $product->update($inputs);
+              }else {
+                  $product = new Product();
+                  $product = $product->create($inputs);
+                  $product->refresh();
+              }
+
+              if($product->uuid) {
                   $files = $product->files()->get();
                   $shortings = @$inputs['shorting'] ?: [];
                   $removed = @$inputs['removed'] ?: [];
-
                   foreach ($files as $file) {
                       if(@$removed[$file->uuid] == 'removed') {
                           $file->delete();
@@ -101,13 +137,14 @@ class ProductController extends Controller
                           $file->save();
                       }
                   }
-
                   Session::flash('success_message', 'Ürün başarılı bir şekilde kaydedildi!');
                   return redirect(route('admin.product.update', ['uuid' => $product->uuid]));
+
               }else {
                   Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
                   return redirect()->back()->withErrors($errors)->withInput();
               }
+
           }
 
 

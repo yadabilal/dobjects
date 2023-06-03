@@ -64,17 +64,17 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{route('admin.product.show', ['uuid' => $model->uuid])}}">
+                                        <a class="dropdown-item" href="{{route('admin.product.update', ['uuid' => $model->uuid])}}">
                                             <i class="fa fa-pencil m-r-5"></i> Güncelle</a>
                                     </li>
                                     @if($model->status == \App\Model\Product::STATUS_PUBLISH)
                                         <li>
-                                            <a class="dropdown-item" href="{{route('admin.product.show', ['uuid' => $model->uuid])}}">
+                                            <a class="dropdown-item" href="{{route('admin.product.unpublish', ['uuid' => $model->uuid])}}">
                                                 <i class="fa fa-trash-o m-r-5"></i> Yayından Kaldır</a>
                                         </li>
                                     @else
                                         <li>
-                                            <a class="dropdown-item" href="{{route('admin.product.show', ['uuid' => $model->uuid])}}">
+                                            <a class="dropdown-item" href="{{route('admin.product.publish', ['uuid' => $model->uuid])}}">
                                                 <i class="fa fa-check m-r-5"></i> Yayınla</a>
                                         </li>
                                     @endif

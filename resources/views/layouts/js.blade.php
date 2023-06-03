@@ -18,6 +18,18 @@
 @stack('page-scripts')
 
 <script>
+    $(document).on("keyup","#identity_number",function() {
+        $("#Billing_identity_number2").val($(this).val());
+    });
+
+    $(document).on("click","#ship_to_different_address",function() {
+        var element = $(this);
+        if(element.is(':checked')) {
+            $(".shipping-address").show();
+        }else {
+            $(".shipping-address").hide();
+        }
+    });
 
     $(document).on("click",".review-star",function() {
         var element = $(this);
@@ -110,10 +122,6 @@
         }
     });
 
-    /*$('.dropdown-menu.cart-popup')['on']('click.bs.dropdown', function(e) {
-        e['stopPropagation']()
-    });*/
-
     $(document).on("click",".product-remove a.remove",function() {
         var element = $(this);
         var id= element.data('id');
@@ -194,25 +202,38 @@
 
   // Şehir Seçme
   $('.city').on('change',function () {
-    var city = $(this).val();
+    var element = $(this);
+    var city = element.val();
     $.ajax({
       url: '{{url('ilce-bul')}}',
       data: {city:city, _token:csrf_token},
       type: 'POST',
       success: function (data) {
-        $('.town').html('');
+          var parent =  element.closest('p').nextAll(':has(.town):first');
+          var town = parent.find('.town');
+          town.html('');
         var newOption = new Option('Şimdi İlçe Seç', '', false, false);
-        $('.town').append(newOption);
+          town.append(newOption);
         if(data.towns) {
           var towns = JSON.parse(data.towns);
           $.each(towns, function(k, v) {
             var newOption = new Option(v.name, v.uuid, false, false);
-            $('.town').append(newOption);
+              town.append(newOption);
           });
         }
       },
     });
   });
+
+    $('.billing-types').on('change',function () {
+        if($(this).val() == '{{\App\Model\Address::BILLING_TYPE_COMPANY}}') {
+            $('.billing-personal').hide();
+            $('.billing-company').show();
+        }else{
+            $('.billing-company').hide();
+            $('.billing-personal').show();
+        }
+    });
   @if(session()->has('success_message'))
       message("success", '{{ session()->get('success_message') }}')
   @endif

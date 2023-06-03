@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
 use App\Model\Category;
+use App\Model\Page;
 use App\Model\Product;
 use App\User;
 use Illuminate\Support\Facades\Response;
@@ -35,16 +36,19 @@ class AdminController extends Controller
         $id = @request()->post('id') ?: null;
         $for = @request()->post('forWhat') ?: "product";
         $url = Str::slug($name);
+        $idField = 'uuid';
 
         if($for == "product") {
             $product = Product::where('url', $url);
+        }else if($for == 'contract'){
+            $product = Page::where('url', $url);
+            $idField = 'id';
         }else {
             $product = Category::where('url', $url);
         }
 
-
         if($id) {
-            $product->where('uuid', '!=', $id);
+            $product->where($idField, '!=', $id);
         }
 
       $product= $product->first();

@@ -1,5 +1,5 @@
-/vendor
 .env
+.env.example
 /.idea
 worker.log
 composer.lock

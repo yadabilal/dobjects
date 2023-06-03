@@ -8,6 +8,7 @@
                     <th>Kullanıcı</th>
                     <th>Teslimat Adresi</th>
                     <th>Ürün Sayısı </th>
+                    <th>Ödeme Referansı</th>
                     <th>Durum</th>
                     <th>Tarih</th>
                     <th class="text-right">İşlemler</th>
@@ -16,7 +17,7 @@
                 <tbody>
                 @foreach($items as $item)
                     <tr>
-                        <td>{{$item->number}}</td>
+                        <td>#{{$item->number}}</td>
                         <td>
                             {{$item->user->full_name()}}
                             <br>
@@ -24,13 +25,14 @@
                         </td>
 
                         <td>
-                            {!!  $item->address->fullDetail() !!}
+                            {!!  $item->address ? $item->address->fullDetail() : '' !!}
                         </td>
                         <td>
-                <span class="badge badge-warning">
-                    {{$item->items_count}} Adet
-                </span>
+                            <span class="badge badge-warning">
+                                {{$item->items_count}} Adet
+                            </span>
                         </td>
+                        <td>{{$item->payment_reference}}</td>
                         <td>
                 <span class="{{$item->status_color(true)}}">
                     {{$item->status(true)}}

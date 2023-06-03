@@ -10,7 +10,7 @@ class Category extends Base
   use SoftDeletes;
 
   protected $table = 'categories';
-  protected $fillable = [ 'uuid', 'name', 'url' ];
+  protected $fillable = [ 'uuid', 'name', 'url', 'sorting' ];
 
 
   protected static function boot()
@@ -25,7 +25,7 @@ class Category extends Base
   }
 
     public function products() {
-        return $this->hasMany(Product::class, 'category_id');
+        return $this->hasMany(Product::class, 'category_id')->where('status', Product::STATUS_PUBLISH);
     }
 
     public function detailUrl() {
@@ -41,18 +41,13 @@ class Category extends Base
               ->get();
       }
 
-        return self::with("products")->withCount('products')
+        return self::select('id', 'name', 'url')
+            ->withCount('products')
             ->has('products', '>' , 0)
+            ->orderBy('sorting')
             ->orderBy('created_at', 'desc')
-            ->orderBy('name', 'asc')
+            ->orderBy('name')
             ->get();
     }
-
-
-
-    // TODO: SİL
-  public function books() {
-    return $this->hasMany(Book::class, 'category_id');
-  }
 
 }

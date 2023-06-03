@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Category;
+use App\Model\Page;
 use App\Model\Product;
 use App\Model\Town;
 
@@ -14,6 +15,7 @@ class HomeController extends Controller
         $allCount = Product::list_all_count();
         $urls = Product::shortingUrls();
         $items = Product::list_all();
+
         $categories = Category::list();
 
         return view('site.home', compact('items', 'categories', 'allCount', 'urls'));
@@ -26,7 +28,7 @@ class HomeController extends Controller
 
         if($item) {
             $maxCount = $item->stock ?: Product::MAX_ORDER_COUNT;
-            $lastItems = Product::list_all(8);
+            $lastItems = Product::list_all(8, false, true);
             return view('site.show', compact('item', 'lastItems', 'maxCount'));
         }else {
             return $this->errorPage();
@@ -36,17 +38,13 @@ class HomeController extends Controller
     // İletişim Sayfası
     public function contract($url = '')
     {
-        if($url == 'gizlilik-sozlesmesi') {
-            return view('site.contract.gizlilik');
-        }else if($url == 'kullanici-sozlesmesi') {
-            return view('site.contract.kullanici');
-        }else if($url == 'kisisel-verilerin-korunmasi') {
-            return view('site.contract.kisisel_veri_korunmasi');
-        }else if($url == 'iptal-ve-iade-kosullari') {
-            return view('site.contract.iade_ve_iptal');
+        $page = Page::where('url', $url)->where('status', Page::STATUS_PUBLISH)->first();
+
+        if($page) {
+            return view('site.contract.index', compact('page'));
         }
 
-      return view('site.contract.index');
+      return view('site.error');
     }
 
     // İlçeleri bul

@@ -31,13 +31,24 @@
               <div class="col-md-4">
                 <div class="form-group form-focus">
                   <label class="focus-label">Stok</label>
-                    <input type="number" class="form-control floating" name="stock" value="{{old('stock', @$model->stock)}}">
+                    <input type="number" class="form-control floating" name="stock" value="{{old('stock', @$model->stock ?: 1)}}">
 
                 </div>
                   @error('stock')
                   <small class="form-text text-muted">{{$message}}</small>
                   @enderror
               </div>
+
+                <div class="col-md-4">
+                    <div class="form-group form-focus">
+                        <label class="focus-label">Sıra</label>
+                        <input type="number" class="form-control floating" name="sorting" value="{{old('sorting', @$model->sorting ?: 1)}}">
+
+                    </div>
+                    @error('shorting')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
+                </div>
 
                 <div class="col-md-4">
                     <div class="form-group form-focus">
@@ -127,7 +138,7 @@
           <h3 class="card-title">Resim Galerisi</h3>
           <div class="form-group">
               <div>
-                  <input class="form-control" type="file" name="files[]" multiple accept="image/x-png,image/gif,image/jpeg">
+                  <input class="form-control" type="file" name="galeries[]" multiple accept="image/x-png,image/gif,image/jpeg">
                   <small class="form-text text-muted">Lütfen max 1000x1000px olacak şekilde fotoğraf yükleyiniz!</small>
               </div>
               <div class="row">
@@ -162,7 +173,7 @@
           <div class="row">
               <div class="col-md-12">
                   <div class="form-group">
-                      <textarea class="form-control" name="description" rows="6" cols="30" maxlength="500">{{old('description', @$model->description)}} </textarea>
+                      <textarea class="form-control summernote" name="description" rows="6" cols="30" maxlength="500">{!! old('description', @$model->description) !!} </textarea>
                       @error('description')
                       <small class="form-text text-muted">{{$message}}</small>
                       @enderror
@@ -175,7 +186,7 @@
           <div class="row">
               <div class="col-md-12">
                   <div class="form-group">
-                      <textarea class="form-control" name="additional_information" rows="6" cols="30" maxlength="500">{{old('additional_information', @$model->additional_information)}} </textarea>
+                      <textarea class="form-control summernote" name="additional_information" rows="6" cols="30" maxlength="500">{!! old('additional_information', @$model->additional_information) !!} </textarea>
                       @error('additional_information')
                       <small class="form-text text-muted">{{$message}}</small>
                       @enderror

@@ -1,6 +1,6 @@
 <a href="{{url('/')}}" class="{{@$linkClass ? : 'logo'}}">
     @if(@$settings['logo'])
-        <img width="400" height="79" src="{{ url('uploads/'.$settings['logo']) }}" alt="Deek Objects" />
+        <img src="{{ url('uploads/'.$settings['logo']) }}" title="{{@$settings['meta_title'] ?: 'Deek Objects | Tasarım Ürünleri'}}" alt="{{@$settings['meta_title'] ?: 'Deek Objects | Tasarım Ürünleri'}}" />
     @else
         {{@$settings['title'] ?: 'Deek Objects'}}
     @endif

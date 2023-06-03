@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Bir Kitap Bul'),
+    'name' => env('APP_NAME', 'Deek Objects'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://birkitapbul.com'),
+    'url' => env('APP_URL', 'https://deekobjects.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -227,5 +227,4 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-    'cron_key' => 'deneme',
 ];

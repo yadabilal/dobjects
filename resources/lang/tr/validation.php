@@ -200,6 +200,18 @@ return [
       'tags' => 'Etiketler',
       'stock' => 'Stok',
       'category_id' => 'Kategori',
+      'description' => 'Açıklama',
+      'identity' => 'Bu alan',
+      'Billing_identity_number' => 'Bu alan',
+      'Billing_identity_number2' => 'Bu alan',
+      'Billing_city_id' => 'Bu alan',
+      'Billing_town_id' => 'Bu alan',
+      'Billing_address' => 'Bu alan',
+      'Billing_email' => 'Bu alan',
+      'Billing_phone' => 'Bu alan',
+      'Billing_name' => 'Bu alan',
+      'Billing_type' => 'Bu alan',
+      'different_address' => 'Bu alan',
     ],
 
 ];

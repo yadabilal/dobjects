@@ -45,25 +45,21 @@
                                 </div>
                             </div>
                             <div class="block block-image">
-                                <img width="100" height="32" src="{{asset('theme/deekobjects/media/payments.png')}}" alt="">
+                                <img height="270" src="{{asset('theme/deekobjects/media/iyzico.jpg')}}" alt="">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="block block-menu">
-                                <h2 class="block-title">Sözleşmeler</h2>
+                                <h2 class="block-title">Kurumsal</h2>
                                 <div class="block-content">
                                     <ul>
+                                        @foreach($pages as $url => $pageTitle)
+                                            <li>
+                                                <a href="{{route('contract.sub', ['url' => $url])}}">{{$pageTitle}}</a>
+                                            </li>
+                                        @endforeach
                                         <li>
-                                            <a href="{{route('contract.sub', ['url' => 'iptal-ve-iade-kosullari'])}}">İade ve İptal Koşulları</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('contract.sub', ['url' => 'kisisel-verilerin-korunmasi'])}}">Kişisel Verilerin Korunması</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('contract.sub', ['url' => 'gizlilik-sozlesmesi'])}}">Gizlilik Sözleşmesi</a>
-                                        </li>
-                                        <li>
-                                            <a href="{{route('contract.sub', ['url' => 'kullanici-sozlesmesi'])}}">Kullanıcı Sözleşmesi</a>
+                                            <a href="{{route('contact')}}">İletişim</a>
                                         </li>
                                     </ul>
                                 </div>

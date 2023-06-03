@@ -23,7 +23,7 @@
             <div class="total-percent"><div class="percent" style="width:20%"></div></div>
         </div>
         <div class="buttons">
-            <a href="{{route('basket.short_list')}}" class="button btn view-cart btn-primary">Sepete Git</a>
+            <a href="{{auth()->id() ? route('basket.short_list') : route('tempbasket.short_list') }}" class="button btn view-cart btn-primary">Sepete Git</a>
             <a href="{{route('home')}}" class="button btn checkout btn-default">Alışverişe Devam Et</a>
         </div>
 

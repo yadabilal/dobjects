@@ -92,7 +92,7 @@ class BasketController extends Controller
         $basket->delete();
         DB::commit();
 
-          $count = $this->user->baskets->sum('quantity');
+          $count = $this->user->baskets->sum('quantity')-$basket->quantity;
           $tdp = $this->user->baskets->sum('total_discount_price');
           $totalDiscountPrice = Base::amountFormatterWithCurrency($tdp);
           $tp = $this->user->baskets->sum('total_price');

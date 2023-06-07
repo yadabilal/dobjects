@@ -46,9 +46,17 @@
                                                 <td> {{$item->readableTotalDiscountPrice().' ('.$item->total_quantity.' ürün için)'}} </td>
                                                 <td>
                                                     @if($item->status == \App\Model\Order::STATUS_CARGO)
-                                                    <a href="{{$item->cargo_url()}}" target="_blank" class="btn-small d-block">Kargo</a>
-                                                        <br>
-                                                        <p>Takip Numarası: {{$item->folow_number}}</p>
+                                                        @if(!$item->cargo->is_special)
+                                                        <a href="{{$item->cargo_url()}}" target="_blank" class="btn-small d-block">Kargo</a>
+                                                            <br>
+                                                            <p>Takip Numarası: {{$item->folow_number}}</p>
+                                                        @else
+                                                            <p>İletişime Geçecek Kişi: {{$item->cargo->full_name}}
+                                                            <br>
+                                                                İletişim Numarası: {{$item->cargo->contact}}
+                                                            </p>
+                                                        @endif
+
                                                     @elseif($item->status == \App\Model\Order::STATUS_COMPLETED && $item->lastFile)
                                                     <a href="{{route('order.downloadBilling', ['uuid' => $item->uuid])}}" class="btn-small d-block">
                                                         <i class="fa fa-download"></i> Faturayı İndir</a>

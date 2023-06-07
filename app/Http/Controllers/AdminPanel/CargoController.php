@@ -46,15 +46,21 @@ class CargoController extends Controller
             }
 
             $inputs = request()->all();
+
             $rules = [
                 'name' => 'required|max:150|min:3',
                 'description' => 'nullable|max:255',
-                'folow_url' => 'required|max:255|min:10',
+                'folow_url' => 'required_without:is_special|max:255',
+                'is_special' => 'nullable|in:0,1',
+                'contact' => 'required_if:is_special,=,1|max:255',
+                'full_name' => 'required_if:is_special,=,1|max:75',
             ];
 
             $validator = Validator::make($inputs, $rules, [
                 'unique' => 'Bu alan benzersiz olmalıdır!',
-                'required' => 'Bu alan boş olamaz!'
+                'required' => 'Bu alan boş olamaz!',
+                'required_if' => 'Bu alan boş olamaz!',
+                'required_without' => 'Bu alan boş olamaz!',
             ]);
             $errors = $validator->getMessageBag()->toArray();
 
@@ -67,7 +73,7 @@ class CargoController extends Controller
                 $inputs['order'] = 5;
 
                 if((!$category->id && $category = $category->create($inputs)) || ($category->id && $category->update($inputs))) {
-                    Session::flash('success_message', 'Ürün başarılı bir şekilde kaydedildi!');
+                    Session::flash('success_message', 'Kargo firması başarılı bir şekilde kaydedildi!');
                     return redirect(route('admin.cargo.update', ['uuid' => $category->uuid]));
                 }else {
                     Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');

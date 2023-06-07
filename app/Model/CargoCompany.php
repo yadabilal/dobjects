@@ -8,7 +8,7 @@ class CargoCompany extends Base
 {
   use SoftDeletes;
   protected $table = 'cargo_companies';
-  protected $fillable = [ 'uuid', 'name', 'order', 'description', 'folow_url'];
+  protected $fillable = [ 'uuid', 'name', 'order', 'description', 'folow_url', 'is_special', 'full_name', 'contact'];
 
   public function image() {
     return '';

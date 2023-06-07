@@ -159,6 +159,24 @@
       $('.notification-popup').fadeOut();
   }, 1000);
 
+  if($('.is_special').length>0) {
+
+      if($('#isSpecial').val() == "0") {
+          $('.is_special').hide();
+      }
+
+      $('#isSpecial').on('change', function () {
+          if($(this).is(':checked')) {
+              $(this).val("1");
+              $('.is_special').show();
+          }else {
+              $(this).val("0");
+              $('.is_special').hide();
+          }
+
+      });
+  }
+
   $('.product-image-remove').click(function () {
       var id = $(this).data('id');
       $("#"+id).val("removed");

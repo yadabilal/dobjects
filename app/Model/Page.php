@@ -11,7 +11,7 @@ class Page extends Base
 
   protected $table = 'pages';
   protected $fillable = [
-    'url', 'title', 'status', 'detail'
+    'url', 'title', 'status', 'detail', 'sorting'
   ];
 
     protected static function boot()

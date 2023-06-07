@@ -40,6 +40,36 @@
                         <small class="form-text text-muted">{{$message}}</small>
                         @enderror
                     </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Özel Kargo</label>
+                            <input type="checkbox" name="is_special" id="isSpecial" value="{{old('is_special', @$model->is_special ?: 0)}}" {{old('is_special', @$model->is_special ?: 0) ? 'checked': ''}}>
+                        </div>
+                        @error('is_special')
+                        <small class="form-text text-muted">{{$message}}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 is_special">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">İletişime Geçecek Kişi</label>
+                            <input type="text" class="form-control floating" maxlength="75" name="full_name" value="{{old('full_name', @$model->full_name)}}">
+                        </div>
+                        @error('full_name')
+                        <small class="form-text text-muted">{{$message}}</small>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 is_special">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">İletişime Geçecek Numara</label>
+                            <input type="text" class="form-control floating" maxlength="255" name="contact" value="{{old('contact', @$model->contact)}}">
+                        </div>
+                        @error('contact')
+                        <small class="form-text text-muted">{{$message}}</small>
+                        @enderror
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,3 +79,4 @@
         </div>
     </form>
 @endsection
+

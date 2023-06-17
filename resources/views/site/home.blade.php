@@ -4,6 +4,9 @@
   <meta name="keywords" content="{{@$settings['meta_keywords']}}">
   <meta name="description" content="{{@$settings['meta_description']}}" />
 @endsection
+@section('facebookAction')
+    fbq('track', 'PageView');
+@endsection
 @section('content')
     @include('layouts.breadcrumb', ['title' => "Mağaza"])
     <div id="content" class="site-content" role="main">

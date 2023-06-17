@@ -4,6 +4,9 @@
   <meta name="keywords" content="{{$item->seo_tags()}}">
   <meta name="description" content="{{$item->seo_description()}}" />
 @endsection
+@section('facebookAction')
+    fbq('track', 'PageView');
+@endsection
 @section('content')
     @include('layouts.breadcrumb', ['title' => $item->name])
     <div id="content" class="site-content" role="main">

@@ -63,6 +63,7 @@ $('.btn-add-to-cart .button')['on']('click', function(e) {
             var status = "error";
 
             if(data.success) {
+                fbq('track', 'AddToCart');
                 status = "success";
                 element['addClass']('added');
                 element['closest']('div')['append'](

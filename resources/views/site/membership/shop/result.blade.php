@@ -1,8 +1,11 @@
 @extends('layouts.app')
 @section('meta')
-    <title>Deek Objects | Sonuç</title>
+    <title>Deek Objects | Ödeme Sonuç</title>
     <meta name="keywords" content="">
     <meta name="description" content="" />
+@endsection
+@section('facebookAction')
+    fbq('track', 'Purchase', {value: {{$order->total_discount_price}}, currency: "TRY"});
 @endsection
 @section('content')
     <div id="content" class="site-content" role="main">

@@ -3,6 +3,7 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     @include('layouts.meta')
+    <meta name="facebook-domain-verification" content="23clmbhq6deq3fihp601xly1pqcbdd" />
     <!-- Facebook Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s)

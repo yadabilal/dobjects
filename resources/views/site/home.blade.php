@@ -25,7 +25,7 @@
                                             </li>
                                         @endforeach
                                         <li>
-                                            <a class="{{request()->url() == route('home') ? 'current' : '' }}" href="{{route('home')}}">Tüm Ürünler <span class="count">{{$allCount}}</span></a>
+                                            <a class="{{request()->url() == route('home') ? 'current' : '' }}" href="{{route('home')}}">Tüm Ürünler</a>
                                         </li>
                                     </ul>
                                 </div>

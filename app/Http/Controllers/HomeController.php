@@ -12,7 +12,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $allCount = Product::list_all_count();
+        $allCount = 0; // Product::list_all_count();
         $urls = Product::shortingUrls();
         $items = Product::list_all();
 

@@ -52,7 +52,7 @@ class Controller extends BaseController
 
       $pages = Page::orderBy('sorting')->pluck('title', 'url');
       $settings = Setting::pluck('value', 'param');
-
+      $this->setting = $settings;
 
       View::share(['user' => $this->user, 'settings' => $settings,
           'pages' => $pages, 'wishListCount' => $wishListCount,

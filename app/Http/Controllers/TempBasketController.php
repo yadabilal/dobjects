@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Base;
 use App\Model\Basket;
+use App\Model\Facebook;
 use App\Model\Product;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -23,12 +24,12 @@ class TempBasketController extends Controller
     }
 
     // Sepete Ekle
-    public function add()
+    public function add(\Illuminate\Http\Request $request)
     {
         $data['success'] = false;
-        if(request()->ajax() && request()->post('id')) {
+        if($request->ajax() && $request->post('id')) {
 
-            $all = Base::js_xss(request());
+            $all = Base::js_xss($request);
             $product = Product::where('uuid', $all['id'])
                 ->where('status', Product::STATUS_PUBLISH)
                 ->first();
@@ -51,6 +52,24 @@ class TempBasketController extends Controller
                     Session::put('basket.items', $baskets);
                     Session::put('basket.totalQuantity', $totalQuantity);
                     if($totalQuantity) {
+
+                        try {
+                            $contents = [];
+                            foreach ($baskets as $basket) {
+                                $content['id'] = $basket->product->id;
+                                $content['quantity'] = $basket->quantity;
+                                $content['item_price'] = $basket->product->discount_price;
+                                $contents[] = $content;
+                            }
+
+                            $facebook = new Facebook();
+                            $facebook->event = Facebook::EVENT_BASKET;
+                            $facebook->sourceUrl = request()->url();
+                            $facebook->user = $this->user;
+                            $facebook->customData['contents'] = $contents;
+                            $result = $facebook->events($this->setting);
+                        }catch (\Exception $e) {}
+
                         $data['success'] = true;
                         $data['id'] = $product->uuid;
                         $data['count'] = $totalQuantity;

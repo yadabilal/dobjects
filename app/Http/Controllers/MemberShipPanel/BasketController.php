@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MemberShipPanel;
 use App\Http\Controllers\Controller;
 use App\Model\Base;
 use App\Model\Basket;
+use App\Model\Facebook;
 use App\Model\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -31,16 +32,16 @@ class BasketController extends Controller
   }
 
   // Sepete Ekle
-  public function add()
+  public function add(\Illuminate\Http\Request $request)
   {
 
     $data['success'] = false;
-    if(request()->ajax() && request()->post('id')) {
+    if($request->ajax() && $request->post('id')) {
 
         if(!$this->user->can_order()) {
             $data['mesage'] = "Lütfen profilinizi tamamlayın!";
         }else {
-            $all = Base::js_xss(request());
+            $all = Base::js_xss($request);
             $product = Product::where('uuid', $all['id'])
                 ->where('status', Product::STATUS_PUBLISH)
                 ->first();
@@ -53,6 +54,24 @@ class BasketController extends Controller
                     $basket = Basket::add($product, @$all['quantity'] ?: 1, @$all['note'] ?: '');
 
                     if($basket) {
+                        try {
+                            $contents = [];
+                            $baskets = $this->user->baskets()->with('product')->get();
+                            foreach ($baskets as $basket) {
+                                $content['id'] = $basket->product->id;
+                                $content['quantity'] = $basket->quantity;
+                                $content['item_price'] = $basket->product->discount_price;
+                                $contents[] = $content;
+                            }
+
+                            $facebook = new Facebook();
+                            $facebook->event = Facebook::EVENT_BASKET;
+                            $facebook->sourceUrl = $request->url();
+                            $facebook->user = $this->user;
+                            $facebook->customData['contents'] = $contents;
+                            $result = $facebook->events($this->setting);
+                        }catch (\Exception $e) {}
+
                         $count = $this->user->baskets()->sum('quantity');
 
                         $data['success'] = true;

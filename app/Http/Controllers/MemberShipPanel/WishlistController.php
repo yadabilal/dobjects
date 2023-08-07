@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MemberShipPanel;
 
 use App\Http\Controllers\Controller;
+use App\Model\Facebook;
 use App\Model\Product;
 use App\Model\Wishlist;
 use Illuminate\Support\Facades\Session;
@@ -35,6 +36,21 @@ class WishlistController extends Controller
 
               $item = Wishlist::add($product);
               if($item) {
+                  try {
+                      $contents = [];
+                      $content['id'] = $item->id;
+                      $content['item_name'] = $item->product->name;
+                      $content['item_price'] = $item->product->discount_price;
+                      $contents[] = $content;
+
+                      $facebook = new Facebook();
+                      $facebook->event = Facebook::EVENT_WISHLIST;
+                      $facebook->sourceUrl = request()->url();
+                      $facebook->user = $this->user;
+                      $facebook->customData['contents'] = $contents;
+                      $result = $facebook->events($this->setting);
+                  }catch (\Exception $e) {}
+
                   Session::flash('success_message', 'Ürün favorilerinize eklendi!');
               }else {
                   Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');

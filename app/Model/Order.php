@@ -105,7 +105,27 @@ class Order extends Base
 
         if(strtolower($checkoutForm->getPaymentStatus()) == 'success' && $conversationId == $checkoutForm->getConversationId()) {
             $this->status = Order::STATUS_NEW;
-            return $this->save();
+            $this->save();
+
+            try {
+                $contents = [];
+                $orderItems = $this->items;
+                foreach ($orderItems as $orderItem) {
+                    $content['id'] = $orderItem->product_id;
+                    $content['quantity'] = $orderItem->quantity;
+                    $content['item_price'] = $orderItem->discount_price;
+                    $contents[] = $content;
+                }
+
+                $facebook = new Facebook();
+                $facebook->event = Facebook::EVENT_SHOP;
+                $facebook->sourceUrl = request()->url();
+                $facebook->user = $this->user;
+                $facebook->customData['contents'] = $contents;
+                $result = $facebook->events($this->setting);
+            }catch (\Exception $e) {}
+
+            return $this;
         }else if($checkoutForm->getPaymentStatus() && $checkoutForm->getErrorCode()) {
             $this->status = Order::STATUS_ERROR;
             $this->setNote(Order::MESSAGE_PAYMENT_NOTE, $checkoutForm->getErrorMessage() ?: 'Ödeme Hatası. Hata Kodu: '.$checkoutForm->getErrorCode());

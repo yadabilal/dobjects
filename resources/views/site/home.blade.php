@@ -135,7 +135,7 @@
                             </div>
                         </div>
 
-                        {{ $items->links('layouts.pagination') }}
+                        {{ $items->appends(request()->input())->links('layouts.pagination')}}
                     </div>
                 </div>
             </div>

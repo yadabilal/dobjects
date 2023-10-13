@@ -33,6 +33,28 @@ class HomeController extends Controller
         return view('site.home', compact('items', 'categories', 'allCount', 'urls'));
     }
 
+    public function discountedProducts(\Illuminate\Http\Request $request)
+    {
+        $allCount = 0; // Product::list_all_count();
+        $urls = Product::shortingUrls();
+        $items = Product::list_all(null, false, false,  true);
+        $categories = Category::list();
+
+        try {
+            $facebook = new Facebook();
+            if($request->get('urun')) {
+                $facebook->event = Facebook::EVENT_SEARCH;
+                $facebook->customData['search_string'] = $request->get('urun');
+            }
+
+            $facebook->sourceUrl = $request->url();
+            $facebook->user = $this->user;
+            $result = $facebook->events($this->setting);
+        }catch (\Exception $e) {}
+
+        return view('site.home', compact('items', 'categories', 'allCount', 'urls'));
+    }
+
     // İletişim Sayfası
     public function show($url, \Illuminate\Http\Request $request)
     {

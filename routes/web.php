@@ -14,6 +14,7 @@ Route::get('google8aab2772028b6e40.html', function () {
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('urun/{url}', 'HomeController@show')->name('product.show');
+Route::get('indirimli-urunler', 'HomeController@discountedProducts')->name('product.discounted');
 
 Route::get('destek', 'SupportController@index')->name('contact');
 Route::post('destek', 'SupportController@save')->name('contact.save');

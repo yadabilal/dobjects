@@ -8,7 +8,7 @@
     fbq('track', 'PageView');
 @endsection
 @section('content')
-    @include('layouts.breadcrumb', ['title' => "Mağaza"])
+    @include('layouts.breadcrumb', ['title' => @$title ?: 'Mağaza' ])
     <div id="content" class="site-content" role="main">
         <div class="section-padding">
             <div class="section-container p-l-r">

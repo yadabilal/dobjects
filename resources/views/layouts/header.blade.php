@@ -34,6 +34,9 @@
                 <a href="{{route('home')}}"><i class="wpb-icon-shop"></i></a>
             </div>
             <div class="shop-page">
+                <a href="{{route('product.discounted')}}"><i class="wpb-icon-gift-voucher"></i></a>
+            </div>
+            <div class="shop-page">
                 <a href="{{route('contact')}}"><i class="wpb-icon-chat"></i></a>
             </div>
             @guest

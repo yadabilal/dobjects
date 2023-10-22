@@ -52,7 +52,8 @@ class HomeController extends Controller
             $result = $facebook->events($this->setting);
         }catch (\Exception $e) {}
 
-        return view('site.home', compact('items', 'categories', 'allCount', 'urls'));
+        $title = "İndirimli Ürünler";
+        return view('site.home', compact('items', 'categories', 'allCount', 'urls', 'title'));
     }
 
     // İletişim Sayfası

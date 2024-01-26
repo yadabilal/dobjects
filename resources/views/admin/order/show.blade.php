@@ -24,8 +24,8 @@
                 <a href="{{route('admin.order.completed', ['uuid' => $model->uuid])}}" class="btn btn-success">
                     <i class="fa fa-check"></i> Kullanıcıya Ulaştı
                 </a>
-
-            @elseif($model->status == \App\Model\Order::STATUS_COMPLETED)
+            @endif
+            @if($model->status != \App\Model\Order::STATUS_WAITING_PAYMENT )
                 <a href="{{route('admin.order.billing_show', ['uuid' => $model->uuid])}}" class="btn btn-info">
                     <i class="fa fa-barcode"></i> Fatura Yükle
                 </a>

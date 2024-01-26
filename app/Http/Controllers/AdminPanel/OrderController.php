@@ -108,7 +108,7 @@ class OrderController extends Controller
 
     public function billing($uuid) {
         $model = Order::where('uuid', $uuid)
-            ->whereIn('status', [Order::STATUS_COMPLETED])
+            ->whereNotIn('status', [Order::STATUS_WAITING_PAYMENT])
             ->with('user', 'items', 'items.product','address', 'address.city', 'address.town')
             ->withCount('items')
             ->orderBy('id', 'desc')

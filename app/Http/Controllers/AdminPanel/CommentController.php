@@ -51,4 +51,32 @@ class CommentController extends Controller
         return redirect()->back();
     }
 
+    public function enableHomePage($id){
+        $model = Comment::where('id' , $id)
+            ->first();
+        $model->show_home_page = 1;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Yorum başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect()->back();
+    }
+
+    public function disableHomePage($id){
+        $model = Comment::where('id' , $id)
+            ->first();
+        $model->show_home_page = 0;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Yorum başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect()->back();
+    }
+
 }

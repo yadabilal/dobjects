@@ -51,7 +51,10 @@
                                 <br>
                                 <span class="badge badge-primary">{{$model->baskets_count}} Kişinin sepetinde</span>
                             @endif
-
+                            <br>
+                            <span class="{{$model->show_home_page ? 'badge badge-info' : 'badge badge-warning'}}">
+                                {{$model->show_home_page ? 'Anasayfada Gösteriliyor': 'Anasayfada Gösterilmiyor'}}
+                            </span>
                         </td>
                         <td>{{$model->created_at()}}</td>
                         <td class="text-right">
@@ -67,6 +70,19 @@
                                         <a class="dropdown-item" href="{{route('admin.product.update', ['uuid' => $model->uuid])}}">
                                             <i class="fa fa-pencil m-r-5"></i> Güncelle</a>
                                     </li>
+
+                                    @if($model->show_home_page)
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('admin.product.disableHomePage', ['id' => $model->id])}}">
+                                                <i class="fa fa-star-o m-r-5"></i> Anasayfadan Kaldır</a>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('admin.product.enableHomePage', ['id' => $model->id])}}">
+                                                <i class="fa fa-star m-r-5"></i> Anasayfada Göster</a>
+                                        </li>
+                                    @endif
+
                                     @if($model->status == \App\Model\Product::STATUS_PUBLISH)
                                         <li>
                                             <a class="dropdown-item" href="{{route('admin.product.unpublish', ['uuid' => $model->uuid])}}">

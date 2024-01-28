@@ -108,7 +108,7 @@
                                             <div class="col-sm-12 col-md-4">
                                                 <label class="required">Konu</label><br>
                                                 <span class="form-control-wrap  {{ $errors->has('subject') ? ' has-validation has-error' : '' }}">
-                                                    <input type="text" pplaceholder="Konu*" name="subject" value="{{old('subject') ? : ''}}" maxlength="50" class="required form-control" aria-required="true">
+                                                    <input type="text" placeholder="Konu*" name="subject" value="{{old('subject') ? : ''}}" maxlength="50" class="required form-control" aria-required="true">
                                                 </span>
                                                 @error('subject')
                                                 <p class="text-error">{{$message}}</p>

@@ -21,7 +21,7 @@ class Product extends Base
         'uuid', 'tags', 'name', 'sorting',
         'url', 'meta_description', 'short_description',
         'description','additional_information','status', 'stock',
-        'discount_rate', 'price', 'discount_price', 'category_id', ''
+        'discount_rate', 'price', 'discount_price', 'category_id', 'show_home_page'
     ];
 
     protected static function boot()

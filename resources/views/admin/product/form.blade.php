@@ -67,6 +67,20 @@
 
                 <div class="col-md-4">
                     <div class="form-group form-focus">
+                        <label class="focus-label">Anasayfada Gösterim</label>
+                        <select class="select floating" name="show_home_page">
+                            <option value="">Seçiniz</option>
+                            <option data-tokens="0" value="0" {{@old('show_home_page', @$model->show_home_page) == 0? 'selected': ''}}>Anasayfada Gösterilmesin</option>
+                            <option data-tokens="1" value="1" {{@old('show_home_page', @$model->show_home_page) == 1 ? 'selected': ''}}>Anasayfada Gösterilsin</option>
+                        </select>
+                    </div>
+                    @error('show_home_page')
+                    <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group form-focus">
                         <label class="focus-label">Fiyat</label>
                         <input type="text" class="form-control floating calculate" id="price" name="price" value="{{old('price', @$model->price)}}">
                     </div>

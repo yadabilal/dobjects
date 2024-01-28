@@ -2,16 +2,76 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Base;
 use App\Model\Category;
+use App\Model\Comment;
 use App\Model\Facebook;
+use App\Model\HomePage;
 use App\Model\Page;
 use App\Model\Product;
+use App\Model\Subscribe;
+use App\Model\Support;
 use App\Model\Town;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
 
-    public function index(\Illuminate\Http\Request $request)
+    public function index() {
+
+        $typeOnes = HomePage::where('type', HomePage::TYPE_1)
+            ->where('status', HomePage::STATUS_PUBLISH)
+            ->orderBy('sorting')
+            ->get();
+
+        $typeTwos = HomePage::where('type', HomePage::TYPE_2)
+            ->where('status', HomePage::STATUS_PUBLISH)
+            ->orderBy('sorting')
+            ->get();
+
+        $typeThrees = HomePage::where('type', HomePage::TYPE_3)
+            ->where('status', HomePage::STATUS_PUBLISH)
+            ->orderBy('sorting')
+            ->get();
+
+        $typeFours = HomePage::where('type', HomePage::TYPE_4)
+            ->where('status', HomePage::STATUS_PUBLISH)
+            ->orderBy('sorting')
+            ->get();
+
+        $typeFives = HomePage::where('type', HomePage::TYPE_5)
+            ->where('status', HomePage::STATUS_PUBLISH)
+            ->orderBy('sorting')
+            ->get();
+
+        $typeSixes = HomePage::where('type', HomePage::TYPE_6)
+            ->where('status', HomePage::STATUS_PUBLISH)
+            ->orderBy('sorting')
+            ->get();
+
+        $typeSevens = HomePage::where('type', HomePage::TYPE_7)
+            ->where('status', HomePage::STATUS_PUBLISH)
+            ->orderBy('sorting')
+            ->get();
+
+        $comments = Comment::where('status', Comment::STATUS_PUBLISH)
+            ->with('product', 'user')
+            ->where('show_home_page', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $products = Product::where('status', Product::STATUS_PUBLISH)
+            ->where('show_home_page', 1)
+            ->orderBy('sorting')
+            ->get();
+
+        return view('site.index', compact('typeOnes', 'typeTwos', 'typeThrees', 'typeFours', 'typeFives', 'comments', 'products', 'typeSixes', 'typeSevens'));
+
+    }
+
+    public function product(\Illuminate\Http\Request $request)
     {
         $allCount = 0; // Product::list_all_count();
         $urls = Product::shortingUrls();
@@ -30,7 +90,7 @@ class HomeController extends Controller
             $result = $facebook->events($this->setting);
         }catch (\Exception $e) {}
 
-        return view('site.home', compact('items', 'categories', 'allCount', 'urls'));
+        return view('site.product', compact('items', 'categories', 'allCount', 'urls'));
     }
 
     public function discountedProducts(\Illuminate\Http\Request $request)
@@ -102,5 +162,65 @@ class HomeController extends Controller
             ], 200);
         }
       }
+    }
+
+    public function subscribeCheck(\Illuminate\Http\Request $request)
+    {
+        $request = \request();
+        $data['success'] = false;
+        if($request->post()) {
+            $data['success'] = true;
+            $inputs = Base::js_xss($request);
+            $rule = [
+                'email' => 'required|email|max:150',
+            ];
+
+            $validator = Validator::make($inputs, $rule);
+            $errors = $validator->getMessageBag()->toArray();
+
+            if ($errors){
+                $data['success'] = false;
+                $data['errors'] = $errors;
+            }
+        }else {
+            $data['message'] = 'Geçersiz İstek!';
+        }
+
+        return Response::json($data, 200);
+    }
+    public function subscribe(\Illuminate\Http\Request $request)
+    {
+        $request= \request();
+        if($request->post()) {
+            $check = $this->subscribeCheck($request);
+            $result = $check->getData();
+            $inputs = Base::js_xss($request);
+            if(@$result->success) {
+
+                $emailAddress = trim($request->all()['email']);
+                if ($emailAddress) {
+                    $email = Subscribe::where('email', $emailAddress)->first();
+
+                    if(!$email) {
+                        $model = new Subscribe();
+                        $model->email = $emailAddress;
+                        $model->save();
+                    }
+                }
+
+                Session::flash('success_message', 'Aboneliğin başarılı bir şekilde oluştu.');
+
+                return redirect()->back();
+
+            }else {
+                if(@$result->message) {
+                    Session::flash('error_message', $result->message);
+                }else{
+                    Session::flash('error_message', 'Lütfen hataları düzeltip tekrar dene!');
+                }
+                return redirect()->back()->withErrors($result->errors)->withInput();
+            }
+        }
+
     }
 }

@@ -254,6 +254,7 @@ $(document).on("click",".btn-save",function() {
   _this.addClass('is-loading');
   var action = $(this).attr('data-action');
   var after_message = ($(this).attr('data-after-message') == 'true');
+  var after_message_content = ($(this).attr('data-after-message-content') == 'true');
   var form = $(this).closest('form')[0];
   var formData = new FormData(form);
   formData.append('_token', csrf_token);
@@ -284,7 +285,12 @@ $(document).on("click",".btn-save",function() {
         $.each(data.errors, function( index, value ) {
             var input = $("[name='"+index+"']");
             input.parent().addClass('has-validation has-error');
-            input.parent().after('<p class="text-error">'+value+'</p>');
+
+            if($('.without-message').length>0) {
+                $('.without-message').after('<p class="text-error">'+value+'</p>');
+            }else {
+                input.parent().after('<p class="text-error">'+value+'</p>');
+            }
 
         });
         _this.removeClass('is-loading');

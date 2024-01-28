@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
 use App\Model\Category;
+use App\Model\Comment;
 use App\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -80,6 +81,4 @@ class CategoryController extends Controller
             return redirect()->back()->withErrors($errors)->withInput();
         }
     }
-
-
 }

@@ -91,6 +91,7 @@ class ProductController extends Controller
               'name' => 'required|max:100|min:3',
               'stock' => 'required|integer',
               'sorting' => 'required|integer',
+              'show_home_page' => 'nullable|integer',
               'category_id' => 'required|exists:categories,id',
               'price' => 'required',
               'discount_rate' => 'required|integer',
@@ -164,5 +165,33 @@ class ProductController extends Controller
         $data['discount_price'] = $discountPrice;
 
         return Response::json($data);
+    }
+
+    public function enableHomePage($id){
+        $model = Product::where('id' , $id)
+            ->first();
+        $model->show_home_page = 1;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Yorum başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect()->back();
+    }
+
+    public function disableHomePage($id){
+        $model = Product::where('id' , $id)
+            ->first();
+        $model->show_home_page = 0;
+
+        if($model && $model->save()) {
+            Session::flash('success_message', 'Yorum başarılı bir şekilde kaydedildi!');
+        }else {
+            Session::flash('error_message', 'Beklenmedik bir hata meydana geldi!');
+        }
+
+        return redirect()->back();
     }
 }

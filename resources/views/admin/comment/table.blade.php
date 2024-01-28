@@ -39,12 +39,27 @@
                             <span class="{{$item->readableStatusColor(true)}}">
                                 {{$item->readableStatus(true)}}
                             </span>
+
+                            <span class="{{$item->show_home_page ? 'badge badge-info' : 'badge badge-warning'}}">
+                                {{$item->show_home_page ? 'Anasayfada Gösteriliyor': 'Anasayfada Gösterilmiyor'}}
+                            </span>
                         </td>
                         <td>{{$item->created_at()}}</td>
                         <td class="text-right">
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
+                                    @if($item->show_home_page)
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('admin.comment.disableHomePage', ['id' => $item->id])}}">
+                                                <i class="fa fa-star-o m-r-5"></i> Anasayfadan Kaldır</a>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a class="dropdown-item" href="{{route('admin.comment.enableHomePage', ['id' => $item->id])}}">
+                                                <i class="fa fa-star m-r-5"></i> Anasayfada Göster</a>
+                                        </li>
+                                    @endif
                                     @if($item->status == \App\Model\Comment::STATUS_UNPUBLISH)
                                         <li>
                                         <a class="dropdown-item" href="{{route('admin.comment.publish', ['id' => $item->id])}}">

@@ -11,7 +11,7 @@ class Comment extends Base
     const STATUS_UNPUBLISH = "UNPUBLISH";
 
   protected $table = 'comments';
-  protected $fillable = [ 'user_id', 'product_id', 'rate', 'review' ];
+  protected $fillable = [ 'user_id', 'product_id', 'rate', 'review', 'show_home_page' ];
 
 
   protected static function boot()

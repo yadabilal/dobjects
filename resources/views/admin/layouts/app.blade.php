@@ -112,6 +112,12 @@
           <li class="{{request()->url() == route('admin.setting.index') ? 'active': ''}}">
             <a href="{{route('admin.setting.index')}}"><i class="fa fa-cog"></i> Ayarlar</a>
           </li>
+            <li class="{{request()->url() == route('admin.subscribe') ? 'active': ''}}">
+                <a href="{{route('admin.subscribe')}}"><i class="fa fa-envelope"></i> Abonelikler</a>
+            </li>
+            <li class="{{request()->url() == route('admin.menu.index', ['type' => @$type ?: \App\Model\HomePage::TYPE_1]) ? 'active': ''}}">
+                <a href="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_1])}}"><i class="fa fa-home"></i> Anasayfa Ayarları</a>
+            </li>
         </ul>
       </div>
     </div>

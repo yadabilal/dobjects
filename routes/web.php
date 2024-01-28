@@ -12,7 +12,10 @@ Route::get('google8aab2772028b6e40.html', function () {
     echo 'google-site-verification: google8aab2772028b6e40.html';
 });
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/anasayfa', 'HomeController@index')->name('anasayfa');
+Route::post('/aboneol-kontrol', 'HomeController@subscribeCheck')->name('subscribe');
+Route::post('/aboneol', 'HomeController@subscribe')->name('subscribe.save');
+Route::get('/', 'HomeController@product')->name('home');
 Route::get('urun/{url}', 'HomeController@show')->name('product.show');
 Route::get('indirimli-urunler', 'HomeController@discountedProducts')->name('product.discounted');
 
@@ -149,6 +152,8 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
 
   // Ürün İşlemleri
     Route::get('urunler', 'ProductController@index')->name('admin.product.index');
+    Route::get('urun-anasayfada-goster/{id}', 'ProductController@enableHomePage')->name('admin.product.enableHomePage');
+    Route::get('urun-anasayfadan-cikar/{id}', 'ProductController@disableHomePage')->name('admin.product.disableHomePage');
     Route::get('urun/guncelle/{uuid}', 'ProductController@update')->name('admin.product.update');
     Route::get('urun/ekle', 'ProductController@create')->name('admin.product.create');
     Route::post('urun/kaydet', 'ProductController@save')->name('admin.product.save');
@@ -174,7 +179,7 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
     Route::post('siparis/iptal-et/{uuid}', 'OrderController@cancel_save')->name('admin.order.cancel_save');
 
     // Kategori İşlemleri
-    Route::get('kategoriler', 'CategoryController@index')->name('admin.category.index');
+    Route::get('kategoriler', 'CategoryController@index')->name('admin.category.index');;
     Route::get('kategori/{uuid}', 'CategoryController@update')->name('admin.category.update');
     Route::get('kategori/ekle', 'CategoryController@create')->name('admin.category.create');
     Route::post('kategori/kaydet', 'CategoryController@save')->name('admin.category.save');
@@ -187,8 +192,21 @@ Route::prefix('admin')->namespace('AdminPanel')->middleware('auth', 'super_admin
 
     // Yorum İşlemleri
     Route::get('yorumlar', 'CommentController@index')->name('admin.comment.index');
+    Route::get('yorum-anasayfada-goster/{id}', 'CommentController@enableHomePage')->name('admin.comment.enableHomePage');
+    Route::get('yorum-anasayfadan-cikar/{id}', 'CommentController@disableHomePage')->name('admin.comment.disableHomePage');
     Route::get('yorum/yayinla/{id}', 'CommentController@publish')->name('admin.comment.publish');
     Route::get('yorum/yayindan-kaldir/{id}', 'CommentController@unPublish')->name('admin.comment.unpublish');
+
+
+    // Menü İşlemleri
+    Route::get('menu/{type}', 'MenuController@index')->name('admin.menu.index');
+    Route::get('menu-guncelle/{id}', 'MenuController@update')->name('admin.menu.update');
+    Route::get('menu-yayindan-kaldir/{id}', 'MenuController@unpublish')->name('admin.menu.unpublish');
+    Route::get('menu-yayinla/{id}', 'MenuController@publish')->name('admin.menu.publish');
+    Route::get('menu-ekle/{type}', 'MenuController@create')->name('admin.menu.create');
+    Route::post('menu/kaydet', 'MenuController@save')->name('admin.menu.save');
+
+    Route::get('abonelikler', 'SubscribeController@index')->name('admin.subscribe');
 
 });
 Route::prefix('sitemap.xml')->group(function () {

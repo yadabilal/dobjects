@@ -113,7 +113,7 @@ class HomeController extends Controller
         }catch (\Exception $e) {}
 
         $title = "İndirimli Ürünler";
-        return view('site.home', compact('items', 'categories', 'allCount', 'urls', 'title'));
+        return view('site.product', compact('items', 'categories', 'allCount', 'urls', 'title'));
     }
 
     // İletişim Sayfası

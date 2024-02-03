@@ -12,10 +12,10 @@ Route::get('google8aab2772028b6e40.html', function () {
     echo 'google-site-verification: google8aab2772028b6e40.html';
 });
 
-Route::get('/anasayfa', 'HomeController@index')->name('anasayfa');
+Route::get('/', 'HomeController@index')->name('mainpage');
 Route::post('/aboneol-kontrol', 'HomeController@subscribeCheck')->name('subscribe');
 Route::post('/aboneol', 'HomeController@subscribe')->name('subscribe.save');
-Route::get('/', 'HomeController@product')->name('home');
+Route::get('/urunler', 'HomeController@product')->name('home');
 Route::get('urun/{url}', 'HomeController@show')->name('product.show');
 Route::get('indirimli-urunler', 'HomeController@discountedProducts')->name('product.discounted');
 

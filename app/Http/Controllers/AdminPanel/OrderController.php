@@ -172,7 +172,7 @@ class OrderController extends Controller
             }
 
         }else {
-            Session::flash('error_message', 'İşelmi yapmaya yetkiniz yok!');
+            Session::flash('error_message', 'İşlemi yapmaya yetkiniz yok!');
             return redirect()->back()->withErrors($errors)->withInput();
         }
     }
@@ -198,7 +198,7 @@ class OrderController extends Controller
     public function billing_save($uuid) {
         $errors = [];
         $model = Order::where('uuid', $uuid)
-            ->whereIn('status', [Order::STATUS_COMPLETED])
+            ->whereNotIn('status', [Order::STATUS_WAITING_PAYMENT])
            ->orderBy('id', 'desc')
             ->first();
 
@@ -230,7 +230,7 @@ class OrderController extends Controller
             }
 
         }else {
-            Session::flash('error_message', 'İşelmi yapmaya yetkiniz yok!');
+            Session::flash('error_message', 'İşlemi yapmaya yetkiniz yok!');
             return redirect()->back()->withErrors($errors)->withInput();
         }
     }
@@ -276,7 +276,7 @@ class OrderController extends Controller
             }
 
         }else {
-            Session::flash('error_message', 'İşelmi yapmaya yetkiniz yok!');
+            Session::flash('error_message', 'İşlemi yapmaya yetkiniz yok!');
             return redirect()->back()->withErrors($errors)->withInput();
         }
     }

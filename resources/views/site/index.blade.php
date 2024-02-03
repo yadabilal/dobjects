@@ -13,7 +13,7 @@
         <div id="main-content" class="main-content">
             <div id="primary" class="content-area">
                 <div id="content" class="site-content" role="main">
-                    @if($typeOnes)
+                    @if($typeOnes->count())
                         <section class="section m-b-70">
                             <!-- Block Sliders -->
                             <div class="block block-sliders layout-3 nav-vertical">
@@ -45,7 +45,7 @@
                         </section>
                     @endif
 
-                    @if($typeTwos)
+                    @if($typeTwos->count())
                             <section class="section section-padding m-b-70">
                                 @foreach($typeTwos as $typeTwo)
                                     <div class="section-container">
@@ -59,7 +59,7 @@
                                                 </div>
                                                 @if($typeTwo->url)
                                                     <div class="intro-button">
-                                                        <a class="btn-underline center" href="{{$typeTwo->url}}">Detay</a>
+                                                        <a class="btn-underline center" href="{{$typeTwo->url}}">{{$typeTwo->sub_title}}</a>
                                                     </div>
                                                 @endif
                                             </div>
@@ -70,7 +70,7 @@
                             </section>
                     @endif
 
-                        @if($typeThrees)
+                        @if($typeThrees->count())
                             <section class="section section-padding m-b-70">
                                 <div class="section-container">
                                     <div class="block block-banners layout-4 banners-effect">
@@ -113,7 +113,7 @@
                             </section>
                         @endif
 
-                        @if($typeFours)
+                        @if($typeFours->count())
                             <section class="section section-padding top-border p-t-70 m-b-70">
                                 <div class="section-container">
                                     <div class="block block-product-cats slider">
@@ -147,7 +147,7 @@
                             </section>
                         @endif
 
-                        @if($typeFives)
+                        @if($typeFives->count())
                             <section class="section background-2 no-space m-b-70">
                                 @foreach($typeFives as $typeFive)
                                     <div class="row">
@@ -189,7 +189,7 @@
                                 @endforeach
                             </section>
                         @endif
-                        @if($typeSixes)
+                        @if($typeSixes->count())
                             <section class="section section-padding m-b-70">
                                 <div class="section-container">
                                     <div class="block block-product-cats layout-2">
@@ -220,7 +220,7 @@
                                 </div>
                             </section>
                         @endif
-                        @if($products)
+                        @if($products->count())
                             <section class="section section-padding top-border p-t-70 m-b-70">
                                 <div class="section-container">
                                     <div class="block block-products slider">
@@ -309,7 +309,7 @@
                                 </div>
                             </section>
                         @endif
-                        @if($comments)
+                        @if($comments->count())
                             <section class="section section-padding top-border p-t-70 m-b-70">
                                 <div class="section-container">
                                     <!-- Block Testimonial -->
@@ -352,7 +352,7 @@
                             </section>
                         @endif
 
-                        @if($typeSevens)
+                        @if($typeSevens->count())
                             <section class="section section-padding top-border p-t-20 m-b-20">
                                 <div class="section-container">
                                     <div class="block block-image slider">
@@ -362,7 +362,7 @@
                                                     @foreach($typeSevens as $typeSeven)
                                                         <div class="item slick-slide">
                                                             <div class="item-image">
-                                                                <a href="#">
+                                                                <a href="{{$typeThree->url ?: 'javascript:void(0)'}}">
                                                                     <img width="450" height="450" src="{{$typeSeven->getPic()}}" alt="{{$typeSeven->title}}" title="{{$typeSeven->title}}">
                                                                 </a>
                                                             </div>

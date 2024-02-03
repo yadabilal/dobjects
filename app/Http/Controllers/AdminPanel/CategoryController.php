@@ -77,7 +77,7 @@ class CategoryController extends Controller
 
 
         }else {
-            Session::flash('error_message', 'İşelmi yapmaya yetkiniz yok!');
+            Session::flash('error_message', 'İşlemi yapmaya yetkiniz yok!');
             return redirect()->back()->withErrors($errors)->withInput();
         }
     }

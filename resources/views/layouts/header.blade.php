@@ -31,6 +31,9 @@
         <div class="header-mobile-fixed">
             <!-- Shop -->
             <div class="shop-page">
+                <a href="{{route('mainpage')}}"><i class="fa fa-home font-awasome-icon"></i></a>
+            </div>
+            <div class="shop-page">
                 <a href="{{route('home')}}"><i class="wpb-icon-shop"></i></a>
             </div>
             <div class="shop-page">
@@ -81,6 +84,9 @@
                             <div class="site-navigation">
                                 <nav id="main-navigation">
                                     <ul id="menu-main-menu" class="menu">
+                                        <li class="level-0 menu-item">
+                                            <a href="{{route('mainpage')}}"><span class="menu-item-text">Anasayfa</span></a>
+                                        </li>
                                         <li class="level-0 menu-item">
                                             <a href="{{route('home')}}"><span class="menu-item-text">Mağaza</span></a>
                                         </li>

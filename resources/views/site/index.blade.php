@@ -70,6 +70,39 @@
                             </section>
                     @endif
 
+                        @if($typeFours->count())
+                            <section class="section section-padding top-border p-t-70 m-b-70">
+                                <div class="section-container">
+                                    <div class="block block-product-cats slider">
+                                        <div class="block-widget-wrap">
+                                            <div class="block-title"><h2>Kategoriler</h2></div>
+                                            <div class="block-content">
+                                                <div class="product-cats-list slick-wrap">
+                                                    <div class="slick-sliders content-category" data-dots="0" data-slidestoscroll="true" data-nav="1" data-columns4="2" data-columns3="3" data-columns2="4" data-columns1="5" data-columns1440="5" data-columns="5">
+                                                        @foreach($typeFours as $typeFours)
+                                                            <div class="item item-product-cat slick-slide">
+                                                                <div class="item-product-cat-content">
+                                                                    <a href="{{$typeFours->url ?: 'javascript:void(0)'}}">
+                                                                        <div class="item-image">
+                                                                            <img width="258" height="258" src="{{$typeFours->getPic()}}" alt="{{$typeFours->title}}" title="{{$typeFours->title}}">
+                                                                        </div>
+                                                                    </a>
+                                                                    <div class="product-cat-content-info">
+                                                                        <h2 class="item-title">
+                                                                            <a href="{{$typeFours->url ?: 'javascript:void(0)'}}">{{$typeFours->title}}</a>
+                                                                        </h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        @endif
                         @if($typeThrees->count())
                             <section class="section section-padding m-b-70">
                                 <div class="section-container">
@@ -106,40 +139,6 @@
                                                         </div>
                                                     </div>
                                                 @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        @endif
-
-                        @if($typeFours->count())
-                            <section class="section section-padding top-border p-t-70 m-b-70">
-                                <div class="section-container">
-                                    <div class="block block-product-cats slider">
-                                        <div class="block-widget-wrap">
-                                            <div class="block-title"><h2>Kategoriler</h2></div>
-                                            <div class="block-content">
-                                                <div class="product-cats-list slick-wrap">
-                                                    <div class="slick-sliders content-category" data-dots="0" data-slidestoscroll="true" data-nav="1" data-columns4="2" data-columns3="3" data-columns2="4" data-columns1="5" data-columns1440="5" data-columns="5">
-                                                        @foreach($typeFours as $typeFours)
-                                                            <div class="item item-product-cat slick-slide">
-                                                                <div class="item-product-cat-content">
-                                                                    <a href="{{$typeFours->url ?: 'javascript:void(0)'}}">
-                                                                        <div class="item-image">
-                                                                            <img width="258" height="258" src="{{$typeFours->getPic()}}" alt="{{$typeFours->title}}" title="{{$typeFours->title}}">
-                                                                        </div>
-                                                                    </a>
-                                                                    <div class="product-cat-content-info">
-                                                                        <h2 class="item-title">
-                                                                            <a href="{{$typeFours->url ?: 'javascript:void(0)'}}">{{$typeFours->title}}</a>
-                                                                        </h2>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -229,6 +228,7 @@
                                             <div class="block-content">
                                                 <div class="content-product-list slick-wrap">
                                                     <div class="slick-sliders products-list grid" data-slidestoscroll="true" data-dots="false" data-nav="1" data-columns4="1" data-columns3="2" data-columns2="3" data-columns1="3" data-columns1440="4" data-columns="4">
+
                                                         @foreach($products as $product)
                                                             <div class="item-product slick-slide">
                                                                 <div class="items">
@@ -255,18 +255,17 @@
                                                                                     @endif
                                                                                 </a>
                                                                             </div>
-                                                                            <div class="product-button">
 
+                                                                            <div class="product-button">
                                                                                 @if($product->in_wishlist())
                                                                                     <div class="btn-wishlist" data-title="Favorilerinde">
-                                                                                        <a href="{{$product->deleteFavoriteUrl()}}" class="product-btn added-favorite">Favorilerinde</a>
+                                                                                        <button class="product-btn added" onclick="location.href='{{$product->deleteFavoriteUrl()}}';">Favorilerinde</button>
                                                                                     </div>
                                                                                 @else
                                                                                     <div class="btn-wishlist" data-title="Favorilere Ekle">
-                                                                                        <a href="{{$product->addFavoriteUrl()}}" class="product-btn">Favorilere Ekle</a>
+                                                                                        <button class="product-btn" onclick="location.href='{{$product->addFavoriteUrl()}}';">Favorilere Ekle</button>
                                                                                     </div>
                                                                                 @endif
-
                                                                                 @if($product->in_basket())
                                                                                     <div class="btn-add-to-cart" data-title="Sepetinde"  data-id="{{$product->uuid}}">
                                                                                         <a href="javascript:void(0)" class="added-to-cart product-btn" title="Sepetinde" tabindex="0">Sepetinde</a>

@@ -361,7 +361,7 @@
                                                     @foreach($typeSevens as $typeSeven)
                                                         <div class="item slick-slide">
                                                             <div class="item-image">
-                                                                <a href="{{$typeSeven->url ?: 'javascript:void(0)'}}">
+                                                                <a href="{{$typeSeven->url ?: 'javascript:void(0)'}}" @if($typeSeven->url) target="_blank" @endif>
                                                                     <img width="450" height="450" src="{{$typeSeven->getPic()}}" alt="{{$typeSeven->title}}" title="{{$typeSeven->title}}">
                                                                 </a>
                                                             </div>

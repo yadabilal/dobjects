@@ -5,7 +5,7 @@ var send_at;
 var progress= false;
 setTimeout(function() {
     $('.page-preloader')['fadeOut']()
-}, 1500);
+}, 100);
 
 function message(status, message) {
     if(status == 'success') {

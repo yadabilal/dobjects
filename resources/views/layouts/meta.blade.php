@@ -18,13 +18,15 @@
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/libs/mmenu/css/mmenu.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/libs/slider/css/jslider.css') }}">
 
-<link rel="stylesheet" href="{{ asset('theme/deekobjects/css/app.css?'.\Carbon\Carbon::now()->getTimestamp()) }}" type="text/css">
-<link rel="stylesheet" href="{{ asset('theme/deekobjects/css/responsive.css?'.\Carbon\Carbon::now()->getTimestamp()) }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('theme/deekobjects/css/app.css')}}" type="text/css">
+<link rel="stylesheet" href="{{ asset('theme/deekobjects/css/responsive.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/css/extra.css?'.\Carbon\Carbon::now()->getTimestamp()) }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('theme/deekobjects/css/font-barlow.css') }}" >
+<link rel="stylesheet" href="{{ asset('theme/deekobjects/css/font-garamond.css') }}">
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@100;200;300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@100;200;300;400;500;600;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=EB+Garamond:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&amp;display=swap" rel="stylesheet">
-
+-->
 <style>
     .page-title {
         background-image: url({{@$settings['breadcrumb'] ? url('uploads/'.$settings['breadcrumb']): asset('theme/deekobjects/media/site-header.jpg')}})!important;

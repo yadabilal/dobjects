@@ -29,6 +29,12 @@ return array (
   502372 => 'Tigo',
   502373 => 'Tigo',
   502374 => 'Tigo',
+  502375 => 'Tigo',
+  50239 => 'Telgua',
+  502390 => 'Tigo',
+  502391 => 'Tigo',
+  502392 => 'Tigo',
+  502393 => 'Tigo',
   50240 => 'Tigo',
   502400 => 'Movistar',
   50241 => 'Telgua',
@@ -128,4 +134,5 @@ return array (
   5025918 => 'Tigo',
   5025919 => 'Tigo',
   502599 => 'Tigo',
+  5028 => 'Tigo',
 );

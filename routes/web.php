@@ -120,6 +120,7 @@ Route::prefix('kayit-ol')->namespace('Auth')->group(function () {
 });
 
 Route::prefix('job')->group(function () {
+    Route::get('cache-image', 'JobController@cacheImage');
   Route::get('waiting-payment/{id}', 'JobController@waiting_payment')
       ->where('id', 'f45a3a9b-a68a-4caa-b66b-c724657e2337-deekobjects-asdfg');
   Route::get('send-sms/{id}', 'JobController@send_sms')

@@ -40,7 +40,7 @@ return array (
   ),
   'mobile' => 
   array (
-    'NationalNumberPattern' => '56161\\d{5}|5(?:0[15-7]|1[06]|24|[34]\\d|5[1-59]|9[46])\\d{7}',
+    'NationalNumberPattern' => '561(?:011|61\\d)\\d{4}|5(?:0[15-7]|1[06]|24|[34]\\d|5[1-59]|9[46])\\d{7}',
     'ExampleNumber' => '5012345678',
     'PossibleLength' => 
     array (
@@ -52,7 +52,7 @@ return array (
   ),
   'tollFree' => 
   array (
-    'NationalNumberPattern' => '800\\d{7}(?:\\d{2,3})?',
+    'NationalNumberPattern' => '8(?:00\\d{7}(?:\\d{2,3})?|11\\d{7})',
     'ExampleNumber' => '8001234567',
     'PossibleLength' => 
     array (
@@ -146,10 +146,11 @@ return array (
   ),
   'noInternationalDialling' => 
   array (
-    'NationalNumberPattern' => '444\\d{4}',
+    'NationalNumberPattern' => '(?:444|811\\d{3})\\d{4}',
     'PossibleLength' => 
     array (
       0 => 7,
+      1 => 10,
     ),
     'PossibleLengthLocalOnly' => 
     array (
@@ -181,7 +182,7 @@ return array (
       'format' => '$1 $2 $3',
       'leadingDigitsPatterns' => 
       array (
-        0 => '512|8[0589]|90',
+        0 => '512|8[01589]|90',
       ),
       'nationalPrefixFormattingRule' => '0$1',
       'domesticCarrierCodeFormattingRule' => '',
@@ -194,8 +195,8 @@ return array (
       'leadingDigitsPatterns' => 
       array (
         0 => '5(?:[0-59]|61)',
-        1 => '5(?:[0-59]|616)',
-        2 => '5(?:[0-59]|6161)',
+        1 => '5(?:[0-59]|61[06])',
+        2 => '5(?:[0-59]|61[06]1)',
       ),
       'nationalPrefixFormattingRule' => '0$1',
       'domesticCarrierCodeFormattingRule' => '',
@@ -234,7 +235,7 @@ return array (
       'format' => '$1 $2 $3',
       'leadingDigitsPatterns' => 
       array (
-        0 => '512|8[0589]|90',
+        0 => '512|8[01589]|90',
       ),
       'nationalPrefixFormattingRule' => '0$1',
       'domesticCarrierCodeFormattingRule' => '',
@@ -247,8 +248,8 @@ return array (
       'leadingDigitsPatterns' => 
       array (
         0 => '5(?:[0-59]|61)',
-        1 => '5(?:[0-59]|616)',
-        2 => '5(?:[0-59]|6161)',
+        1 => '5(?:[0-59]|61[06])',
+        2 => '5(?:[0-59]|61[06]1)',
       ),
       'nationalPrefixFormattingRule' => '0$1',
       'domesticCarrierCodeFormattingRule' => '',
@@ -280,6 +281,5 @@ return array (
     ),
   ),
   'mainCountryForCode' => false,
-  'leadingZeroPossible' => false,
   'mobileNumberPortableRegion' => true,
 );

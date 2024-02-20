@@ -99,11 +99,10 @@ class PhoneNumberMatcher implements \Iterator
      * @var string
      */
     protected static $alternateFormatsFilePrefix;
-    const META_DATA_FILE_PREFIX = 'PhoneNumberAlternateFormats';
 
     protected static function init()
     {
-        static::$alternateFormatsFilePrefix = \dirname(__FILE__) . '/data/' . static::META_DATA_FILE_PREFIX;
+        static::$alternateFormatsFilePrefix = __DIR__ . '/data/PhoneNumberAlternateFormats';
 
         static::$innerMatches = array(
             // Breaks on the slash - e.g. "651-234-2345/332-445-1234"
@@ -178,9 +177,7 @@ class PhoneNumberMatcher implements \Iterator
         static::$leadClass = $leadClass;
 
         // Init extension patterns from PhoneNumberUtil
-        PhoneNumberUtil::initCapturingExtnDigits();
         PhoneNumberUtil::initExtnPatterns();
-
 
         // Phone number pattern allowing optional punctuation.
         static::$pattern = '(?:' . $leadClass . $punctuation . ')' . $leadLimit
@@ -270,7 +267,6 @@ class PhoneNumberMatcher implements \Iterator
      * @param AbstractLeniency $leniency The leniency to use when evaluating candidate phone numbers
      * @param int $maxTries The maximum number of invalid numbers to try before giving up on the text.
      *  This is to cover degenerate cases where the text has a lot of false positives in it. Must be >= 0
-     * @throws \NullPointerException
      * @throws \InvalidArgumentException
      */
     public function __construct(PhoneNumberUtil $util, $text, $country, AbstractLeniency $leniency, $maxTries)
@@ -605,8 +601,8 @@ class PhoneNumberMatcher implements \Iterator
         // Starting from the end, go through in reverse, excluding the first group, and check the
         // candidate and number groups are the same.
         for ($formattedNumberGroupIndex = (\count($formattedNumberGroups) - 1);
-             $formattedNumberGroupIndex > 0 && $candidateNumberGroupIndex >= 0;
-             $formattedNumberGroupIndex--, $candidateNumberGroupIndex--) {
+            $formattedNumberGroupIndex > 0 && $candidateNumberGroupIndex >= 0;
+            $formattedNumberGroupIndex--, $candidateNumberGroupIndex--) {
             if ($candidateGroups[$candidateNumberGroupIndex] != $formattedNumberGroups[$formattedNumberGroupIndex]) {
                 return false;
             }
@@ -805,7 +801,7 @@ class PhoneNumberMatcher implements \Iterator
         $formatRule = $util->chooseFormattingPatternForNumber($metadata->numberFormats(), $nationalNumber);
         // To do this, we check that a national prefix formatting rule was present and that it wasn't
         // just the first-group symbol ($1) with punctuation.
-        if (($formatRule !== null) && \mb_strlen($formatRule->getNationalPrefixFormattingRule()) > 0) {
+        if (($formatRule !== null) && $formatRule->getNationalPrefixFormattingRule() !== '') {
             if ($formatRule->getNationalPrefixOptionalWhenFormatting()) {
                 // The national-prefix is optional in these cases, so we don't need to check if it was
                 // present.
@@ -879,6 +875,7 @@ class PhoneNumberMatcher implements \Iterator
      * @link http://php.net/manual/en/iterator.current.php
      * @return PhoneNumberMatch|null
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->lastMatch;
@@ -889,6 +886,7 @@ class PhoneNumberMatcher implements \Iterator
      * @link http://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->lastMatch = $this->find($this->searchIndex);
@@ -909,6 +907,7 @@ class PhoneNumberMatcher implements \Iterator
      * @return mixed scalar on success, or null on failure.
      * @since 5.0.0
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->searchIndex;
@@ -921,6 +920,7 @@ class PhoneNumberMatcher implements \Iterator
      * Returns true on success or false on failure.
      * @since 5.0.0
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return $this->state === 'READY';
@@ -932,6 +932,7 @@ class PhoneNumberMatcher implements \Iterator
      * @return void Any returned value is ignored.
      * @since 5.0.0
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->searchIndex = 0;

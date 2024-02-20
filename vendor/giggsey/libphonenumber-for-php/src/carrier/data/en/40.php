@@ -11,6 +11,8 @@
  */
 
 return array (
+  4062 => 'Vodafone',
+  4064 => 'Orange',
   407000 => 'Enigma-System',
   407013 => 'Lycamobile',
   407014 => 'Lycamobile',
@@ -22,7 +24,8 @@ return array (
   40702 => 'Lycamobile',
   40705 => 'Iristel',
   40711 => 'Telekom',
-  40712 => '2K Telecom',
+  40712 => 'Orange',
+  40713 => 'Orange',
   4072 => 'Vodafone',
   4073 => 'Vodafone',
   4074 => 'Orange',

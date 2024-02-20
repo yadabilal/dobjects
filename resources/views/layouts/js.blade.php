@@ -12,7 +12,7 @@
 <script src="{{ asset('theme/deekobjects/libs/slider/js/jquery.slider.js') }}"></script>
 
 <script rel="preload" src="{{ asset('theme/deekobjects/js/app.min.js') }}"></script>
-<script async src="{{ asset('theme/deekobjects/libs/elevatezoom/js/jquery.elevatezoom.min.js') }}"></script>
+<script src="{{ asset('theme/deekobjects/libs/elevatezoom/js/jquery.elevatezoom.min.js') }}"></script>
 
 <script src="{{ asset('theme/deekobjects/js/btn-proccess.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>
 {!! @$settings['extraJs'] !!}

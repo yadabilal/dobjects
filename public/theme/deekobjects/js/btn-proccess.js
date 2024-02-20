@@ -1,12 +1,7 @@
 var timeOut = 5000;
 var send_at;
-
 // Daha fazla yükle
 var progress= false;
-setTimeout(function() {
-    $('.page-preloader')['fadeOut']()
-}, 100);
-
 function message(status, message) {
     if(status == 'success') {
         $('body')['append']('<div class="cart-product-added success-message"><div class="added-message">'+message+'</div></div>');
@@ -18,11 +13,9 @@ function message(status, message) {
         $('.cart-product-added')['remove']()
     }, 3000)
 }
-
 $(document).on("keyup","#identity_number",function() {
     $("#Billing_identity_number2").val($(this).val());
 });
-
 $(document).on("click","#ship_to_different_address",function() {
     var element = $(this);
     if(element.is(':checked')) {
@@ -31,7 +24,6 @@ $(document).on("click","#ship_to_different_address",function() {
         $(".shipping-address").hide();
     }
 });
-
 $(document).on("click",".review-star",function() {
     var element = $(this);
     var id = element.data('id');
@@ -41,7 +33,6 @@ $(document).on("click",".review-star",function() {
 
     $("#reviewRate").trigger("change");
 });
-
 $('.btn-add-to-cart .button')['on']('click', function(e) {
     var quantity = 1;
     var element = $(this);
@@ -87,7 +78,6 @@ $('.btn-add-to-cart .button')['on']('click', function(e) {
     });
 
 });
-
 $('.cart-icon')['on']('click', function() {
     var cartBody = $(".cart-popup");
     $.ajax({
@@ -112,7 +102,6 @@ $('.cart-icon')['on']('click', function() {
         }
     });
 });
-
 $('.quantity .plus')['on']('click', function(e) {
     var val = parseInt($(this)['closest']('.quantity')['find']('.qty')['val']());
     $(this)['closest']('.quantity')['find']('.qty')['val'](val + 1)
@@ -123,7 +112,6 @@ $('.quantity .minus')['on']('click', function(e) {
         $(this)['closest']('.quantity')['find']('.qty')['val'](val - 1)
     }
 });
-
 $(document).on("click",".product-remove a.remove",function() {
     var element = $(this);
     var id= element.data('id');
@@ -165,7 +153,6 @@ $(document).on("click",".product-remove a.remove",function() {
         }
     });
 });
-
 $(document).on("click",".mini-cart-item a.remove",function() {
     var element = $(this);
     var id= element.data('id');
@@ -201,7 +188,6 @@ $(document).on("click",".mini-cart-item a.remove",function() {
         }
     });
 });
-
 // Şehir Seçme
 $('.city').on('change',function () {
     var element = $(this);
@@ -226,7 +212,6 @@ $('.city').on('change',function () {
         },
     });
 });
-
 $('.billing-types').on('change',function () {
     if($(this).val() == billingCompanyType) {
         $('.billing-personal').hide();
@@ -241,13 +226,11 @@ $('.close-search', '.search-overlay')['on']('click.break', function(e) {
     var search = $('.search-overlay');
     search['toggleClass']('search-visible')
 });
-
 $('.search-toggle')['on']('click.break', function(e) {
     $('.page-wrapper')['toggleClass']('opacity-style');
     var search = $('.search-overlay');
     search['toggleClass']('search-visible')
 });
-
 // Kaydet Buton İşlemleri
 $(document).on("click",".btn-save",function() {
   var _this = $(this);
@@ -362,8 +345,8 @@ $(document).on("click",".btn-payment",function() {
   }
 
 });
-
 $(document).ready(function() {
+    $('.page-preloader')['fadeOut']();
     var body = $('body');
     $('.slick-sliders')['each'](function() {
         slider($(this))
@@ -375,9 +358,6 @@ $(document).ready(function() {
     $('.shop-details .slick-carousel')['each'](function() {
         slider($(this))
     });
-
-
-
     function slider(element) {
         element['slick']({
             arrows: element['data']('nav') ? !0 : !1,
@@ -457,7 +437,6 @@ $(document).ready(function() {
             }
         })
     }
-
     function slickArrow(e) {
         if ($('.slick-arrow', e)['length'] > 0) {
             if ($('.fa-angle-left', e)['length'] > 0) {
@@ -485,7 +464,6 @@ $(document).ready(function() {
             $('.fa-angle-right', e['parent']())['remove']()
         }
     }
-
     function thumbnail(slick, element) {
         if ($('.image-thumbnail')['length'] > 0) {
             var galery = 'image-thumbnail'
@@ -506,7 +484,6 @@ $(document).ready(function() {
             borderColour: element['bordercolour']
         })
     }
-
   disabled();
   // Zorunlu alanlar dolmadan buton disable olmalı
   $('.required').on('keyup', function () {
@@ -550,7 +527,6 @@ $(document).ready(function() {
 
   });
 });
-
 // Yeni Kod İsteme
 $(document).on("click",".new-code",function() {
   var action = $(this).attr('data-action');
@@ -579,7 +555,6 @@ $(document).on("click",".new-code",function() {
     });
   }
 });
-
 // Kaydetme Adımları
 $(document).on("click",".btn-register",function() {
   var element = $(this);
@@ -627,11 +602,9 @@ $(document).on("click",".btn-register",function() {
     });
   }
 });
-
 $(document).on('click', '.modal-login-register', function () {
   $('#login-register-modal').addClass('is-active');
 });
-
 if($('.new-code').length) {
   function countdownTimer() {
     const difference = +new Date() - +send_at;

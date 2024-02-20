@@ -9,8 +9,8 @@
 <script src="{{ asset('theme/deekobjects/libs/slider/js/draggable-0.1.js') }}"></script>
 <script src="{{ asset('theme/deekobjects/libs/slider/js/jquery.slider.js') }}"></script>
 
-<script src="{{ asset('theme/deekobjects/js/app.js') }}"></script>
-<script src="{{ asset('theme/deekobjects/libs/elevatezoom/js/jquery.elevatezoom.js') }}"></script>
+<script rel="preload" src="{{ asset('theme/deekobjects/js/app.min.js') }}"></script>
+<script defer src="{{ asset('theme/deekobjects/libs/elevatezoom/js/jquery.elevatezoom.min.js') }}"></script>
 
 <script src="{{ asset('theme/deekobjects/js/btn-proccess.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>
 {!! @$settings['extraJs'] !!}

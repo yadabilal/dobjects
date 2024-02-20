@@ -346,7 +346,10 @@ $(document).on("click",".btn-payment",function() {
 
 });
 $(document).ready(function() {
-    $('.page-preloader')['fadeOut']();
+    setTimeout(function() {
+        $('.page-preloader')['fadeOut']();
+    }, 300)
+
     var body = $('body');
     $('.slick-sliders')['each'](function() {
         slider($(this))

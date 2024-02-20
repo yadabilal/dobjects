@@ -6,11 +6,10 @@
 @if(@$settings['logo'])
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('uploads/'.$settings['logo']) }}">
 @endif
-
-<link rel="stylesheet"  href="{{ asset('theme/deekobjects/libs/bootstrap/css/bootstrap.min.css') }}" type="text/css">
+<link rel="preload" as="style" onload="this.rel='stylesheet'"  href="{{ asset('theme/deekobjects/libs/bootstrap/css/bootstrap.min.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/libs/feather-font/css/iconfont.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/libs/icomoon-font/css/icomoon.css') }}" type="text/css">
-<link rel="stylesheet"  href="{{ asset('theme/deekobjects/libs/font-awesome/css/font-awesome.css') }}" type="text/css">
+<link rel="preload" as="style" onload="this.rel='stylesheet'"  href="{{ asset('theme/deekobjects/libs/font-awesome/css/font-awesome.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/libs/wpbingofont/css/wpbingofont.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/libs/elegant-icons/css/elegant.css') }}" type="text/css">
 <link rel="stylesheet" href="{{ asset('theme/deekobjects/libs/slick/css/slick.css') }}" type="text/css">

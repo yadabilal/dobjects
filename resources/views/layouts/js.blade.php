@@ -1,5 +1,3 @@
-<link rel="preload" as="style" onload="this.rel='stylesheet'"   href="{{ asset('theme/deekobjects/css/app.min.css')}}" type="text/css">
-
 <script src="{{ asset('theme/deekobjects/libs/popper/js/popper.min.js') }}"></script>
 <script src="{{ asset('theme/deekobjects/libs/jquery/js/jquery.min.js')}}"></script>
 <script async src="{{ asset('theme/deekobjects/libs/bootstrap/js/bootstrap.min.js') }}"></script>

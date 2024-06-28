@@ -75,8 +75,8 @@ class HomeController extends Controller
     {
         $allCount = 0; // Product::list_all_count();
         $urls = Product::shortingUrls();
-        $items = Product::list_all();
-        $categories = Category::list();
+        $items = Product::list_all(null, false, false, false, 'no_accesorio');
+        $categories = Category::list(false, false, 'no_accesorio');
 
         try {
             $facebook = new Facebook();
@@ -90,7 +90,8 @@ class HomeController extends Controller
             $result = $facebook->events($this->setting);
         }catch (\Exception $e) {}
 
-        return view('site.product', compact('items', 'categories', 'allCount', 'urls'));
+        $showAllTitle = 'Tüm Ürünler';
+        return view('site.product', compact('items', 'categories', 'allCount', 'urls', 'showAllTitle'));
     }
 
     public function discountedProducts(\Illuminate\Http\Request $request)
@@ -98,7 +99,7 @@ class HomeController extends Controller
         $allCount = 0; // Product::list_all_count();
         $urls = Product::shortingUrls();
         $items = Product::list_all(null, false, false,  true);
-        $categories = Category::list();
+        $categories = Category::list(false , true);
 
         try {
             $facebook = new Facebook();
@@ -113,7 +114,34 @@ class HomeController extends Controller
         }catch (\Exception $e) {}
 
         $title = "İndirimli Ürünler";
-        return view('site.product', compact('items', 'categories', 'allCount', 'urls', 'title'));
+        $showAllTitle = 'Tüm İndirimli Ürünler';
+
+        return view('site.product', compact('items', 'categories', 'allCount', 'urls', 'title', 'showAllTitle'));
+    }
+
+    public function accesorioProducts(\Illuminate\Http\Request $request)
+    {
+        $allCount = 0; // Product::list_all_count();
+        $urls = Product::shortingUrls();
+        $items = Product::list_all(null, false, false,  false, 'accesorio');
+        $categories = Category::list(false, false, 'accesorio');
+
+        try {
+            $facebook = new Facebook();
+            if($request->get('urun')) {
+                $facebook->event = Facebook::EVENT_SEARCH;
+                $facebook->customData['search_string'] = $request->get('urun');
+            }
+
+            $facebook->sourceUrl = $request->url();
+            $facebook->user = $this->user;
+            $result = $facebook->events($this->setting);
+        }catch (\Exception $e) {}
+
+        $title = "Aksesuar";
+        $showAllTitle = 'Tüm Aksesuarlar';
+
+        return view('site.product', compact('items', 'categories', 'allCount', 'urls', 'title', 'showAllTitle'));
     }
 
     // İletişim Sayfası

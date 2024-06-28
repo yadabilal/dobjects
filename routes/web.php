@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@index')->name('mainpage');
 Route::post('/aboneol-kontrol', 'HomeController@subscribeCheck')->name('subscribe');
 Route::post('/aboneol', 'HomeController@subscribe')->name('subscribe.save');
 Route::get('/urunler', 'HomeController@product')->name('home');
+Route::get('/aksesuar-urunleri', 'HomeController@accesorioProducts')->name('product.accesorio');
 Route::get('urun/{url}', 'HomeController@show')->name('product.show');
 Route::get('indirimli-urunler', 'HomeController@discountedProducts')->name('product.discounted');
 

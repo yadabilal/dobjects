@@ -29,25 +29,48 @@ class Category extends Base
     }
 
     public function detailUrl() {
-      return route('home').'?kategori='.$this->url;
+      return request()->url().'?kategori='.$this->url;
     }
 
-    public static function list($forAdmin = false) {
+    public static function list($forAdmin = false, $discount= false, $type = 'all') {
 
       if($forAdmin) {
           return self::with("products")->withCount('products')
               ->orderBy('created_at', 'desc')
-              ->orderBy('name', 'asc')
+              ->orderBy('name')
               ->get();
       }
 
-        return self::select('id', 'name', 'url')
-            ->withCount('products')
-            ->has('products', '>' , 0)
-            ->orderBy('sorting')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('name')
-            ->get();
+      $categories = self::select('id', 'name', 'url')
+          ->orderBy('sorting')
+          ->orderBy('created_at', 'desc')
+          ->orderBy('name');
+
+        if($discount) {
+            $categories->whereHas('products', function($q){
+                $q->where('products.discount_rate',  '>', 0);
+            });
+        }
+
+        if($type == 'accesorio') {
+            $categories->whereHas('products',  function($q) {
+                    $q->where('is_accesorio', '=', 1);
+                }, '>', 0)
+                ->withCount(['products' =>  function($q) {
+                    $q->where('is_accesorio', '=', 1);
+                }]);
+        }else if($type == 'no_accesorio') {
+            $categories->whereHas('products',  function($q) {
+                $q->where('is_accesorio', '=', 0);
+            }, '>', 0)
+                ->withCount(['products' =>  function($q) {
+                    $q->where('is_accesorio', '=', 0);
+                }]);
+        }else {
+            $categories->withCount('products')->with('products')->has('products', '>' , 0);
+        }
+
+        return $categories ->get();
     }
 
 }

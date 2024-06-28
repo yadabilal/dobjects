@@ -142,6 +142,13 @@
                     @enderror
                 </div>
 
+                <div class="col-md-4">
+                    <input type="checkbox" value="1" name="is_accesorio" {{@old('is_accesorio') == 1? 'checked': @$model->is_accesorio == 1 ? 'checked' : ''}}> Aksesuar Ürünü
+                    @error('is_accesorio')
+                        <small class="form-text text-muted">{{$message}}</small>
+                    @enderror
+                </div>
+
             </div>
           </div>
         </div>

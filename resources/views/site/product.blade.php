@@ -25,7 +25,7 @@
                                             </li>
                                         @endforeach
                                         <li>
-                                            <a class="{{request()->url() == route('home') ? 'current' : '' }}" href="{{route('home')}}">Tüm Ürünler</a>
+                                            <a class="{{request()->url() == route('home') ? 'current' : '' }}" href="{{request()->url()}}">{{$showAllTitle}}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -64,7 +64,7 @@
 
                                         @if(!$items->total())
                                             <div class="alert alert-danger fullwidth" role="alert">
-                                                Herhangi bir sonuç bulunamadı! Lütfen tüm bilgileri doğru girdiğinden emin ol!
+                                                Herhangi bir sonuç bulunamadı!
                                             </div>
                                         @endif
 

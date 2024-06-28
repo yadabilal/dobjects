@@ -92,6 +92,7 @@ class ProductController extends Controller
               'stock' => 'required|integer',
               'sorting' => 'required|integer',
               'show_home_page' => 'nullable|integer',
+              'is_accesorio' => 'nullable|integer',
               'category_id' => 'required|exists:categories,id',
               'price' => 'required',
               'discount_rate' => 'required|integer',
@@ -115,6 +116,12 @@ class ProductController extends Controller
               if(request()->post('id')) {
                   $product = Product::where('uuid', request()->post('id'))->first();
               }
+
+              $inputs['is_accesorio'] = 0;
+              if(request()->post('is_accesorio')) {
+                  $inputs['is_accesorio'] = 1;
+              }
+
               unset($inputs['id']);
               unset($inputs['_token']);
 

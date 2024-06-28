@@ -21,7 +21,7 @@ class Product extends Base
         'uuid', 'tags', 'name', 'sorting',
         'url', 'meta_description', 'short_description',
         'description','additional_information','status', 'stock',
-        'discount_rate', 'price', 'discount_price', 'category_id', 'show_home_page'
+        'discount_rate', 'price', 'discount_price', 'category_id', 'show_home_page', 'is_accesorio'
     ];
 
     protected static function boot()
@@ -271,7 +271,7 @@ class Product extends Base
 
         return $urls;
     }
-    public static function list_all($paginate =null, $waiting_orders = false, $withRate = false, $discount= false) {
+    public static function list_all($paginate =null, $waiting_orders = false, $withRate = false, $discount= false, $type = 'all') {
         $paginate = $paginate ? : self::PAGINATION_COUNT;
         $search = Base::js_xss(request());
         $items = self::with("category", "files");
@@ -282,6 +282,12 @@ class Product extends Base
 
         if($discount) {
             $items->where('discount_rate', '>', 0);
+        }
+
+        if($type == 'accesorio') {
+            $items->where('is_accesorio', '=', 1);
+        }else if($type == 'no_accesorio') {
+            $items->where('is_accesorio', '=', 0);
         }
 
         // Ürün adına göre

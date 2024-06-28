@@ -91,6 +91,9 @@
                                             <a href="{{route('home')}}"><span class="menu-item-text">Mağaza</span></a>
                                         </li>
                                         <li class="level-0 menu-item">
+                                            <a href="{{route('product.accesorio')}}"><span class="menu-item-text">Aksesuar</span></a>
+                                        </li>
+                                        <li class="level-0 menu-item">
                                             <a href="{{route('product.discounted')}}"><span class="menu-item-text">İndirimli Ürünler</span></a>
                                         </li>
                                         <li class="level-0 menu-item">

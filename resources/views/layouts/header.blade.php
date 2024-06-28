@@ -31,38 +31,41 @@
         <div class="header-mobile-fixed">
             <!-- Shop -->
             <div class="shop-page">
-                <a href="{{route('mainpage')}}"><i class="fa fa-home font-awasome-icon"></i></a>
+                <a href="{{route('mainpage')}}" title="Anasayfa"><i class="fa fa-home font-awasome-icon"></i></a>
             </div>
             <div class="shop-page">
-                <a href="{{route('home')}}"><i class="wpb-icon-shop"></i></a>
+                <a href="{{route('home')}}" title="Mağaza"><i class="wpb-icon-shop"></i></a>
             </div>
             <div class="shop-page">
-                <a href="{{route('product.discounted')}}"><i class="wpb-icon-gift-voucher"></i></a>
+                <a href="{{route('product.accesorio')}}" title="Aksesuar"><i class="wpb-icon-d-design"></i></a>
             </div>
             <div class="shop-page">
-                <a href="{{route('contact')}}"><i class="wpb-icon-chat"></i></a>
+                <a href="{{route('product.discounted')}}" title="İndirimli Ürünler"><i class="wpb-icon-gift-voucher"></i></a>
+            </div>
+            <div class="shop-page">
+                <a href="{{route('contact')}}" title="İletişim"><i class="wpb-icon-chat"></i></a>
             </div>
             @guest
                 <!-- Login -->
                 <div class="my-account">
                     <div class="login-header">
-                        <a href="{{url('giris-yap')}}"><i class="wpb-icon-user"></i></a>
+                        <a href="{{url('giris-yap')}}" title="Giriş Yap"><i class="wpb-icon-user"></i></a>
                     </div>
                 </div>
             @else
 
                 <div class="my-account">
                     <div class="login-header">
-                        <a href="{{route('profile')}}"><i class="wpb-icon-user"></i></a>
+                        <a href="{{route('profile')}}" title="Hesabım"><i class="wpb-icon-user"></i></a>
                     </div>
                 </div>
             @endguest
 
             <div class="search-box">
-                <div class="search-toggle"><i class="wpb-icon-magnifying-glass"></i></div>
+                <div class="search-toggle" title="Ara"><i class="wpb-icon-magnifying-glass"></i></div>
             </div>
             <div class="wishlist-box">
-                <a href="{{route('wishlist.index')}}">
+                <a href="{{route('wishlist.index')}}" title="Favorilerim">
                     <i class="wpb-icon-heart"></i>
                 </a>
             </div>

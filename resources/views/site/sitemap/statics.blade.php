@@ -7,11 +7,17 @@
       <priority>1.0</priority>
   </url>
   <url>
-      <loc>{{ route('home.book') }}</loc>
+      <loc>{{ route('product.accesorio') }}</loc>
       <lastmod>{{ \Carbon\Carbon::now()->toAtomString() }}</lastmod>
       <changefreq>daily</changefreq>
       <priority>1.0</priority>
   </url>
+    <url>
+        <loc>{{ route('product.discounted') }}</loc>
+        <lastmod>{{ \Carbon\Carbon::now()->toAtomString() }}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
   <url>
       <loc>{{ route('login') }}</loc>
       <lastmod>{{ \Carbon\Carbon::now()->toAtomString() }}</lastmod>

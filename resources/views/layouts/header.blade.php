@@ -61,13 +61,13 @@
                 </div>
             @endguest
 
-            <div class="search-box">
-                <div class="search-toggle" title="Ara"><i class="wpb-icon-magnifying-glass"></i></div>
-            </div>
             <div class="wishlist-box">
                 <a href="{{route('wishlist.index')}}" title="Favorilerim">
                     <i class="wpb-icon-heart"></i>
                 </a>
+            </div>
+            <div class="search-box">
+                <div class="search-toggle" title="Ara"><i class="wpb-icon-magnifying-glass"></i></div>
             </div>
         </div>
     </div>

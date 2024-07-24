@@ -34,6 +34,11 @@ class Category extends Base
 
     public static function list($forAdmin = false, $discount= false, $type = 'all') {
 
+        $search = Base::js_xss(request());
+        if(@$search['urun']) {
+            $type = 'all';
+        }
+
       if($forAdmin) {
           return self::with("products")->withCount('products')
               ->orderBy('created_at', 'desc')

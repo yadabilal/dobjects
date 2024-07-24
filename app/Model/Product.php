@@ -284,14 +284,9 @@ class Product extends Base
             $items->where('discount_rate', '>', 0);
         }
 
-        if($type == 'accesorio') {
-            $items->where('is_accesorio', '=', 1);
-        }else if($type == 'no_accesorio') {
-            $items->where('is_accesorio', '=', 0);
-        }
-
         // Ürün adına göre
         if(@$search['urun']) {
+            $type = 'all';
             $items->where('name', 'like', '%'.$search['urun'].'%');
         }
 
@@ -305,6 +300,12 @@ class Product extends Base
             $items->whereHas('category', function ($q) use ($search) {
                 $q->where('url', $search['kategori']);
             });
+        }
+
+        if($type == 'accesorio') {
+            $items->where('is_accesorio', '=', 1);
+        }else if($type == 'no_accesorio') {
+            $items->where('is_accesorio', '=', 0);
         }
 
         // Sıralama yap

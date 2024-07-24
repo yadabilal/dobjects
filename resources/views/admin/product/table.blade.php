@@ -26,8 +26,16 @@
                                 <img src="{{$model->image()}}" alt="" style="max-height: 100%;">
                             </div>
                         </td>
-                        <td>{{$model->name}}</td>
-                        <td>{{$model->category->name}}</td>
+                        <td>
+                            {{$model->name}}
+                            @if($model->is_accesorio)
+                                <br>
+                                <span class="badge badge-info">Aksesuar Ürünü</span>
+                            @endif
+                        </td>
+                        <td>
+                            {{$model->category->name}}
+                        </td>
                         <td>{{$model->stock}} Adet</td>
                         <td>
                             {{$model->readableDiscountPrice()}} <br>

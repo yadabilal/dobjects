@@ -10,7 +10,6 @@ use App\Model\HomePage;
 use App\Model\Page;
 use App\Model\Product;
 use App\Model\Subscribe;
-use App\Model\Support;
 use App\Model\Town;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;

@@ -21,7 +21,7 @@ class ProductController extends Controller
 
   public function index()
   {
-    $models = Product::list_all(Product::PAGINATION_LIST_ADMIN, true);
+    $models = Product::list_all(Product::PAGINATION_LIST_ADMIN, true, false, false, request()->get('type') ?: 'no_accesorio');
 
     return view($this->view.'.index', compact('models'));
   }

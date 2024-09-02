@@ -19,6 +19,7 @@
                             <li class="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_5]) == route('admin.menu.index', ['type' => $type]) ? 'active' : ''}}"><a href="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_5])}}">Abone Olma Alanı</a></li>
                             <li class="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_6]) == route('admin.menu.index', ['type' => $type]) ? 'active' : ''}}"><a href="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_6])}}">Size Özel Tasarımlar Alanı</a></li>
                             <li class="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_7]) == route('admin.menu.index', ['type' => $type]) ? 'active' : ''}}"><a href="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_7])}}">Markalar Alanı</a></li>
+                            <li class="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_8]) == route('admin.menu.index', ['type' => $type]) ? 'active' : ''}}"><a href="{{route('admin.menu.index', ['type' => \App\Model\HomePage::TYPE_8])}}">Popup Alanı</a></li>
                         </ul>
                     </div>
                 </div>

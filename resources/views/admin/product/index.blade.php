@@ -5,7 +5,7 @@
       <h4 class="page-title">Ürünler</h4>
     </div>
       <div class="col-sm-5 text-right m-b-30">
-          <a href="{{route('admin.product.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Ürün Ekle</a>
+          <a href="{{route('admin.product.create', ['type' => request()->get('type')])}}" class="btn btn-primary"><i class="fa fa-plus"></i> Ürün Ekle</a>
       </div>
   </div>
 

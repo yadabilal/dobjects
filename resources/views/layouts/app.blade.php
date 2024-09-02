@@ -22,7 +22,7 @@
         <img height="1" width="1"
              src="https://www.facebook.com/tr?id=1253011552026497&ev=PageView&noscript=1"/>
     </noscript>
-    <!-- End Facebook Pixel Code -->
+
 </head>
 
 <body class="shop">
@@ -35,6 +35,23 @@
     </div>
 
     @include('layouts.footer')
+
+    @if($popup)
+        <div id="popupOverlay"></div>
+        <div id="popup">
+            <span id="popupClose">&times;</span>
+            <div class="image-container">
+                @if($popup->getPic())
+                    <img src="{{$popup->getPic()}}" alt="{{$popup->title}}" title="{{$popup->title}}">
+                @endif
+                <div id="popupTitle">{{$popup->title}}</div>
+                <div id="popupText">{{$popup->sub_title}}</div>
+                @if($popup->url)
+                    <a id="detailButton" class="button-outline btn-sm" href="{{$popup->url}}">Detaya Git</a>
+                @endif
+            </div>
+        </div>
+    @endif
 </div>
 
 @include('layouts.search')

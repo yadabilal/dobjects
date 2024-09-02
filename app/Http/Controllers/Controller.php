@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Basket;
 use App\Model\Book;
 use App\Model\File;
+use App\Model\HomePage;
 use App\Model\Page;
 use App\Model\Product;
 use App\Model\Setting;
@@ -51,12 +52,18 @@ class Controller extends BaseController
       }
 
       $pages = Page::orderBy('sorting')->pluck('title', 'url');
+      $popup = HomePage::where('type', HomePage::TYPE_8)
+          ->where('status', HomePage::STATUS_PUBLISH)
+          ->orderBy('sorting', 'desc')
+          ->orderBy('id', 'desc')
+          ->first();
+
       $settings = Setting::pluck('value', 'param');
       $this->setting = $settings;
 
       View::share(['user' => $this->user, 'settings' => $settings,
           'pages' => $pages, 'wishListCount' => $wishListCount,
-          'cartItemCount' => $cartItemCount]);
+          'cartItemCount' => $cartItemCount, 'popup' => $popup]);
       return parent::callAction($method, $parameters);
     }
 

@@ -11,6 +11,7 @@ class HomePage extends Base
     const TYPE_5 = 5;
     const TYPE_6 = 6;
     const TYPE_7 = 7;
+    const TYPE_8 = 8;
 
     const STATUS_PUBLISH = 'publish';
     const STATUS_NOT_PUBLISH = 'notpublish';

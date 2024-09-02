@@ -346,8 +346,25 @@ $(document).on("click",".btn-payment",function() {
 
 });
 $(document).ready(function() {
+
     setTimeout(function() {
         $('.page-preloader')['fadeOut']();
+        if (!localStorage.getItem('popupShown')) {
+            $('#popupOverlay').fadeIn();
+            $('#popup').fadeIn();
+
+            $('#popupClose').click(function() {
+                $('#popupOverlay').fadeOut();
+                $('#popup').fadeOut();
+                localStorage.setItem('popupShown', 'true');
+            });
+
+            $('#popupOverlay').click(function() {
+                $('#popupOverlay').fadeOut();
+                $('#popup').fadeOut();
+                localStorage.setItem('popupShown', 'true');
+            });
+        }
     }, 300)
 
     var body = $('body');

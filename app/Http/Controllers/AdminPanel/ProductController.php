@@ -21,9 +21,10 @@ class ProductController extends Controller
 
   public function index()
   {
+      $title = request()->get('type')=='accesorio' ? 'Aksesuar Ürünleri' : 'Ürünler';
     $models = Product::list_all(Product::PAGINATION_LIST_ADMIN, true, false, false, request()->get('type') ?: 'no_accesorio');
 
-    return view($this->view.'.index', compact('models'));
+    return view($this->view.'.index', compact('models', 'title'));
   }
 
   public function show($uuid){

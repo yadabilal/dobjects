@@ -78,10 +78,10 @@
           <li class="{{request()->url() == route('admin.user.index') ? 'active': ''}}">
             <a href="{{route('admin.user.index')}}"><i class="fa fa-dashboard"></i> Kullanıcılar</a>
           </li>
-          <li class="{{request()->url() == route('admin.product.index') ? 'active': ''}}">
+          <li class="{{route('admin.product.index', ['type' => 'accesorio']) != request()->getUri() && request()->url() == route('admin.product.index') ? 'active': ''}}">
             <a href="{{route('admin.product.index')}}"><i class="fa fa-book"></i> Ürünler</a>
           </li>
-            <li class="{{request()->url() == route('admin.product.index', ['type' => 'accesorio']) ? 'active': ''}}">
+            <li class="{{route('admin.product.index', ['type' => 'accesorio']) == request()->getUri() ? 'active': '' }}">
                 <a href="{{route('admin.product.index', ['type' => 'accesorio'])}}"><i class="fa fa-coffee"></i>Aksesuar Ürünleri</a>
             </li>
           <li class="{{request()->url() == route('admin.order.index') ? 'active': ''}}">

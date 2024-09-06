@@ -183,6 +183,13 @@ class Product extends Base
         return self::decimalFormat($this->discount_price).self::currency();
     }
 
+    public function readablePriceFacebook() {
+        return self::decimalFormat($this->price).self::currencyFacebook();
+    }
+    public function readableDiscountPriceFacebook() {
+        return self::decimalFormat($this->discount_price).self::currencyFacebook();
+    }
+
     public function readableDiscountPriceWithQuantity($quantity){
         return self::decimalFormat($this->discount_price*$quantity).self::currency();
     }

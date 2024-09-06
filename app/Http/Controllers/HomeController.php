@@ -14,6 +14,9 @@ use App\Model\Town;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class HomeController extends Controller
 {
@@ -249,5 +252,67 @@ class HomeController extends Controller
             }
         }
 
+    }
+
+    public function export()
+    {
+        $fileName = 'products_'.time().'.xlsx';
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'id');
+        $sheet->setCellValue('B1', 'title');
+        $sheet->setCellValue('C1', 'description');
+        $sheet->setCellValue('D1', 'availability');
+        $sheet->setCellValue('E1', 'condition');
+        $sheet->setCellValue('F1', 'price');
+        $sheet->setCellValue('G1', 'link');
+        $sheet->setCellValue('H1', 'image_link');
+        $sheet->setCellValue('I1', 'brand');
+        $sheet->setCellValue('J1', 'google_product_category');
+        $sheet->setCellValue('K1', 'fb_product_category');
+
+        $products = Product::with('category', 'files')->orderBy('id', 'desc')->get();
+
+        $row = 2;
+        foreach ($products as $product) {
+            try {
+                if (!$products->isEmpty()) {
+                    $category = @$product->category ? $product->category->name : '';
+                    $imageUrl = @$product->files[0] ? url('uploads/'.$product->files[0]->path) : '';
+                    $price = $product->isDiscount() ? $product->readableDiscountPriceFacebook() : $product->readablePriceFacebook();
+
+                    $sheet->setCellValue('A' . $row,  $product->uuid);
+                    $sheet->setCellValue('B' . $row, $product->name);
+                    $sheet->setCellValue('C' . $row, strip_tags($product->description));
+                    $sheet->setCellValue('D' . $row, 'in stock');
+                    $sheet->setCellValue('E' . $row,  'used');
+                    $sheet->setCellValue('F' . $row, $price);
+                    $sheet->setCellValue('G' . $row, $product->detailUrl());
+                    $sheet->setCellValue('H' . $row, $imageUrl);
+                    $sheet->setCellValue('I' . $row, 'Deek Objects');
+                    $sheet->setCellValue('J' . $row, $category);
+                    $sheet->setCellValue('K' . $row, $category);
+                    $row++;
+                }
+
+            }catch (\Exception $e) {
+                dd($e->getMessage(), $e->getLine(), $e->getFile());
+            }
+
+        }
+
+        $response = new StreamedResponse(function() use($spreadsheet) {
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        });
+
+        // Yanıt başlıkları
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="'.$fileName.'"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
     }
 }

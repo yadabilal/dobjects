@@ -19,6 +19,7 @@ Route::get('/urunler', 'HomeController@product')->name('home');
 Route::get('/aksesuar-urunleri', 'HomeController@accesorioProducts')->name('product.accesorio');
 Route::get('urun/{url}', 'HomeController@show')->name('product.show');
 Route::get('indirimli-urunler', 'HomeController@discountedProducts')->name('product.discounted');
+Route::get('urun-listesi-2323.xlsx', 'HomeController@export')->name('product.export');
 
 Route::get('destek', 'SupportController@index')->name('contact');
 Route::post('destek', 'SupportController@save')->name('contact.save');

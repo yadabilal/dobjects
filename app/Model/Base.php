@@ -93,6 +93,10 @@ class Base extends Model
         return "₺";
     }
 
+    public static function currencyFacebook() {
+        return "TRY";
+    }
+
     public static function amountFormatterWithCurrency($amount) {
       return self::decimalFormat($amount).self::currency();
     }

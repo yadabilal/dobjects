@@ -273,7 +273,10 @@ class HomeController extends Controller
         $sheet->setCellValue('J1', 'google_product_category');
         $sheet->setCellValue('K1', 'fb_product_category');
 
-        $products = Product::with('category', 'files')->orderBy('id', 'desc')->get();
+        $products = Product::with('category', 'files')
+            ->orderBy('id', 'desc')
+            ->where('status', Product::STATUS_PUBLISH)
+            ->get();
 
         $row = 2;
         foreach ($products as $product) {

@@ -47,6 +47,9 @@ class TempBasketController extends Controller
                     $basket->quantity = $quantity;
                     $totalQuantity = Session::get('basket.totalQuantity') ? Session::get('basket.totalQuantity') +$quantity : $quantity;
 
+                    if(@$baskets[ $product->uuid]) {
+                        $basket->quantity = $baskets[ $product->uuid]->quantity+$quantity;
+                    }
                     $baskets[ $product->uuid] = $basket;
 
                     Session::put('basket.items', $baskets);
@@ -82,10 +85,10 @@ class TempBasketController extends Controller
                 }
 
             }else {
-                $data['message'] = "Geçersiz İşlem!";
+                $data['message'] = "Geçersiz İşlem!->1";
             }
         }else {
-            $data['message'] = "Geçersiz İşlem!";
+            $data['message'] = "Geçersiz İşlem!->2";
         }
 
         return Response::json($data, 200);
@@ -194,7 +197,7 @@ class TempBasketController extends Controller
         $totalFinallyPrice = 0;
         $quantity = 0;
 
-        $cartItems = Session::get('basket.items');
+        $cartItems = Session::get('basket.items') ?: [];
 
         foreach ($cartItems as $cartItemId => $basket) {
             $product = Product::where('uuid' , $cartItemId)

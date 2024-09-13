@@ -33,10 +33,10 @@ $(document).on("click",".review-star",function() {
 
     $("#reviewRate").trigger("change");
 });
-$('.btn-add-to-cart .button')['on']('click', function(e) {
+$('.btn-add-to-cart')['on']('click', function(e) {
     var quantity = 1;
-    var element = $(this);
-    var id= element.data('id');
+    var element = $(this).find('.button').first();
+    var id= $(this).data('id');
     element['addClass']('loading');
 
     if($("#quantity").length>0) {
@@ -57,8 +57,8 @@ $('.btn-add-to-cart .button')['on']('click', function(e) {
                 fbq('track', 'AddToCart');
                 status = "success";
                 element['addClass']('added');
-                element['closest']('div')['append'](
-                    '<a href="javascript:void(0)" class="added-to-cart product-btn" title="Sepetinde" tabindex="0">Sepetinde</a>');
+                element['closest']('div').html(
+                    '<a href="javascript:void(0)" class="added-to-cart product-btn" title="Sepetinde" data-id="'+id+'" tabindex="0">Sepetinde</a>');
 
                 $('.cart-count').html(data.count);
             }
@@ -349,20 +349,20 @@ $(document).ready(function() {
 
     setTimeout(function() {
         $('.page-preloader')['fadeOut']();
-        if (!localStorage.getItem('popupShown')) {
+        if (!localStorage.getItem(popupShownId)) {
             $('#popupOverlay').fadeIn();
             $('#popup').fadeIn();
 
             $('#popupClose').click(function() {
                 $('#popupOverlay').fadeOut();
                 $('#popup').fadeOut();
-                localStorage.setItem('popupShown', 'true');
+                localStorage.setItem(popupShownId, 'true');
             });
 
             $('#popupOverlay').click(function() {
                 $('#popupOverlay').fadeOut();
                 $('#popup').fadeOut();
-                localStorage.setItem('popupShown', 'true');
+                localStorage.setItem(popupShownId, 'true');
             });
         }
     }, 300)

@@ -55,7 +55,7 @@
                 <div id="popupTitle">{{$popup->title}}</div>
                 <div id="popupText">{{$popup->sub_title}}</div>
                 @if($popup->url)
-                    <a id="detailButton" class="button-outline btn-sm" href="{{$popup->url}}">Detaya Git</a>
+                    <a id="detailButton" class="button-outline btn-sm" href="{{$popup->url.'?clickedPopup='.$popupId}}">Detaya Git</a>
                 @endif
             </div>
         </div>

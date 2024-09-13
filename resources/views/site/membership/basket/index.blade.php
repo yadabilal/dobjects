@@ -28,7 +28,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($carts as $cart)
+                                        @foreach($carts ?: [] as $cart)
                                             <tr class="cart-item" id="{{$cart->uuid}}">
                                                 <td class="product-thumbnail">
                                                     <a href="{{$cart->product->detailUrl()}}">

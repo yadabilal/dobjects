@@ -12,6 +12,13 @@
 <script rel="preload" src="{{ asset('theme/deekobjects/js/app.min.js') }}"></script>
 <script src="{{ asset('theme/deekobjects/libs/elevatezoom/js/jquery.elevatezoom.min.js') }}"></script>
 
+<script>
+    var popupShownId= '{{$popupId ? : ''}}';
+    @if($shownPopupId)
+        localStorage.setItem(popupShownId, 'true');
+    @endif
+
+</script>
 <script src="{{ asset('theme/deekobjects/js/btn-proccess.js?'.\Carbon\Carbon::now()->getTimestamp()) }}"></script>
 {!! @$settings['extraJs'] !!}
 @stack('page-scripts')

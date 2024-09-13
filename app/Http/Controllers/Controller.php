@@ -10,6 +10,7 @@ use App\Model\Page;
 use App\Model\Product;
 use App\Model\Setting;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -52,17 +53,27 @@ class Controller extends BaseController
       }
 
       $pages = Page::orderBy('sorting')->pluck('title', 'url');
+      $clickedPopup = request()->get('clickedPopup');
       $popup = HomePage::where('type', HomePage::TYPE_8)
           ->where('status', HomePage::STATUS_PUBLISH)
+          ->where('url', '!=', $clickedPopup)
           ->orderBy('sorting', 'desc')
           ->orderBy('id', 'desc')
           ->first();
+
+      $popupId = md5($popup->sorting.$popup->id);
+      $shownPopupId = "";
+      if($popupId == $clickedPopup) {
+          $shownPopupId = 'popup-shown-'.md5($popup->sorting.$popup->id);
+      }
 
       $settings = Setting::pluck('value', 'param');
       $this->setting = $settings;
 
       View::share(['user' => $this->user, 'settings' => $settings,
           'pages' => $pages, 'wishListCount' => $wishListCount,
+          'shownPopupId' => $shownPopupId,
+          'popupId' => $popupId,
           'cartItemCount' => $cartItemCount, 'popup' => $popup]);
       return parent::callAction($method, $parameters);
     }

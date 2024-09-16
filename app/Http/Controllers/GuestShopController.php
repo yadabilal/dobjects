@@ -197,13 +197,12 @@ class GuestShopController extends Controller
                 'remoteip' => $ip
             ]));
 
-            $response = curl_exec($ch);
-            curl_close($ch);
-
-            $responseData = json_decode($response, true);
+            // reCAPTCHA doğrulaması
+            $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$recaptchaResponse}");
+            $responseKeys = json_decode($response, true);
 
             // Başarılı olup olmadığını kontrol et
-            if (@$responseData['success'] && @$responseData['score'] >= 0.5) {
+            if (@$responseKeys['success']) {
                 $count = Basket::sumQuantity();
                 if(\request()->post() && $count) {
                     $check = $this->check();

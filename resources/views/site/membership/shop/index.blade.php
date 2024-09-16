@@ -310,8 +310,7 @@
                                             </label>
                                         </p>
                                         @if(!auth()->id() && @$settings['RECAPTCHA_SITE_KEY'])
-                                            <input type="hidden" name="g-recaptcha-response" id="recaptchaResponse">
-                                            <div class="g-recaptcha m-b-10" data-sitekey="{{$settings['RECAPTCHA_SITE_KEY']}}"></div>
+                                            <div class="g-recaptcha" data-sitekey="{{$settings['RECAPTCHA_SITE_KEY']}}"></div>
                                             @error('g-recaptcha-response')
                                                 <p class="text-error">{{$message}}</p>
                                             @enderror
@@ -340,13 +339,6 @@
 
 @push('page-scripts')
     @if(!auth()->id() && @$settings['RECAPTCHA_SITE_KEY'])
-        <script src="https://www.google.com/recaptcha/api.js?render={{ $settings['RECAPTCHA_SITE_KEY'] }}"></script>
-        <script>
-            grecaptcha.ready(function() {
-                grecaptcha.execute('{{ $settings['RECAPTCHA_SITE_KEY'] }}', {action: 'submit'}).then(function(token) {
-                    document.getElementById('recaptchaResponse').value = token;
-                });
-            });
-        </script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @endif
 @endpush

@@ -46,15 +46,15 @@
                 <div class="profile-view">
                     <div class="profile-img-wrap">
                         <div class="profile-img">
-                            <a class="avatar">({{$item->user ? $item->user->user_name() : $item->address->phone}})</a>
+                            <a class="avatar">({{$model->user ? $model->user->user_name() : $model->address->phone}})</a>
                         </div>
                     </div>
                     <div class="profile-basic">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="profile-info-left">
-                                    <h3 class="user-name m-t-0">{{$item->user ? $item->user->full_name() : $item->address->fullName()}}</h3>
-                                    <h5 class="company-role m-t-0 m-b-0">{{$item->user ? $item->user->user_name() : $item->address->phone}}</h5>
+                                    <h3 class="user-name m-t-0">{{$model->user ? $model->user->full_name() : $model->address->fullName()}}</h3>
+                                    <h5 class="company-role m-t-0 m-b-0">{{$model->user ? $model->user->user_name() : $model->address->phone}}</h5>
                                     <small class="text-muted">{{$model->tags}}</small>
                                     <div class="staff-id">Oluşturulma Tarihi: {{$model->created_at()}}</div>
                                     <div class="staff-id">Durum: <span class="{{$model->status_color(true)}}">{{$model->status(true)}}</span></div>

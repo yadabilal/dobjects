@@ -312,6 +312,9 @@
                                         @if(!auth()->id() && @$settings['RECAPTCHA_SITE_KEY'])
                                             <input type="hidden" name="g-recaptcha-response" id="recaptchaResponse">
                                             <div class="g-recaptcha m-b-10" data-sitekey="{{$settings['RECAPTCHA_SITE_KEY']}}"></div>
+                                            @error('g-recaptcha-response')
+                                                <p class="text-error">{{$message}}</p>
+                                            @enderror
                                         @endif
 
                                         <div class="form-row place-order">

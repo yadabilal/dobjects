@@ -28,7 +28,7 @@ class GuestShopController extends Controller
     $carts = Basket::getAll();
     $totalCount = Basket::sumQuantity();
 
-    if($totalCount) {
+    if($totalCount && @$this->setting['kayitOlmadanAlisveris'] == 1) {
         $user = null;
         $totalPrices = Basket::totals();
         $totalDiscountPrice = Base::amountFormatterWithCurrency($totalPrices['totalFinallyPrice']);
@@ -115,7 +115,7 @@ class GuestShopController extends Controller
     // Validasyon Kontrolü
     public function check() {
         // Post varsa
-        if(\request()->post()){
+        if(\request()->post() && @$this->setting['kayitOlmadanAlisveris'] == 1){
             $inputs = Base::js_xss(\request());
             $data['success'] = true;
             $count = Basket::sumQuantity();
@@ -185,7 +185,7 @@ class GuestShopController extends Controller
         $secretKey = @$this->setting['RECAPTCHA_SECRET_KEY'] ?: '';
         $errors=[];
 
-        if($recaptchaResponse && $secretKey ) {
+        if($recaptchaResponse && $secretKey && @$this->setting['kayitOlmadanAlisveris'] == 1) {
             $ip = $request->ip();
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');

@@ -85,7 +85,7 @@ class GuestShopController extends Controller
 
         if($order) {
             if($order->checkPayment()) {
-                return redirect()->route('shop.result', ['uuid' => $order->uuid]);
+                return redirect()->route('guest.shop.result', ['uuid' => $order->uuid]);
             }else {
                 Session::flash('error_message', 'İşlem sırasında bir hata meydana geldi. Lütfen bizi bilgilendirin!');
             }

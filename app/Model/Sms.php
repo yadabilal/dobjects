@@ -71,6 +71,10 @@ class Sms extends Model
     $data['type'] =Job::TYPE_SMS;
     $data['contact'] = $order->user ? $order->user->phone : $address->phone;
     $data['content'] ='deekobjects.com ekibi olarak siparişlerini aldık. Sipariş durumunu profil sayfandan takip edebilirsin.';
+
+    if(!$order->user) {
+        $data['content'] ='deekobjects.com ekibi olarak siparişlerini aldık. Sipariş durumunu linkten takip edebilirsiniz: '.route('guest.shop.result', ['uuid' => $order->uuid]);
+    }
     Job::create($data);
   }
 
@@ -86,7 +90,10 @@ class Sms extends Model
       $address = $order->address()->first();
       $data['type'] =Job::TYPE_SMS;
       $data['contact'] = $order->user ? $order->user->phone : $address->phone;
-    $data['content'] ='deekobjects.com ekibi olarak siparişini kargoladık. Sipariş durumunu profil sayfandan takip edebilirsin.';
+      $data['content'] ='deekobjects.com ekibi olarak siparişini kargoladık. Sipariş durumunu profil sayfandan takip edebilirsin.';
+      if(!$order->user) {
+          $data['content'] ='deekobjects.com ekibi olarak siparişini kargoladık. Sipariş durumunu linkten takip edebilirsiniz: '.route('guest.shop.result', ['uuid' => $order->uuid]);
+      }
     Job::create($data);
   }
 
@@ -95,6 +102,9 @@ class Sms extends Model
       $data['type'] =Job::TYPE_SMS;
       $data['contact'] = $order->user ? $order->user->phone : $address->phone;
     $data['content'] ='deekobjects.com ekibi olarak faturanı oluşturduk. Faturana profil sayfandan ulaşabilirsin.';
+      if(!$order->user) {
+          $data['content'] ='deekobjects.com ekibi olarak faturanı oluşturduk. Sipariş durumunu linkten takip edebilirsiniz: '.route('guest.shop.result', ['uuid' => $order->uuid]);
+      }
     Job::create($data);
   }
 

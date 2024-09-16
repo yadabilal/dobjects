@@ -51,12 +51,16 @@ class ShopController extends Controller
     }
 
     public function resultPayment($uuid) {
-        $order = Order::where('user_id', $this->user->id)
-            ->with('items')
+        $order = Order::with('items')
             ->where('uuid', $uuid)
-            ->whereIn('status', [Order::STATUS_ERROR, Order::STATUS_NEW])
-            ->first();
+            ->whereIn('status', [Order::STATUS_ERROR, Order::STATUS_NEW]);
 
+
+        if($this->user) {
+            $order->where('user_id', $this->user->id);
+        }
+
+        $order = $order->first();
         if($order) {
             return view('site.membership.shop.result', compact('order'));
         }else {
@@ -69,13 +73,16 @@ class ShopController extends Controller
     // Adres Bilgilerini Gir
     public function callbackPayment($uuid) {
 
-        $order = Order::where('user_id', $this->user->id)
-            ->with('items')
+        $order = Order::with('items')
             ->where('uuid', $uuid)
             ->where('status', Order::STATUS_WAITING_PAYMENT);
 
         if(request('token')) {
             $order->where('payment_reference', request('token'));
+        }
+
+        if($this->user) {
+            $order->where('user_id', $this->user->id);
         }
 
         $order= $order->first();

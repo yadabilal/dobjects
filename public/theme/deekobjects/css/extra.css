@@ -128,6 +128,9 @@ p.form-submit {
 .page-login-register .box-form-login .box-content input {
     height: 3.4375pc;
 }
+.btn-shopping-without-login {
+    width: 100%;
+}
 .page-login-register .box-form-login .box-content input {
     width: 100%;
 }

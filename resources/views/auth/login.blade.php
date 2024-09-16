@@ -49,13 +49,15 @@
                                             <div class="button-login">
                                                 <input type="submit" class="button buttonDisable" value="Giriş Yap">
                                             </div>
-                                        </form>
 
-                                        @if(request()->get('alisveris') == 'devam-et' && @$settings['kayitOlmadanAlisveris'] == 1)
-                                            <div class="button-login">
-                                                <a  href="{{route('guest.shop')}}" class="button" value="">Kaydetmeden Devam Et</a>
-                                            </div>
-                                        @endif
+                                            @if(request()->get('alisveris') == 'devam-et' && @$settings['kayitOlmadanAlisveris'] == 1)
+                                                <div class="rememberme-lost p-t-10">
+                                                    <div class="lost-password text-center btn-shopping-without-login">
+                                                        <a href="{{route('guest.shop')}}">Kaydolmadan Devam Et</a>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </form>
                                     </div>
                                 </div>
                             </div>

@@ -310,7 +310,7 @@
                                             </label>
                                         </p>
                                         @if(!auth()->id() && @$settings['RECAPTCHA_SITE_KEY'])
-                                            <div class="g-recaptcha" data-sitekey="{{$settings['RECAPTCHA_SITE_KEY']}}"></div>
+                                            <div class="g-recaptcha m-b-20" data-sitekey="{{$settings['RECAPTCHA_SITE_KEY']}}"></div>
                                             @error('g-recaptcha-response')
                                                 <p class="text-error">{{$message}}</p>
                                             @enderror

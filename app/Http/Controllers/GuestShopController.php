@@ -51,11 +51,27 @@ class GuestShopController extends Controller
       }
     }
 
-    public function resultPayment($uuid) {
-        $order = Order::where('session_id', session()->getId())
-            ->with('items')
+
+    public function order($uuid) {
+        $items = Order::with('items')
             ->where('uuid', $uuid)
-            ->whereNull('user_id')
+            //->whereNull('user_id')
+            ->whereIn('status', [Order::STATUS_ERROR, Order::STATUS_NEW])
+            ->paginate(Order::PAGINATION_LIST, ['*'], 'sayfa');
+
+        if($items) {
+            return view('site.membership.order.index', compact('items'));
+        }else {
+            Session::flash('error_message', 'Geçersiz İşlem!');
+            return redirect()->route('home');
+        }
+
+    }
+
+    public function resultPayment($uuid) {
+        $order = Order::with('items')
+            ->where('uuid', $uuid)
+            //->whereNull('user_id')
             ->whereIn('status', [Order::STATUS_ERROR, Order::STATUS_NEW])
             ->first();
 
@@ -71,20 +87,20 @@ class GuestShopController extends Controller
     // Adres Bilgilerini Gir
     public function callbackPayment($uuid) {
 
-        $order = Order::where('session_id', session()->getId())
-            ->with('items')
+        $order = Order::with('items')
             ->where('uuid', $uuid)
-            ->whereNull('user_id')
+            //->whereNull('user_id')
             ->where('status', Order::STATUS_WAITING_PAYMENT);
 
         if(request('token')) {
-            $order->where('payment_reference', request('token'));
+            $order = $order->where('payment_reference', request('token'));
         }
 
-        $order= $order->first();
+        $order = $order->first();
 
         if($order) {
             if($order->checkPayment()) {
+                Basket::where('session_id', session()->getId())->delete();
                 return redirect()->route('guest.shop.result', ['uuid' => $order->uuid]);
             }else {
                 Session::flash('error_message', 'İşlem sırasında bir hata meydana geldi. Lütfen bizi bilgilendirin!');

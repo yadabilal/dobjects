@@ -20,9 +20,15 @@
                             <div class="sub-error">
                                 Siparişlerinizi görüntülemek ya da takip etmek için lütfen aşağıdaki linki tıklayın.
                             </div>
-                            <a class="button" href="{{route('my_order')}}">
-                                Siparişlerime Git
-                            </a>
+                            @if(auth()->id())
+                                <a class="button" href="{{route('my_order')}}">
+                                    Siparişlerime Git
+                                </a>
+                            @else
+                                <a class="button" href="{{route('guest.shop.order', ['uuid' => $order->uuid])}}">
+                                    Siparişe Git
+                                </a>
+                            @endif
                         @else
                             <div class="sub-title">
                                 {{$order->extra_messages}}

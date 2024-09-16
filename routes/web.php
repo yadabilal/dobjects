@@ -68,6 +68,8 @@ Route::prefix('giris-yapmadan')->group(function () {
     Route::post('alisveris/adres', 'GuestShopController@save_address')->name('guest.shop.save_address');
     Route::get('alisveris/odeme/{uuid}', 'GuestShopController@payment')->name('guest.shop.payment');
     Route::post('alisveris/odeme', 'GuestShopController@save_payment')->name('guest.shop.save_payment');
+
+    Route::get('alisveris/siparis/{uuid}', 'GuestShopController@order')->name('guest.shop.order');
 });
 
 

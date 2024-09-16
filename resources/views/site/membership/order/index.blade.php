@@ -10,8 +10,10 @@
         <div class="section-container p-l-r">
             <div class="page-my-account">
                 <div class="my-account-wrap clearfix">
-                    @include("layouts.lef_menu")
-                    <div class="my-account-content tab-content">
+                    @if(auth()->id())
+                        @include("layouts.lef_menu")
+                    @endif
+                    <div class="@if(auth()->id()) my-account-content tab-content @endif">
                         <div class="tab-pane fade show active">
                             <div id="shop-page" class="my-account-orders stats-wrapper shop-wrapper">
                                 <div class="table-responsive">

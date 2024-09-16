@@ -19,9 +19,9 @@
                     <tr>
                         <td>#{{$item->number}}</td>
                         <td>
-                            {{$item->user->full_name()}}
+                            {{$item->user ? $item->user->full_name() : $item->address->fullName()}}
                             <br>
-                            ({{$item->user->user_name()}})
+                            ({{$item->user ? $item->user->user_name() : $item->address->phone}})
                         </td>
 
                         <td>

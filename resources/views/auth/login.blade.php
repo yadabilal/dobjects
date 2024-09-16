@@ -50,6 +50,12 @@
                                                 <input type="submit" class="button buttonDisable" value="Giriş Yap">
                                             </div>
                                         </form>
+
+                                        @if(request()->get('alisveris') == 'devam-et' && @$settings['kayitOlmadanAlisveris'] == 1)
+                                            <div class="button-login">
+                                                <a  href="{{route('guest.shop')}}" class="button" value="">Kaydetmeden Devam Et</a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

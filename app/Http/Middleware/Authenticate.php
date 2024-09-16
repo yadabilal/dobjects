@@ -15,7 +15,8 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return url('giris-yap');
+            $checkout_in_progress = $request->get('alisveris');
+            return $checkout_in_progress=='devam-et' ? url('giris-yap?alisveris=devam-et') : url('giris-yap');
         }
     }
 }

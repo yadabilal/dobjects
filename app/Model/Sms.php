@@ -67,29 +67,33 @@ class Sms extends Model
   }
 
   public static function new_order($order) {
+    $address = $order->address()->first();
     $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->user->phone;
+    $data['contact'] = $order->user ? $order->user->phone : $address->phone;
     $data['content'] ='deekobjects.com ekibi olarak siparişlerini aldık. Sipariş durumunu profil sayfandan takip edebilirsin.';
     Job::create($data);
   }
 
     public static function cancel_order($order) {
+        $address = $order->address()->first();
         $data['type'] =Job::TYPE_SMS;
-        $data['contact'] = $order->user->phone;
+        $data['contact'] = $order->user ? $order->user->phone : $address->phone;
         $data['content'] ='deekobjects.com ekibi olarak '.$order->number.' numaralı siparişini iptal ettik. Daha fazla detay için deekobjects.com.';
         Job::create($data);
     }
 
   public static function order_cargo($order) {
-    $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->user->phone;
+      $address = $order->address()->first();
+      $data['type'] =Job::TYPE_SMS;
+      $data['contact'] = $order->user ? $order->user->phone : $address->phone;
     $data['content'] ='deekobjects.com ekibi olarak siparişini kargoladık. Sipariş durumunu profil sayfandan takip edebilirsin.';
     Job::create($data);
   }
 
   public static function order_billing($order) {
-    $data['type'] =Job::TYPE_SMS;
-    $data['contact'] = $order->user->phone;
+      $address = $order->address()->first();
+      $data['type'] =Job::TYPE_SMS;
+      $data['contact'] = $order->user ? $order->user->phone : $address->phone;
     $data['content'] ='deekobjects.com ekibi olarak faturanı oluşturduk. Faturana profil sayfandan ulaşabilirsin.';
     Job::create($data);
   }

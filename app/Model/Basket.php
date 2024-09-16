@@ -15,7 +15,7 @@ class Basket extends Base
 
   protected $table = 'baskets';
   protected $fillable = [ 'uuid', 'product_id', 'user_id', 'quantity', 'price',
-      'discount_price', 'total_price', 'total_discount_price', 'note'];
+      'discount_price', 'total_price', 'total_discount_price', 'note', 'session_id'];
 
   // Kullanıcı
   public function user() {
@@ -40,15 +40,108 @@ class Basket extends Base
 
 
     public function can_delete() {
-      return $this->user_id == auth()->id();
+      return auth()->id() ? $this->user_id == auth()->id() : $this->session_id == session()->getId();
+    }
+
+    public static function sumQuantity($userId = null) {
+        $baskets = self::orderBy('id', 'desc')
+            ->has('product')
+            ->with('product', 'user');
+        $userId = $userId ? : \auth()->id();
+
+        if($userId) {
+            $baskets->where('user_id', $userId);
+        }else {
+            $baskets->where('session_id', session()->getId());
+        }
+
+        return $baskets->sum('quantity');
+    }
+
+    public static function sumTotalDiscountPrice($userId = null) {
+        $baskets = self::orderBy('id', 'desc')
+            ->has('product')
+            ->with('product', 'user');
+        $userId = $userId ? : \auth()->id();
+
+        if($userId) {
+            $baskets->where('user_id', $userId);
+        }else {
+            $baskets->where('session_id', session()->getId());
+        }
+
+        return $baskets->sum('total_price');
+    }
+
+    public static function sumTotalPrice($userId = null) {
+        $baskets = self::orderBy('id', 'desc')
+            ->has('product')
+            ->with('product', 'user');
+        $userId = $userId ? : \auth()->id();
+
+        if($userId) {
+            $baskets->where('user_id', $userId);
+        }else {
+            $baskets->where('session_id', session()->getId());
+        }
+
+        return $baskets->sum('total_price');
+    }
+
+    public static function totals($userId = null) {
+        $totalPrice = 0;
+        $totalFinallyPrice = 0;
+
+        $baskets = self::getAll($userId);
+
+        foreach ($baskets as $basket) {
+            $totalPrice += $basket->product->price*$basket->quantity;
+            $totalFinallyPrice += $basket->product->discount_price*$basket->quantity;
+        }
+
+        $totalDiscountPrice = $totalPrice-$totalFinallyPrice;
+
+        return [
+            'totalPrice' => $totalPrice,
+            'totalDiscountPrice' => $totalDiscountPrice,
+            'totalFinallyPrice' => $totalFinallyPrice
+        ];
+    }
+
+    public static function getAll($userId = null, $oldSessionId = null) {
+        $baskets = self::orderBy('id', 'desc')
+          ->has('product')
+          ->with('product', 'user');
+
+        if(!$oldSessionId) {
+            $userId = $userId ? : \auth()->id();
+
+            if($userId) {
+                $baskets->where('user_id', $userId);
+            }else {
+                $baskets->where('session_id', session()->getId());
+            }
+        }else {
+            $baskets->whereNull('user_id');
+            $baskets->where('session_id', $oldSessionId);
+        }
+
+
+      return $baskets->get();
     }
 
   // Sepete Ekle
   public static function add($product, $quantity = 1, $note = '', $userId = null) {
       $userId = $userId ? : \auth()->id();
-    $basketElement = self::where('product_id', $product->id)
-        ->where('user_id', $userId)
-        ->first();
+      $basketElement = self::where('product_id', $product->id);
+
+    if($userId) {
+        $basketElement->where('user_id', $userId);
+    }else {
+        $basketElement->where('session_id', session()->getId());
+    }
+
+    $basketElement = $basketElement->first();
 
     if(!$basketElement) {
         $basketElement= new self();
@@ -60,6 +153,7 @@ class Basket extends Base
         $basketElement->discount_price = $product->discount_price;
         $basketElement->total_price = $product->price*$quantity;
         $basketElement->total_discount_price = $product->discount_price*$quantity;
+        $basketElement->session_id = session()->getId();
         $basketElement->save();
 
     }

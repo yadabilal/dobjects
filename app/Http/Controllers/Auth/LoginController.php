@@ -96,19 +96,20 @@ class LoginController extends Controller
 
     public function redirectTo(){
 
-        $carts = Session::get('basket.items') ?: [];
-
-        foreach ($carts as $cartId => $cart) {
-            $product = Product::where('uuid', $cartId)->where('status', Product::STATUS_PUBLISH)->first();
-            if($product) {
-                Basket::add($product, $cart->quantity);
-            }
-        }
-
-        Session::put('basket.items', []);
       if(auth()->user()->type == User::TYPE_ADMIN) {
         return $this->adminRedirectTo;
       }else {
+          try {
+              $oldSessionId = Session::get('1t45s23dk15h');
+              $oldSessionId = $oldSessionId ? base64_decode($oldSessionId) : null;
+
+              if($oldSessionId) {
+                  Basket::where('session_id', $oldSessionId)->update(['user_id' => auth()->id()]);
+              }
+
+              Session::remove('1t45s23dk15h');
+          }catch (\Exception $e) {}
+
         return $this->redirectTo;
       }
 

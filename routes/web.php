@@ -28,12 +28,13 @@ Route::post('destek/kontrol', 'SupportController@check')->name('support.check');
 Route::get('/sozlesme', 'HomeController@contract')->name('contract');
 Route::get('/sozlesme/{url}', 'HomeController@contract')->name('contract.sub');
 
+/*
 Route::post('/sepet/ekle', 'TempBasketController@add')->name('tempbasket.add');
 Route::post('sepet/liste', 'TempBasketController@list')->name('tempbasket.list');
 Route::get('sepet', 'TempBasketController@index')->name('tempbasket.short_list');
 Route::post('sepet/guncelle', 'TempBasketController@update')->name('tempbasket.update');
 Route::post('sepet/sil', 'TempBasketController@delete')->name('tempbasket.delete');
-
+*/
 
 Route::post('ilce-bul', 'HomeController@town');
 
@@ -47,6 +48,29 @@ Route::post('sifremi-unuttum', 'Auth\ForgotPasswordController@sendResetPassword'
 Route::post('alisveris/odeme/sonuc/{uuid}', 'MemberShipPanel\ShopController@callbackPayment')->name('shop.callback');
 Route::get('alisveris/odeme/sonuc/{uuid}', 'MemberShipPanel\ShopController@callbackPayment')->name('shop.callback');
 Route::get('alisveris/odeme/tamamlandi/{uuid}', 'MemberShipPanel\ShopController@resultPayment')->name('shop.result');
+
+
+// Sepet İşlemleri
+Route::prefix('sepet')->namespace('MemberShipPanel')->group(function () {
+    Route::post('ekle', 'BasketController@add')->name('basket.add');
+    Route::post('liste', 'BasketController@list')->name('basket.list');
+    Route::post('sil', 'BasketController@delete')->name('basket.delete');
+    Route::get('/', 'BasketController@index')->name('basket.short_list');
+    Route::post('guncelle', 'BasketController@update')->name('basket.update');
+});
+
+Route::prefix('giris-yapmadan')->group(function () {
+    Route::post('alisveris/kontrol', 'GuestShopController@check')->name('guest.shop.check');
+    Route::get('alisveris/adres', 'GuestShopController@index')->name('guest.shop');
+    Route::post('alisveris/adres', 'GuestShopController@save_address')->name('guest.shop.save_address');
+    Route::get('alisveris/odeme/{uuid}', 'GuestShopController@payment')->name('guest.shop.payment');
+    Route::post('alisveris/odeme', 'GuestShopController@save_payment')->name('guest.shop.save_payment');
+
+    Route::post('alisveris/odeme/sonuc/{uuid}', 'GuestShopController\ShopController@callbackPayment')->name('guest.shop.callback');
+    Route::get('alisveris/odeme/sonuc/{uuid}', 'GuestShopController\ShopController@callbackPayment')->name('guest.shop.callback');
+    Route::get('alisveris/odeme/tamamlandi/{uuid}', 'GuestShopController\ShopController@resultPayment')->name('guest.shop.result');
+});
+
 
 Route::prefix('hesabim')->namespace('MemberShipPanel')->middleware('auth', 'normal_user')->group(function () {
   // Profil İşlemleri
@@ -68,20 +92,11 @@ Route::prefix('hesabim')->namespace('MemberShipPanel')->middleware('auth', 'norm
   Route::get('/izin', 'PermissionController@index')->name('permission');
   Route::post('/izin/guncelle', 'PermissionController@edit')->name('permission.more');
 
-  // Sepet İşlemleri
-  Route::post('sepet/ekle', 'BasketController@add')->name('basket.add');
-  Route::post('sepet/liste', 'BasketController@list')->name('basket.list');
-  Route::post('sepet/sil', 'BasketController@delete')->name('basket.delete');
-  Route::get('sepet', 'BasketController@index')->name('basket.short_list');
-  Route::post('sepet/guncelle', 'BasketController@update')->name('basket.update');
-
 
     // Favoriler İşlemleri
     Route::get('favorilerim', 'WishlistController@index')->name('wishlist.index');
     Route::get('favorilerime-ekle/{uuid}', 'WishlistController@add')->name('wishlist.add');
     Route::get('favorilerimden-sil/{uuid}', 'WishlistController@delete')->name('wishlist.delete');
-
-
 
     // Alışveriş İşlemleri
   Route::post('alisveris/kontrol', 'ShopController@check')->name('shop.check');

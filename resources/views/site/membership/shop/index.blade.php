@@ -11,7 +11,7 @@
         <div class="section-padding">
             <div class="section-container p-l-r">
                 <div class="shop-checkout">
-                    <form name="checkout" method="post" class="checkout" autocomplete="off" action="{{route('shop.save_address')}}">
+                    <form name="checkout" method="post" class="checkout" autocomplete="off" action="{{auth()->id() ? route('shop.save_address') : route('guest.shop.save_address')}}">
                         @csrf
                         <div class="row">
                             <div class="col-xl-8 col-lg-7 col-md-12 col-12">
@@ -22,7 +22,7 @@
                                             <p class="form-row form-row-first validate-required">
                                                 <label>Ad <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="name" value="{{old("name") ?:$user->name}}" maxlength="25">
+                                                    <input type="text" class="input-text" name="name" value="{{old("name") ?:$user ? $user->name : ''}}" maxlength="25">
                                                     @error('name')
                                                     <p class="text-error">{{$message}}</p>
                                                     @enderror
@@ -31,7 +31,7 @@
                                             <p class="form-row form-row-last validate-required">
                                                 <label>Soyad <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="surname" value="{{old("surname") ?: $user->surname}}" maxlength="30">
+                                                    <input type="text" class="input-text" name="surname" value="{{old("surname") ?: $user ? $user->surname : ''}}" maxlength="30">
                                                     @error('surname')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror
@@ -41,7 +41,7 @@
                                             <p class="form-row form-row-last validate-required">
                                                 <label>TC Kimlik Numarası <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
-                                                    <input type="text" id="identity_number" class="input-text" name="identity_number" maxlength="11" minlength="11" value="{{old("identity_number") ?: $user->identity_number}}">
+                                                    <input type="text" id="identity_number" class="input-text" name="identity_number" maxlength="11" minlength="11" value="{{old("identity_number") ?: $user ? $user->identity_number : ''}}">
                                                     @error('identity_number')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror
@@ -87,7 +87,7 @@
                                             <p class="form-row form-row-wide validate-required validate-phone">
                                                 <label>Telefon <span class="required" title="required">*</span></label>
                                                 <span class="input-wrapper control">
-                                                    <input type="tel" class="input-text" name="phone" value="{{old('phone') ?: $user->phone}}">
+                                                    <input type="tel" class="input-text" name="phone" value="{{old('phone') ?: $user ? $user->phone : ''}}" maxlength="11">
                                                     @error('phone')
                                                       <p class="text-error">{{$message}}</p>
                                                     @enderror
@@ -151,7 +151,7 @@
                                         <p class="form-row form-row-first validate-required billing-personal">
                                             <label>Ad <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_name" value="{{old("Billing_name") ?:$user->name}}" maxlength="25">
+                                                    <input type="text" class="input-text" name="Billing_name" value="{{old("Billing_name") ?: $user ? $user->name : ''}}" maxlength="25">
                                                     @error('Billing_name')
                                                     <p class="text-error">{{$message}}</p>
                                                     @enderror
@@ -160,7 +160,7 @@
                                         <p class="form-row form-row-last validate-required billing-personal">
                                             <label>Soyad <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="text" class="input-text" name="Billing_surname" value="{{old("Billing_surname") ?: $user->surname}}" maxlength="30">
+                                                    <input type="text" class="input-text" name="Billing_surname" value="{{old("Billing_surname") ?: $user ? $user->surname : ''}}" maxlength="30">
                                                     @error('Billing_surname')
                                                 <p class="text-error">{{$message}}</p>
                                                 @enderror
@@ -216,7 +216,7 @@
                                         <p class="form-row form-row-wide validate-required validate-phone">
                                             <label>Telefon <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper control">
-                                                    <input type="tel" class="input-text" name="Billing_phone" value="{{old('Billing_phone') ?: $user->phone}}">
+                                                    <input type="tel" class="input-text" name="Billing_phone" value="{{old('Billing_phone') ?: $user ? $user->phone : ''}}" maxlength="11">
                                                     @error('Billing_phone')
                                                       <p class="text-error">{{$message}}</p>
                                                     @enderror
@@ -309,12 +309,17 @@
                                                     Ön Bilgilendirme Koşulları'nı ve Mesafeli Satış Sözleşmesi'ni okudum, onaylıyorum.</span>
                                             </label>
                                         </p>
+                                        @if(!auth()->id() && @$settings['RECAPTCHA_SITE_KEY'])
+                                            <input type="hidden" name="g-recaptcha-response" id="recaptchaResponse">
+                                            <div class="g-recaptcha m-b-10" data-sitekey="{{$settings['RECAPTCHA_SITE_KEY']}}"></div>
+                                        @endif
+
                                         <div class="form-row place-order">
                                             <div class="terms-and-conditions-wrapper">
                                                 <div class="privacy-policy-text"></div>
                                             </div>
                                             <button
-                                                data-action="{{route('shop.check')}}"
+                                                data-action="{{auth()->id() ? route('shop.check') : route('guest.shop.check') }}"
                                                 class="button alt is-solid accent-button raised btn-payment is-fullwidth"
                                                 type="button"
                                                 value="Ödeme Aşamasına Geç">Ödeme Aşamasına Geç</button>
@@ -328,5 +333,17 @@
             </div>
         </div>
     </div>
-
 @endsection
+
+@push('page-scripts')
+    @if(!auth()->id() && @$settings['RECAPTCHA_SITE_KEY'])
+        <script src="https://www.google.com/recaptcha/api.js?render={{ $settings['RECAPTCHA_SITE_KEY'] }}"></script>
+        <script>
+            grecaptcha.ready(function() {
+                grecaptcha.execute('{{ $settings['RECAPTCHA_SITE_KEY'] }}', {action: 'submit'}).then(function(token) {
+                    document.getElementById('recaptchaResponse').value = token;
+                });
+            });
+        </script>
+    @endif
+@endpush

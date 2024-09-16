@@ -25,9 +25,9 @@
 
 <script>
     var homeUrl = '{{route('home')}}';
-    var basketAddUrl = '{{auth()->id() ? route('basket.add'): route('tempbasket.add')}}';
-    var basketList = '{{auth()->id() ? route('basket.list'): route('tempbasket.list')}}';
-    var basketDelete = '{{auth()->id() ? route('basket.delete'): route('tempbasket.delete')}}';
+    var basketAddUrl = '{{route('basket.add')}}';
+    var basketList = '{{route('basket.list')}}';
+    var basketDelete = '{{route('basket.delete')}}';
     var cityChangeUrl = '{{url('ilce-bul')}}';
     var billingCompanyType = '{{\App\Model\Address::BILLING_TYPE_COMPANY}}';
 

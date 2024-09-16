@@ -16,7 +16,8 @@ class Address extends Base
 
   protected $table = 'addresses';
   protected $fillable = [ 'uuid', 'user_id', 'city_id', 'town_id', 'address',
-      "name", "surname", "phone", "email", "billing_note", "note", "type", 'identity_number', 'billing_type'];
+      "name", "surname", "phone", "email", "billing_note", "note", "type", 'identity_number',
+      'billing_type', 'session_id'];
 
 
   public function fullDetail() {

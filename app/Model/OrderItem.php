@@ -23,7 +23,7 @@ class OrderItem extends Base
     'uuid',  'status', 'order_id',
     'user_id', 'product_id', 'discount',
     'quantity', 'price', 'total_price',
-      'total_discount_price', 'discount_price',
+      'total_discount_price', 'discount_price','session_id'
   ];
 
   // Sender
@@ -65,6 +65,7 @@ class OrderItem extends Base
     static::creating(function ($model) {
       $model->status = self::STATUS_NEW;
       $model->user_id = \auth()->id();
+      $model->session_id = session()->getId();
     });
 
     static::created(function ($model) {

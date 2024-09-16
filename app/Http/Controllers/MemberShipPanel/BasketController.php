@@ -15,15 +15,15 @@ class BasketController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth');
+    //$this->middleware('auth');
   }
 
   // Sipariş Tamamla
   public function index() {
-    $user = $this->user;
-    $carts = $user->baskets()->get();
-    $totalPrices = $user->basketTotals();
-    $totalCount = $this->user->baskets->sum('quantity');
+    $user = $this->user ?: null;
+    $carts = Basket::getAll();
+    $totalPrices = Basket::totals();
+    $totalCount = Basket::sumQuantity();
     $totalDiscountPrice = Base::amountFormatterWithCurrency($totalPrices['totalFinallyPrice']);
     $totalPrice = Base::amountFormatterWithCurrency($totalPrices['totalPrice']);
     $discountPrice = Base::amountFormatterWithCurrency($totalPrices['totalDiscountPrice']);
@@ -34,11 +34,10 @@ class BasketController extends Controller
   // Sepete Ekle
   public function add(\Illuminate\Http\Request $request)
   {
-
     $data['success'] = false;
     if($request->ajax() && $request->post('id')) {
 
-        if(!$this->user->can_order()) {
+        if($this->user && !$this->user->can_order()) {
             $data['mesage'] = "Lütfen profilinizi tamamlayın!";
         }else {
             $all = Base::js_xss($request);
@@ -56,7 +55,7 @@ class BasketController extends Controller
                     if($basket) {
                         try {
                             $contents = [];
-                            $baskets = $this->user->baskets()->with('product')->get();
+                            $baskets = Basket::getAll();
                             foreach ($baskets as $basket) {
                                 $content['id'] = $basket->product->id;
                                 $content['quantity'] = $basket->quantity;
@@ -67,12 +66,12 @@ class BasketController extends Controller
                             $facebook = new Facebook();
                             $facebook->event = Facebook::EVENT_BASKET;
                             $facebook->sourceUrl = $request->url();
-                            $facebook->user = $this->user;
+                            $facebook->user = $this->user ?: 'quest_'.session_id();
                             $facebook->customData['contents'] = $contents;
                             $result = $facebook->events($this->setting);
                         }catch (\Exception $e) {}
 
-                        $count = $this->user->baskets()->sum('quantity');
+                        $count = Basket::sumQuantity();
 
                         $data['success'] = true;
                         $data['id'] = $basket->uuid;
@@ -111,10 +110,10 @@ class BasketController extends Controller
         $basket->delete();
         DB::commit();
 
-          $count = $this->user->baskets->sum('quantity')-$basket->quantity;
-          $tdp = $this->user->baskets->sum('total_discount_price');
+          $count = Basket::sumQuantity()-$basket->quantity;
+          $tdp = Basket::sumTotalDiscountPrice();
           $totalDiscountPrice = Base::amountFormatterWithCurrency($tdp);
-          $tp = $this->user->baskets->sum('total_price');
+          $tp = Basket::sumTotalPrice();
           $totalPrice = Base::amountFormatterWithCurrency($tp);
           $discountPrice = Base::amountFormatterWithCurrency($tp-$tdp);
 
@@ -139,7 +138,7 @@ class BasketController extends Controller
   public function update() {
       if (request()->isMethod('post')) {
           $inputs = Base::js_xss(\request());
-          $carts = $this->user->baskets;
+          $carts = Basket::getAll();
           if(@$inputs['quantity'] && $carts) {
               $isError = false;
               foreach ($carts as $cart) {
@@ -193,9 +192,9 @@ class BasketController extends Controller
 
         if(request()->ajax()) {
           $data['success'] = true;
-          $carts = $this->user->baskets()->get() ? : [];
-          $totalPrices = $this->user->basketTotals();
-          $count = $this->user->baskets->sum('quantity');
+          $carts = Basket::getAll();
+          $totalPrices = Basket::totals();
+          $count = Basket::sumQuantity();
           $totalPrice = Base::amountFormatterWithCurrency($totalPrices['totalFinallyPrice']);
           $data['list'] = view('site.membership.basket.short_list',compact('carts', 'count', 'totalPrice'))->render();
         }else {

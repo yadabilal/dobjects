@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Model\Basket;
-use App\Model\Book;
-use App\Model\File;
 use App\Model\HomePage;
 use App\Model\Page;
-use App\Model\Product;
 use App\Model\Setting;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -49,7 +45,8 @@ class Controller extends BaseController
           $wishListCount = $this->user->wishlists->count();
           $cartItemCount = $this->user->baskets->sum('quantity');
       }else {
-          $cartItemCount = Session::get('basket.totalQuantity') ?:0;
+          Session::put('1t45s23dk15h', base64_encode(session()->getId()));
+          $cartItemCount = Basket::sumQuantity();
       }
 
       $pages = Page::orderBy('sorting')->pluck('title', 'url');

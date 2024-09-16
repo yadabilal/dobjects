@@ -14,7 +14,7 @@
                 <div class="shop-cart {{$totalCount ? '': 'hidden'}}">
                     <div class="row">
                         <div class="col-xl-8 col-lg-12 col-md-12 col-12">
-                            <form class="cart-form" action="{{auth()->id() ? route('basket.update') : route('tempbasket.update')}}" method="post">
+                            <form class="cart-form" action="{{route('basket.update')}}" method="post">
                                 @csrf
                                 <div class="table-responsive">
                                     <table class="cart-items table" cellspacing="0">
@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                                 <div class="proceed-to-checkout">
-                                    <a href="{{route('shop')}}" class="checkout-button button">
+                                    <a href="{{auth()->id() ? route('shop') : route('shop').'?alisveris=devam-et'}}" class="checkout-button button">
                                         Sepeti Onayla
                                     </a>
                                 </div>

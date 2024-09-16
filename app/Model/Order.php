@@ -34,7 +34,7 @@ class Order extends Base
     'total_quantity', 'total_price',
       'total_discount_price', 'discount_price',
       'cargo_id','folow_number', 'extra_messages',
-      'payment_reference', 'payment_payload', 'billing_address_id'
+      'payment_reference', 'payment_payload', 'billing_address_id', 'session_id'
   ];
 
 
@@ -139,7 +139,8 @@ class Order extends Base
 
     static::creating(function ($model) {
       $model->status = self::STATUS_WAITING_PAYMENT;
-      $model->user_id = \auth()->id();
+      $model->user_id = \auth()->id() ?: null;
+      $model->session_id = session()->getId();
     });
 
     static::created(function ($model) {

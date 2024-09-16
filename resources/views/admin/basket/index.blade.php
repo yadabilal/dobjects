@@ -45,7 +45,7 @@
                 </div>
               </td>
               <td>{{$model->product->name}}</td>
-              <td>{{$model->user->full_name()}}</td>
+              <td>{{$model->user ? $model->user->full_name() : 'Misafir Kullanıcı: '.$model->session_id}}</td>
               <td>{{$model->quantity}} Adet</td>
               <td>{{$model->created_at()}}</td>
             </tr>

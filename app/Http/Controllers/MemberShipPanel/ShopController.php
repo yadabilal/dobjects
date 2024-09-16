@@ -19,7 +19,7 @@ class ShopController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth')->except(['callbackPayment']);
+    //$this->middleware('auth')->except(['callbackPayment']);
   }
 
 // Adres Bilgilerini Gir

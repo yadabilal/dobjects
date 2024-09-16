@@ -66,9 +66,9 @@ Route::prefix('giris-yapmadan')->group(function () {
     Route::get('alisveris/odeme/{uuid}', 'GuestShopController@payment')->name('guest.shop.payment');
     Route::post('alisveris/odeme', 'GuestShopController@save_payment')->name('guest.shop.save_payment');
 
-    Route::post('alisveris/odeme/sonuc/{uuid}', 'GuestShopController\ShopController@callbackPayment')->name('guest.shop.callback');
-    Route::get('alisveris/odeme/sonuc/{uuid}', 'GuestShopController\ShopController@callbackPayment')->name('guest.shop.callback');
-    Route::get('alisveris/odeme/tamamlandi/{uuid}', 'GuestShopController\ShopController@resultPayment')->name('guest.shop.result');
+    Route::post('alisveris/odeme/sonuc/{uuid}', 'GuestShopController@callbackPayment')->name('guest.shop.callback');
+    Route::get('alisveris/odeme/sonuc/{uuid}', 'GuestShopController@callbackPayment')->name('guest.shop.callback');
+    Route::get('alisveris/odeme/tamamlandi/{uuid}', 'GuestShopController@resultPayment')->name('guest.shop.result');
 });
 
 

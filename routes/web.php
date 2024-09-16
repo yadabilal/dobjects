@@ -60,6 +60,7 @@ Route::prefix('sepet')->namespace('MemberShipPanel')->group(function () {
 });
 
 Route::prefix('giris-yapmadan')->group(function () {
+    Route::post('alisveris/odeme/sonuc/{uuid}', 'GuestShopController@callbackPayment')->name('guest.shop.callback');
     Route::get('alisveris/odeme/sonuc/{uuid}', 'GuestShopController@callbackPayment')->name('guest.shop.callback');
     Route::get('alisveris/odeme/tamamlandi/{uuid}', 'GuestShopController@resultPayment')->name('guest.shop.result');
 

@@ -352,6 +352,9 @@ class GuestShopController extends Controller
                                     $basketItems[] = $basketItem;
                                     $itemSavedCount ++;
                                 }
+
+                                $cart->note = "Sipariş Oluşturuldu. Sipariş: ".$order->number.' id: '.$order->id;
+                                $cart->save();
                             }
 
                             if($itemSavedCount == $itemCount) {
@@ -390,7 +393,7 @@ class GuestShopController extends Controller
                                 }else {
                                     DB::rollBack();
                                     foreach ($carts as $cart) {
-                                        $cart->note = "Sipariş Oluşturulma sırasıda hata: ".$checkoutFormInitialize->getErrorMessage();
+                                        $cart->note = "Sipariş Oluşturulma sırasıda hata: ".$checkoutFormInitialize->getErrorMessage().' kullanıcı bilgileri-> telefon: '.$inputs['phone'].' email: '.$inputs['email'];
                                         $cart->save();
                                     }
 
@@ -400,6 +403,11 @@ class GuestShopController extends Controller
 
                         }catch (\Exception $e) {
                             DB::rollBack();
+                            $inputs = Base::js_xss(\request());
+                            foreach ($carts as $cart) {
+                                $cart->note = "Sipariş Oluşturulma sırasıda hata: ".$e->getMessage().' kullanıcı bilgileri-> telefon: '.$inputs['phone'].' email: '.$inputs['email'];
+                                $cart->save();
+                            }
                             Session::flash('error_message', $e->getMessage() );
                         }
 

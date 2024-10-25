@@ -44,7 +44,14 @@
                   <img src="{{$model->product->image()}}" alt="" style="max-height: 100%;">
                 </div>
               </td>
-              <td>{{$model->product->name}}</td>
+              <td>
+                  {{$model->product->name}}
+                  @if($model->note)
+                      <div class="alert alert-warning">
+                          {{$model->note}}
+                      </div>
+                  @endif
+              </td>
               <td>{{$model->user ? $model->user->full_name() : 'Misafir Kullanıcı: '.$model->session_id}}</td>
               <td>{{$model->quantity}} Adet</td>
               <td>{{$model->created_at()}}</td>

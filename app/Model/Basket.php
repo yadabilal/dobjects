@@ -70,7 +70,7 @@ class Basket extends Base
             $baskets->where('session_id', session()->getId());
         }
 
-        return $baskets->sum('total_price');
+        return $baskets->sum('total_discount_price');
     }
 
     public static function sumTotalPrice($userId = null) {

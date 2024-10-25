@@ -353,7 +353,7 @@ class GuestShopController extends Controller
                                     $itemSavedCount ++;
                                 }
 
-                                $cart->note = "Sipariş Oluşturuldu.";
+                                $cart->note = "Sipariş Oluşturuldu. Sipariş: ".$order->number.' id: '.$order->id;
                                 $cart->save();
                             }
 

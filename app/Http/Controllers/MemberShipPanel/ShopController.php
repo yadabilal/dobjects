@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MemberShipPanel;
 use App\Http\Controllers\Controller;
 use App\Model\Address;
 use App\Model\Base;
+use App\Model\Basket;
 use App\Model\City;
 use App\Model\Order;
 use App\Model\OrderItem;
@@ -273,9 +274,16 @@ class ShopController extends Controller
                     $itemCount = 0;
                     $carts = $this->user->baskets()->get();
                     $totalCount = $this->user->baskets->sum('quantity');
-                    $tdp = $this->user->baskets->sum('total_discount_price');
-                    $tp = $this->user->baskets->sum('total_price');
+
+                    $totalPrices = Basket::totals(auth()->id());
+
+                    $tdp = $totalPrices['totalFinallyPrice'];
+                    $tp = $totalPrices['totalPrice'];
                     $discountPrice = $tp-$tdp;
+
+                    /*$tdp = $this->user->baskets->sum('total_discount_price');
+                    $tp = $this->user->baskets->sum('total_price');
+                    $discountPrice = $tp-$tdp; */
                     $latestOrder = Order::orderBy('id', 'desc')->first();
 
                     $order = new Order();
@@ -313,6 +321,9 @@ class ShopController extends Controller
                             $basketItems[] = $basketItem;
                             $itemSavedCount ++;
                         }
+
+                        $cart->note = "Sipariş Oluşturuldu. Sipariş: ".$order->number.' id: '.$order->id;
+                        $cart->save();
                     }
 
                     if($itemSavedCount == $itemCount) {
@@ -350,12 +361,23 @@ class ShopController extends Controller
                             return redirect(route('shop.payment', ['uuid' => $order->uuid]));
                         }else {
                             DB::rollBack();
+
+                            foreach ($carts as $cart) {
+                                $cart->note = "Sipariş Oluşturulma sırasıda hata: ".$checkoutFormInitialize->getErrorMessage().' kullanıcı id: '.auth()->id();
+                                $cart->save();
+                            }
                             Session::flash('error_message', $checkoutFormInitialize->getErrorMessage());
                         }
                     }
 
                 }catch (\Exception $e) {
                     DB::rollBack();
+
+                    foreach ($carts as $cart) {
+                        $cart->note = "Sipariş Oluşturulma sırasıda hata: ".$e->getMessage().' kullanıcı id: '.auth()->id();
+                        $cart->save();
+                    }
+
                     Session::flash('error_message', $e->getMessage() );
                 }
 

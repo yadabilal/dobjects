@@ -309,8 +309,11 @@ class GuestShopController extends Controller
                             $itemCount = 0;
                             $carts = Basket::getAll(null);
                             $totalCount = Basket::sumQuantity();
-                            $tdp = Basket::sumTotalDiscountPrice();
-                            $tp = Basket::sumTotalPrice();
+
+                            $totalPrices = Basket::totals();
+
+                            $tdp = $totalPrices['totalFinallyPrice'];
+                            $tp = $totalPrices['totalPrice'];
                             $discountPrice = $tp-$tdp;
                             $latestOrder = Order::orderBy('id', 'desc')->first();
 
@@ -386,6 +389,11 @@ class GuestShopController extends Controller
                                     return redirect(route('guest.shop.payment', ['uuid' => $order->uuid]));
                                 }else {
                                     DB::rollBack();
+                                    foreach ($carts as $cart) {
+                                        $cart->note = "Sipariş Oluşturulma sırasıda hata: ".$checkoutFormInitialize->getErrorMessage();
+                                        $cart->save();
+                                    }
+
                                     Session::flash('error_message', $checkoutFormInitialize->getErrorMessage() ?: 'Ödeme sisteminde beklenmedik bir hata alındı!Kod: 24');
                                 }
                             }

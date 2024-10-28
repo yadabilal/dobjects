@@ -75,6 +75,8 @@ class BasketController extends Controller
 
                         $data['success'] = true;
                         $data['id'] = $basket->uuid;
+                        $data['name'] = $product->name;
+                        $data['price'] = $product->discount_price;
                         $data['count'] = $count;
                         $data['message'] = "Ürün Sepete Eklendi!";
                     }else {

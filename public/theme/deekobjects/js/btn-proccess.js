@@ -55,6 +55,16 @@ $('.btn-add-to-cart')['on']('click', function(e) {
 
             if(data.success) {
                 fbq('track', 'AddToCart');
+                gtag('event', 'add_to_cart', {
+                    'time': Date.now(),
+                    'items': [{
+                        'id': id,
+                        'name': data.name,
+                        'price': data.price,
+                        'quantity': quantity
+                    }]
+                });
+
                 status = "success";
                 element['addClass']('added');
                 element['closest']('div').html(
@@ -334,6 +344,10 @@ $(document).on("click",".btn-payment",function() {
           });
           _this.removeClass('is-loading');
         }else {
+            gtag('event', 'begin_checkout', {
+                'value': data.totalPrice,
+                'currency': 'TRY'
+            });
           form.submit();
         }
 

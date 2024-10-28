@@ -14,6 +14,13 @@
                 <div class="page-404">
                     <div class="content-page-404">
                         @if($order->status == \App\Model\Order::STATUS_NEW)
+                            <script>
+                                gtag('event', 'purchase', {
+                                    'order_id': '{{$order->number}}',
+                                    'total_price': '{{$order->total_discount_price}}',
+                                    'currency': 'TRY'
+                                });
+                            </script>
                             <div class="sub-title">
                                 Tebrikler! Siparişiniz başarılı bir şekilde gerçekleşti.
                             </div>

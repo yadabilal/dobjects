@@ -190,6 +190,9 @@ class GuestShopController extends Controller
                 $data['message'] = "Bu işlemi yapmaya yetkiniz yok!";
             }
 
+            $totalPrices = Basket::totals();
+            $data['totalPrice'] = $totalPrices['totalFinallyPrice'];
+
             return Response::json($data, 200);
         }
     }

@@ -13,6 +13,7 @@ class Job extends Base
   const TYPE_WAITING_PAYMENT= 'WAITING_PAYMENT';
 
   const STATUS_WAITING = 'WAITING';
+  const STATUS_PROCESSING = 'PROCESSING';
   const STATUS_COMPLETED = 'COMPLETED';
 
   public $timestamps = false;

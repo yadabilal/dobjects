@@ -43,6 +43,7 @@ class Sms extends Model
     $response = curl_exec($ch);
     curl_close($ch);
 
+
     $result = true;
     if($response) {
       Log::debug('SMS SONUCLARI -->'.$phone.' - '. $response.' --- MESAJ: '.$message);
@@ -50,6 +51,7 @@ class Sms extends Model
 
     if (strpos($response, ':Zaman düzeltilip gönderildi') === false && strpos($response, ':Gonderildi') === false) {
       Log::info($phone.' --> Onay kodu gönderilemedi');
+      dd($response);
       $result = false;
       $job['type'] =Job::TYPE_SMS;
       $job['subject'] =$subject;

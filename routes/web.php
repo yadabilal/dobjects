@@ -138,6 +138,9 @@ Route::prefix('kayit-ol')->namespace('Auth')->group(function () {
 
 });
 
+
+Route::get('sms/test', 'JobController@test');
+
 Route::prefix('job')->group(function () {
     Route::get('cache-image', 'JobController@cacheImage');
   Route::get('waiting-payment/{id}', 'JobController@waiting_payment')

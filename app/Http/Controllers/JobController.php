@@ -17,6 +17,9 @@ use Intervention\Image\Facades\Image;
 class JobController extends Controller
 {
 
+    public function test() {
+        Sms::send('test mesajı', '+905346326393', 'Test');
+    }
     public function cacheImage() {
         $typeOnes = HomePage::where('status', HomePage::STATUS_PUBLISH)
             ->orderBy('sorting')
@@ -114,25 +117,48 @@ class JobController extends Controller
   public function send_sms() {
 
     Log::info('=============== SMS BAŞLADI ===============');
+      DB::transaction(function () {
+          // Waiting olan ilk kaydı lockla ve al
+          $job = DB::table('jobs')
+              ->where('status', Job::STATUS_WAITING)
+              ->whereDate('send_at', '<=',Carbon::now())
+              ->whereNull('locked_at')
+              ->orderBy('id')
+              ->lockForUpdate()
+              ->first();
 
-    $models = Job::where('status', Job::STATUS_WAITING)
-      ->where('type', Job::TYPE_SMS)
-      ->whereDate('send_at', '<=',Carbon::now());
+          if ($job) {
+              // İşleme başlamadan önce durumu 'processing' yap ve locked_at zamanını güncelle
+              DB::table('jobs')
+                  ->where('id', $job->id)
+                  ->update([
+                      'status' => Job::STATUS_PROCESSING,
+                      'locked_at' => Carbon::now(),
+                  ]);
 
-    Log::info($models->count(). ' Sonuç Bulundu.');
-    DB::beginTransaction();
+              // İşlem Yap (Burada payload işlenebilir)
+              try {
+                  $result = Sms::send($job->content, $job->contact, $job->subject);
+                  if($result) {
+                      Log::info($job->contact.' numarasına sms gönderildi.');
+                  }else {
+                      Log::error($job->contact.' numarasına sms gönderilemedi.');
+                  }
 
-    foreach ($models->get() as $model) {
-      $result = Sms::send($model->content, $model->contact, $model->subject);
-      $model->update(['status' => Job::STATUS_COMPLETED]);
-      if($result) {
-        Log::info($model->contact.' numarasına sms gönderildi.');
-      }else {
-        Log::error($model->contact.' numarasına sms gönderilemedi.');
-      }
-    }
+                  // İşlem başarılı olursa durumu 'completed' yap
+                  DB::table('jobs')
+                      ->where('id', $job->id)
+                      ->update(['status' => Job::STATUS_COMPLETED]);
+              } catch (\Exception $e) {
+                  // Hata olursa status 'waiting' olarak kalabilir veya loglama yapabilirsiniz
+                  DB::table('jobs')
+                      ->where('id', $job->id)
+                      ->update(['status' => Job::STATUS_WAITING]);
+                  Log::info("Hata: ".$e->getMessage());
+              }
+          }
+      });
 
-    DB::commit();
 
     Log::info('=============== SMS BİTTİ ===============');
   }

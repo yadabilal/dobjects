@@ -51,7 +51,7 @@ class Sms extends Model
 
     if (strpos($response, ':Zaman düzeltilip gönderildi') === false && strpos($response, ':Gonderildi') === false) {
       Log::info($phone.' --> Onay kodu gönderilemedi');
-      dd($response);
+
       $result = false;
       $job['type'] =Job::TYPE_SMS;
       $job['subject'] =$subject;

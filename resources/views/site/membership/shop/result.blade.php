@@ -38,7 +38,7 @@
                             @endif
                         @else
                             <div class="sub-title">
-                                {{$order->extra_messages}}
+                                {{$order->getPaymentMessage()}}
                             </div>
 
                         @endif

@@ -223,4 +223,25 @@ class Order extends Base
     ];
   }
 
+    public function getPaymentMessage() {
+        $message = $this->extra_messages;
+        $json = json_decode($this->extra_messages, true);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $messages = [];
+
+            if (@$json['USER_NOTE'] ) {
+                $messages[] = $json['USER_NOTE'];
+            }
+
+            if (@$json['PAYMENT_NOTE']) {
+                $messages[] = $json['PAYMENT_NOTE'];
+            }
+
+            $message = implode(',', $messages);
+        }
+
+        return $message;
+    }
+
 }

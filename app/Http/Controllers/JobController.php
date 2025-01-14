@@ -18,6 +18,7 @@ class JobController extends Controller
 {
 
     public function test() {
+        exit;
         Sms::send('test mesajı', '+905346326393', 'Test');
     }
     public function cacheImage() {
